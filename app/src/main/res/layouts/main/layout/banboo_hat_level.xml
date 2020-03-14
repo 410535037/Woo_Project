@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="400dp"
+    android:background="@drawable/choose_pot_or_vege_cardbg"
+    android:layout_gravity="center">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/goldom_level"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/hat"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerHorizontal="true"
+        android:background="#D2D5D3"
+        android:layout_below="@+id/goldom_level"
+        android:layout_marginTop="20dp"/>
+
+
+    <RelativeLayout
+        android:id="@+id/num_of_palnt_relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp">
+
+      <ImageView
+          android:id="@+id/plant"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_marginLeft="20dp"
+          android:layout_centerHorizontal="true"
+          android:background="@drawable/plant"/>
+
+      <TextView
+          android:id="@+id/num_of_palnt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="累積收穫量"
+          android:textSize="18sp"
+          android:textColor="#796868"
+          android:layout_below="@+id/plant"
+          android:layout_centerHorizontal="true"/>
+
+      <TextView
+          android:id="@+id/num"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/num_of_palnt"
+          android:layout_centerHorizontal="true"
+          android:text="400"
+          android:textColor="#89B094"
+          android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/num_of_share_calendar_relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentRight="true">
+
+      <ImageView
+          android:id="@+id/share_calendar"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_marginRight="20dp"
+          android:layout_centerHorizontal="true"
+          android:background="@drawable/share_calendar"/>
+
+      <TextView
+          android:id="@+id/num_of_share_calendar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="分享栽培曆"
+          android:textSize="18sp"
+          android:textColor="#796868"
+          android:layout_below="@+id/share_calendar"
+          android:layout_centerHorizontal="true"/>
+
+      <TextView
+          android:id="@+id/num_calen"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/num_of_share_calendar"
+          android:layout_centerHorizontal="true"
+          android:text="150"
+          android:textColor="#89B094"
+          android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/share"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
+
+  </RelativeLayout>
+
+</LinearLayout>

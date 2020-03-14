@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".user_setting.personal_info_edit">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/test" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="個人資料"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="450dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:paddingLeft="47dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                android:background="@drawable/edit_pencil2"
+                android:hint="輸入姓名"
+                android:textColorHint="#518D62"/>
+
+            <EditText
+                android:id="@+id/edit_phone"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:hint="輸入電話"
+                android:textColorHint="#518D62"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:paddingLeft="47dp"
+                android:inputType="phone"
+                android:background="@drawable/edit_pencil2"/>
+
+            <EditText
+                android:id="@+id/edit_email"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:hint="輸入電子郵件"
+                android:textColorHint="#518D62"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:paddingLeft="47dp"
+                android:background="@drawable/edit_pencil2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+
+                />
+
+            <EditText
+                android:id="@+id/edit_addr"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:hint="輸入所在地"
+                android:textColorHint="#518D62"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:paddingLeft="47dp"
+                android:background="@drawable/edit_pencil2"/>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+
+                <Spinner
+                    android:id="@+id/type"
+                    android:layout_width="144dp"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"/>
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent" />
+
+                <Spinner
+                    android:id="@+id/type2"
+                    android:layout_width="152dp"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+
+                android:layout_height="30dp"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edit_age"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:hint="輸入年紀"
+                android:textColorHint="#518D62"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:paddingLeft="47dp"
+                android:background="@drawable/edit_pencil2"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="51dp"
+                    android:layout_height="match_parent" />
+
+                <Spinner
+                    android:id="@+id/select_age"
+                    android:layout_width="190dp"
+                    android:layout_height="56dp"
+                    android:spinnerMode="dialog" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="選擇性別"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/man_woman"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:text="男"
+                    android:textColor="#89B094"
+                    android:background="@drawable/gender"
+                    android:textSize="35dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gender_space"
+                    android:layout_weight="1"
+                    />
+
+                <Button
+                    android:id="@+id/woman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:text="女"
+                    android:background="@drawable/gender"
+                    android:textColor="#89B094"
+                    android:textSize="35dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvShowNumbers"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="種植經驗"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                />
+
+            <LinearLayout
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gender"
+                    />
+
+                <Button
+                    android:id="@+id/one_year"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/gender"
+                    android:text="1年以下"
+                    android:textSize="20dp"
+                    android:textColor="#89B094"
+                    />
+
+                <Button
+                    android:id="@+id/two_year"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/gender"
+                    android:text="2~3年"
+                    android:textSize="20dp"
+                    android:textColor="#89B094"
+                    />
+                <Button
+                    android:id="@+id/three_year"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/gender"
+                    android:text="3年以上"
+                    android:textSize="20dp"
+                    android:textColor="#89B094"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="320dp"
+                android:layout_height="81dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6EAE7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/user_info_cancel"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:text="取消"
+                android:textColor="#89B094"
+                android:textSize="20dp"
+                tools:targetApi="lollipop" />
+
+            <View
+                android:layout_width="1.3dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:background="#D2D5D3" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/user_info_confirm"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:text="確定"
+                android:textColor="#89B094"
+                android:textSize="20dp"
+                tools:targetApi="lollipop" />
+
+            <View
+                android:layout_width="1.3dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:background="#D2D5D3" />
+
+
+        </LinearLayout>
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</LinearLayout>

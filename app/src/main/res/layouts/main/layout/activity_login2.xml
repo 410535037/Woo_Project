@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bgtwo"
+    tools:context=".login.login2">
+
+
+    <TextView
+        android:id="@+id/loginsub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="個人資訊"
+        android:textColor="#ffff"
+        android:textSize="60sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="30dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:paddingLeft="47dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:textColor="#518D62"
+                android:background="@drawable/edit_pencil2"
+                android:hint="輸入姓名"
+                android:singleLine="true"
+                android:textColorHint="#518D62"/>
+
+            <EditText
+            android:id="@+id/phone"
+            android:layout_width="320dp"
+            android:layout_height="56dp"
+            android:hint="輸入電話"
+            android:textColorHint="#518D62"
+            android:layout_gravity="center"
+            android:textColor="#518D62"
+                android:singleLine="true"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="47dp"
+            android:inputType="phone"
+            android:background="@drawable/edit_pencil2"/>
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="320dp"
+                android:layout_height="56dp"
+                android:hint="輸入電子郵件"
+                android:textColorHint="#518D62"
+                android:layout_gravity="center"
+                android:textColor="#518D62"
+                android:layout_marginTop="30dp"
+                android:paddingLeft="47dp"
+                android:background="@drawable/edit_pencil2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+
+                />
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+
+                <Spinner
+                    android:id="@+id/type"
+                    android:layout_width="144dp"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"/>
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent" />
+
+                <Spinner
+                    android:id="@+id/type2"
+                    android:layout_width="152dp"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+
+                android:layout_height="30dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="51dp"
+                    android:layout_height="match_parent" />
+
+                <Spinner
+                    android:id="@+id/age"
+                    android:layout_width="195dp"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="選擇性別"
+                android:textColor="#89B094"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/man_woman"
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:text="男"
+                    android:textColor="#89B094"
+                    android:background="@drawable/gender"
+                    android:textSize="35dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gender_space"
+                    android:layout_weight="1"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/woman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:text="女"
+                    android:background="@drawable/gender"
+                    android:textColor="#89B094"
+                    android:textSize="35dp" />
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/user_info_confirm"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:background="@drawable/getstart"
+                android:layout_marginTop="30dp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

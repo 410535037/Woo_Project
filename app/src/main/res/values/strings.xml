@@ -1,0 +1,169 @@
+<resources>
+    <string name="app_name">務農族</string>
+
+
+
+
+    <string-array name="類別">
+        <item>十字花科</item>
+        <item>非十字花科</item>
+        <item>瓜菜</item>
+        <item>果菜</item>
+        <item>包葉菜</item>
+        <item>根莖葉</item>
+        <item>花菜</item>
+        <item>瓜果</item>
+        <item>豆菜</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="農地編號">
+        <item>A01</item>
+        <item>A02</item>
+        <item>A03</item>
+
+    </string-array>
+
+    <string-array name="十字花科">
+        <item>青江</item>
+        <item>小白</item>
+        <item>奶白</item>
+        <item>小松</item>
+        <item>塔菇</item>
+        <item>芥藍</item>
+        <item>千寶</item>
+        <item>山甜</item>
+        <item>廣島</item>
+    </string-array>
+
+    <string-array name="非十字花科">
+        <item>空心</item>
+        <item>莧菜</item>
+        <item>蘿蔓</item>
+        <item>A菜</item>
+        <item>福山</item>
+        <item>山菠菜</item>
+        <item>菠菜</item>
+        <item>茼蒿</item>
+        <item>皇宮菜</item>
+    </string-array>
+
+    <string-array name="瓜菜">
+        <item>花胡瓜</item>
+        <item>苦瓜</item>
+        <item>絲瓜</item>
+        <item>冬瓜</item>
+        <item>南瓜</item>
+        <item>夏南瓜</item>
+    </string-array>
+
+    <string-array name="果菜">
+        <item>番茄</item>
+        <item>茄子</item>
+        <item>彩椒</item>
+        <item>玉米</item>
+    </string-array>
+
+    <string-array name="包葉菜">
+        <item>甘藍</item>
+        <item>包心白菜</item>
+        <item>結球萵苣</item>
+    </string-array>
+
+    <string-array name="其他">
+        <item>食用百合</item>
+        <item>茴香類</item>
+    </string-array>
+
+    <string-array name="根莖菜">
+        <item>胡蘿蔔</item>
+        <item>甜菜根</item>
+        <item>嫩莖萵苣</item>
+    </string-array>
+
+    <string-array name="花菜">
+        <item>青花椰</item>
+        <item>白花椰</item>
+    </string-array>
+
+    <string-array name="瓜果">
+        <item>美濃瓜</item>
+    </string-array>
+
+    <string-array name="豆菜">
+        <item>敏豆</item>
+    </string-array>
+
+
+
+    <string-array name="sex_list">
+        <item>女</item>
+        <item>男</item>
+    </string-array>
+
+    <string name="spn_sex_list_prompt">請選擇性別</string>
+    <string name="title_activity_home2">home2</string>
+
+    <string-array name="action_item">
+        <item>育苗</item>
+        <item>播種</item>
+        <item>澆水</item>
+        <item>施肥</item>
+        <item>鋤草</item>
+        <item>防蟲</item>
+        <item>除病</item>
+        <item>收成</item>
+    </string-array>
+
+    <string-array name="county_item">
+        <item>基隆市</item>
+        <item>新北市</item>
+        <item>台北市</item>
+        <item>桃園市</item>
+        <item>新竹縣</item>
+        <item>新竹市</item>
+        <item>苗栗縣</item>
+        <item>台中市</item>
+        <item>彰化縣</item>
+        <item>南投縣</item>
+        <item>雲林縣</item>
+        <item>嘉義縣</item>
+        <item>嘉義市</item>
+        <item>台南市</item>
+        <item>高雄市</item>
+        <item>屏東縣</item>
+        <item>台東縣</item>
+        <item>花蓮縣</item>
+        <item>宜蘭縣</item>
+    </string-array>
+
+    <string-array name="age_item">
+        <item>20歲以下</item>
+        <item>21歲~30歲</item>
+        <item>31歲~40歲</item>
+        <item>41歲~50歲</item>
+        <item>50歲~65歲</item>
+        <item>65歲以上</item>
+    </string-array>
+
+
+    <string-array name="運送方式">
+        <item>選擇運送方式</item>
+        <item>7-11取貨</item>
+        <item>全家取貨</item>
+        <item>宅配</item>
+
+    </string-array>
+
+    <string-array name="付款方式">
+        <item>選擇付款方式</item>
+        <item>貨到付款</item>
+        <item>銀行轉帳</item>
+        <item>信用卡/金融卡</item>
+    </string-array>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/white">
+    <!--ripple中的color為點擊時的顏色-->
+
+    <!--基本顏色
+    <item>
+        <shape>
+            <solid android:color="#61d169" />
+            <corners android:radius="5dip"/>
+        </shape>
+    </item> -->
+
+    <!-- 边框颜色值 -->
+    <item>
+        <shape>
+            <!--边框的宽度及颜色-->
+            <stroke android:width="3px" android:color="#FC9D33" />
+            <corners android:radius="5dip"/>
+        </shape>
+    </item>
+
+</ripple>

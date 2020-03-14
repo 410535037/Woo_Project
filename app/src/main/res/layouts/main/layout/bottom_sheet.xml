@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bottomsheet_round">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="功能"
+                android:textSize="20sp"
+                android:textColor="#402C2B"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/menuLinearLayout"
+        android:layout_marginTop="25dp">
+
+        <RelativeLayout
+            android:id="@+id/recordLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/record"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_library_books_black_24dp"
+                android:background="@drawable/bottom_sheet_btn_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="栽種記錄"
+                android:padding="8dp"
+                android:textSize="15sp"
+                android:textColor="#796868"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/record"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/calendarLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/calendar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/calendar"
+                android:background="@drawable/bottom_sheet_btn_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="栽培日曆"
+                android:padding="8dp"
+                android:textSize="15sp"
+                android:textColor="#796868"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/calendar"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/second_menuLinearLayout"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+
+        <RelativeLayout
+            android:id="@+id/settingLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/setting"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_search_black_24dp"
+                android:background="@drawable/bottom_sheet_btn_style"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜尋"
+                android:padding="8dp"
+                android:textSize="15sp"
+                android:textColor="#796868"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/setting"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/userLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7">
+
+            <ImageButton
+                android:id="@+id/user"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/user10"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="個人設定"
+                android:padding="8dp"
+                android:textSize="15sp"
+                android:textColor="#796868"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/user"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

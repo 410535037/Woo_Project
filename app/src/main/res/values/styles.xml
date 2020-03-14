@@ -1,0 +1,45 @@
+<resources>
+        <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!--  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+            <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        //改變EditText底線顏色
+        <item name="colorControlNormal">#808080</item>
+        <item name="colorControlActivated">#89B094</item>
+
+    </style>
+
+
+
+
+
+    <style name="Theme.SearchView" parent="Base.Widget.AppCompat.SearchView">
+        <item name="queryBackground">@drawable/searchbar2</item>
+        <item name="queryHint">搜尋作物</item>
+
+    </style>
+
+    <style name="custem_fab">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">#E6EAE7</item>
+
+    </style>
+
+    <!--自定義耗時對話方塊-->
+    <style name="CustomProgressDialog" parent="Theme.AppCompat.Dialog">
+        <!--此屬性控制懸浮窗背景是否變暗-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+</resources>

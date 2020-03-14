@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".calendar.calendar_memo2">
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="日期"
+        android:textColor="@color/primary_color"
+        android:textSize="25sp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="選擇所從事的活動 : "
+                android:textSize="25sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb5"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="施肥"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/cb6"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:text="鋤草"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/cb7"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:text="除病蟲"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb1"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="播種"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/cb2"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:text="育苗"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/cb8"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:text="收成"
+                    android:textSize="20sp" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb3"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="定植"
+                    android:textSize="20sp" />
+
+                <CheckBox
+                    android:id="@+id/cb4"
+                    android:layout_width="95dp"
+                    android:layout_height="wrap_content"
+                    android:text="澆水"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="15dp"
+                android:text="發生什麼有趣的事呢?"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/edit_message1"
+                android:layout_width="320dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/textview_border"
+                android:gravity="start"
+                android:paddingLeft="3dp"
+                android:paddingTop="3dp"
+                android:textSize="25sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="上傳作物照片 : "
+                    android:textSize="25sp" />
+
+                <ImageButton
+                    android:id="@+id/calendar_picture_select"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/camera_picture"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/calendar_picture_view"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#E6EAE7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/cancel"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="195dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:text="取 消"
+                    android:textColor="#89B094"
+                    android:textSize="20dp"
+                    tools:targetApi="lollipop" />
+
+                <View
+                    android:layout_width="1.3dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#D2D5D3" />
+
+                <Button
+                    android:id="@+id/confirm"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:onClick="sendMessage"
+                    android:text="確 認"
+                    android:textColor="#89B094"
+                    android:textSize="20dp"
+                    tools:targetApi="lollipop" />
+
+
+            </LinearLayout>
+
+        </android.support.design.widget.BottomNavigationView>
+    </LinearLayout>
+
+
+</LinearLayout>
