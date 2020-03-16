@@ -173,11 +173,10 @@ public class login extends AppCompatActivity implements GoogleApiClient.Connecti
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) { }
 
 
-    public void signIn()
-    {
+    public void signIn() {
         //signInButton 按下時，啟動登入頁面
         Intent googleSignInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(googleSignInIntent,GoogleSignInRequestCode);
+        startActivityForResult(googleSignInIntent, GoogleSignInRequestCode);
 
     }
 

@@ -43,6 +43,8 @@ import com.example.woo_project.webservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class record extends AppCompatActivity
 {
     boolean fg = false;
@@ -381,6 +383,7 @@ public class record extends AppCompatActivity
                     //record_name.setRecord_vege_name(cardview.getName());
 
                     Intent intent = new Intent(record.this, record_Information.class);
+                    intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
             });
