@@ -1,104 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.home2">
+    tools:context=".home.home2"
+    android:orientation="vertical"
+    android:background="#E6EAE7">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".home.home2"
-        tools:showIn="@layout/activity_home2"
-        android:background="#E6EAE7">
 
         <RelativeLayout
             android:id="@+id/level_RL"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginTop="5dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="150dp"
-                android:layout_height="25dp"
-                android:background="@drawable/hat_score"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/hat"
-                android:layout_marginLeft="-30dp"
-                android:text="550 / 1000"
-                android:textColor="#89B094"
-                style="?android:attr/borderlessButtonStyle"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/hat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/home_house" />
+
+            </LinearLayout>
+
+
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/hat"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/hat"/>
+                android:id="@+id/edit_pot"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/home_add"
+                android:layout_alignParentEnd="true"
+
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+
+                 />
 
         </RelativeLayout>
 
+
         <RelativeLayout
-            android:layout_below="@+id/level_RL"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/open_bottom_sheet">
+            android:layout_height="0dp"
+            android:layout_weight="4">
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/home2_recyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="wrap_content" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/search_bt"
-                android:layout_width="145dp"
+            </LinearLayout>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/open_bottom_sheet"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                app:fab_icon="@drawable/ic_menu_black_24dp"
+                app:fab_colorNormal="#FC9D33"
+                app:fab_colorPressed="#F7C389"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="143dp"
-                android:layout_marginEnd="122dp"
-                android:layout_marginBottom="145dp"
-                android:background="@drawable/bg_round_bt"
-                android:text="搜尋作物"
-                android:textSize="20dp" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="15dp"
+                android:onClick="showDialog"
+
+                tools:ignore="RtlHardcoded" />
 
         </RelativeLayout>
 
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/open_bottom_sheet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_menu_black_24dp"
-            app:fab_colorNormal="#FC9D33"
-            app:fab_colorPressed="#F7C389"
-            android:onClick="showDialog"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/edit_pot"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/editpot"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/home_edit_pot_btn_style"/>
 
 
 
-
-
-
-    </RelativeLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

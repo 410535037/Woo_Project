@@ -55,7 +55,6 @@ public class home2 extends AppCompatActivity {
     String delete_cardview_id;
     GlobalVariable GV; //首頁作物照片(暫時)
     int cardview_id;
-    Button taipei_life,taipei_land_lease,taipei_farmers,search_bt;
 
     List<home2_plant_img_cardview> cardviewList;
     //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
@@ -75,7 +74,7 @@ public class home2 extends AppCompatActivity {
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView( R.layout.activity_home2 );
 
-        banboo_hat_level=new Dialog(this);
+       // banboo_hat_level=new Dialog(this);
 
         cardviewList = new ArrayList<>();
 
@@ -114,29 +113,16 @@ public class home2 extends AppCompatActivity {
                 dialog.show();
             }
         } );
-
-
-        hat=(ImageButton) findViewById(R.id.hat);
-        hat.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                ShowPopUp_level();
-            }
-        } );
-
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        //cardviewList.add(new home2_plant_img_cardview(0,"",R.drawable.gender,""));
+        for(int i = 0 ;i < 20;i++)
+        {
+            cardviewList.add(new home2_plant_img_cardview(1,"B  01",R.drawable.home_canopy,""));
+        }
+        recyclerView.setAdapter(new home2.CardAdapter(home2.this, cardviewList));
         createBottomSheetDialog();
 
-        search_bt=(Button) findViewById(R.id.search_bt);
-        search_bt.setVisibility(View.VISIBLE);
 
-           /** search_bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent=new Intent(home2.this,search.class);
-                    startActivity(intent);
-                }
-            });**/
 
 
     }
@@ -156,63 +142,22 @@ public class home2 extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).post(new Runnable(){
                 @Override
                 public void run() {
-
+                /**
                     Log.v("test","user_vege: "+user_vege);
                     if(user_vege.contains("找不到"))
                     {
                         cardviewList.clear();
-                        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                        cardviewList.add(new home2_plant_img_cardview(0,"",R.drawable.gender,""));
-                        cardviewList.add(new home2_plant_img_cardview(1,"",R.drawable.home_picture,""));
+                        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
+                        //cardviewList.add(new home2_plant_img_cardview(0,"",R.drawable.gender,""));
+                        cardviewList.add(new home2_plant_img_cardview(1,"B  01",R.drawable.home_canopy,""));
                         recyclerView.setAdapter(new home2.CardAdapter(home2.this, cardviewList));
                     }
                     else
                     {
-                        search_bt.setVisibility(View.GONE);
-                        cardviewList.clear();
-                        String[] split_all = user_vege.split("分開");
-                        String[] split=split_all[0].split("%");
-                        String[] split_index=split_all[1].split("%");
-                        Log.v("test","user vege split length: "+split.length);
-                        //首頁植物圖片判斷
-                        for(int i = 0;i < split.length;i++)
-                        {
-
-                            switch (split[i]) {
-                                case "紅蘿蔔":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_carrot_pot,split_index[i]));
-                                    break;
-                                case "空心菜":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_kon_pot,split_index[i]));
-                                    break;
-                                case "秋葵":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_ciu_pot,split_index[i]));
-                                    break;
-                                case "小白菜":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_small_pot,split_index[i]));
-                                    break;
-                                case "大白菜":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_chinese_cabbage_pot,split_index[i]));
-                                    break;
-                                case "青花菜":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_broccoli_pot,split_index[i]));
-                                    break;
-                                case "茄子":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_eggplant_pot,split_index[i]));
-                                    break;
-                                case "高麗菜":
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.vege_cabbage_pot,split_index[i]));
-                                    break;
-                                default:
-                                    cardviewList.add(new home2_plant_img_cardview(i, split[i], R.drawable.no_vege_picture,split_index[i]));
-                                    break;
-                            }
-                            Log.v("test","for 的 i : "+i);
-                        }
-                        Log.v("test","cardviewList的長度是: "+ cardviewList.size());
                         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                         recyclerView.setAdapter(new home2.CardAdapter(home2.this, cardviewList));
                     }
+                 **/
                     dismissLoadingDialog();
 
 
@@ -239,13 +184,6 @@ public class home2 extends AppCompatActivity {
         }
     };
 
-
-    private void ShowPopUp_level()
-    {
-        banboo_hat_level.setContentView(R.layout.banboo_hat_level);
-        banboo_hat_level.getWindow().setBackgroundDrawable(new ColorDrawable( Color.TRANSPARENT));
-        banboo_hat_level.show();
-    }
 
     private void createBottomSheetDialog()
     {
@@ -301,9 +239,6 @@ public class home2 extends AppCompatActivity {
 
     }
 
-
-
-
     public void showDialog(View view)
     {
         bottomSheetDialog.show();
@@ -331,9 +266,9 @@ public class home2 extends AppCompatActivity {
             final home2_plant_img_cardview cardview = cardviewList.get(i);
             if(!cardview.getName().equals(""))
             {
-                viewHolder.plant_name.setText(cardview.getId()+"  "+cardview.getName());
+                //viewHolder.plant_name.setText(cardview.getId()+"  "+cardview.getName());
             }
-            viewHolder.plant_img.setImageResource(cardview.getImage());
+           // viewHolder.plant_img.setImageResource(cardview.getImage());
             cardview_id = i;
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -373,7 +308,7 @@ public class home2 extends AppCompatActivity {
 
             ViewHolder(View itemView){
                 super(itemView);
-                plant_img = itemView.findViewById(R.id.home2_plant_img);
+              //  plant_img = itemView.findViewById(R.id.home2_plant_img);
                 plant_name = itemView.findViewById(R.id.home2_plant_name);
 
             }
@@ -387,6 +322,7 @@ public class home2 extends AppCompatActivity {
 //            notifyItemInserted(i);
         }
     }
+
     private void showLoadingDialog(String message){
         message = "載入中...";
         mLoadingDialog.setMessage(message);
