@@ -1,20 +1,16 @@
 package com.example.woo_project.home;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.database.DataSetObserver;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,20 +18,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.R;
@@ -47,16 +46,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class home2 extends AppCompatActivity {
+public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
     BottomSheetDialog bottomSheetDialog;
-    ImageButton record,calendar,discuss,store,setting,user,hat,edit_pot;
-    Dialog banboo_hat_level;
+    ImageButton record,calendar,setting,user,edit_pot;
+
     String delete_cardview_id;
     GlobalVariable GV; //首頁作物照片(暫時)
     int cardview_id;
 
-    List<home2_plant_img_cardview> cardviewList;
+    List<home2_plant_img_cardview> canopy_cardviewList;
     //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
     private android.os.Handler mUI_Handler = new android.os.Handler();
     //宣告特約工人的經紀人
@@ -65,8 +64,16 @@ public class home2 extends AppCompatActivity {
     private HandlerThread mThread;
 
     String user_vege,gmail;
-    RecyclerView recyclerView;
+    TextView canopy_area;
     ProgressDialog mLoadingDialog;
+
+    private home2_canopy_A  home2_canopy_A = new home2_canopy_A();
+    private home2_canopy_B  home2_canopy_B = new home2_canopy_B();
+    private home2_canopy_C  home2_canopy_C = new home2_canopy_C();
+    private home2_canopy_North  home2_canopy_North = new home2_canopy_North();
+    private home2_canopy_Middle  home2_canopy_Millde = new home2_canopy_Middle();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -74,11 +81,8 @@ public class home2 extends AppCompatActivity {
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView( R.layout.activity_home2 );
 
-       // banboo_hat_level=new Dialog(this);
+        canopy_area = findViewById(R.id.canopy_area);
 
-        cardviewList = new ArrayList<>();
-
-        recyclerView = findViewById(R.id.home2_recyclerview);
 
         //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
         mThread = new HandlerThread("");
@@ -94,38 +98,61 @@ public class home2 extends AppCompatActivity {
         mLoadingDialog = new ProgressDialog(home2.this);
         showLoadingDialog("載入中...");
 
-        edit_pot=(ImageButton) findViewById(R.id.edit_pot);
+        edit_pot= findViewById(R.id.edit_pot);
         edit_pot.setOnClickListener( new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                AlertDialog.Builder builder = new AlertDialog.Builder(home2.this);
-                builder.setTitle("編輯盆栽☆即將推出，敬請期待!");
-                builder.setMessage("查看所有盆栽，點擊可更改盆栽編號");
-                builder.setPositiveButton("好", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                add_canopy_or_canopyArea();
 
-                    }
-                });
-                AlertDialog dialog=builder.create();
-                dialog.show();
             }
         } );
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-        //cardviewList.add(new home2_plant_img_cardview(0,"",R.drawable.gender,""));
-        for(int i = 0 ;i < 20;i++)
-        {
-            cardviewList.add(new home2_plant_img_cardview(1,"B  01",R.drawable.home_canopy,""));
-        }
-        recyclerView.setAdapter(new home2.CardAdapter(home2.this, cardviewList));
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+//        for(int i = 0 ;i < 20;i++)
+//        {
+//            canopy_cardviewList.add(new home2_plant_img_cardview(1,"B  "+i,R.drawable.home_canopy,""));
+//        }
+//        recyclerView.setAdapter(new home2.canopy_CardAdapter(home2.this, canopy_cardviewList));
         createBottomSheetDialog();
 
-
+        ViewPager home2_viewpager =  findViewById(R.id.home2_viewpager);
+        home2_viewpager.addOnPageChangeListener(this);
+        setupViewPager(home2_viewpager);
 
 
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0: ;
+                        return home2_canopy_A;
+                    case 1:
+                        return home2_canopy_B;
+                    case 2:
+                        return home2_canopy_C;
+                    case 3:
+                        return home2_canopy_North;
+                    case 4:
+                        return home2_canopy_Millde;
+                }
+                return null;
+            }
+            @Override
+            public int getCount() {
+                return 5;
+            }
+        });
+
+    }
+
+
+
+
+
 
     Runnable  home2_cardview_r1 = new Runnable() {
         @Override
@@ -159,8 +186,6 @@ public class home2 extends AppCompatActivity {
                     }
                  **/
                     dismissLoadingDialog();
-
-
                 }
             });
 
@@ -244,83 +269,83 @@ public class home2 extends AppCompatActivity {
         bottomSheetDialog.show();
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    private class CardAdapter extends  RecyclerView.Adapter<CardAdapter.ViewHolder>
-    {
-        private Context context;
-        public List<home2_plant_img_cardview> cardviewList;
+    }
 
-        CardAdapter(Context context, List<home2_plant_img_cardview> cardviewList) {
-            this.context = context;
-            this.cardviewList = cardviewList;
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                canopy_area.setText("A區棚架");
+                break;
+            case 1:
+                canopy_area.setText("B區棚架");
+                break;
+            case 2:
+                canopy_area.setText("C區棚架");
+                break;
+            case 3:
+                canopy_area.setText("北區棚架");
+                break;
+            case 4:
+                canopy_area.setText("中區棚架");
+                break;
         }
 
-        @Override
-        public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = LayoutInflater.from(context).inflate(R.layout.activity_home2_plant_img,viewGroup,false);
-            return new ViewHolder(view);
-        }
+    }
 
-        @Override
-        public void onBindViewHolder(CardAdapter.ViewHolder viewHolder, int i) {
-            final home2_plant_img_cardview cardview = cardviewList.get(i);
-            if(!cardview.getName().equals(""))
-            {
-                //viewHolder.plant_name.setText(cardview.getId()+"  "+cardview.getName());
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+
+    private void add_canopy_or_canopyArea(){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(home2.this);
+        View mView = getLayoutInflater().inflate(R.layout.home_add_canopy, null);
+        //Dialog的標題
+        mBuilder.setTitle("");
+
+        Button add_canopy,add_area;
+        add_canopy = mView.findViewById(R.id.add_canopy);
+        add_area = mView.findViewById(R.id.add_area);
+
+        mBuilder.setView(mView);
+        final AlertDialog canopy_dialog = mBuilder.create();
+        canopy_dialog.show();
+
+        add_canopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canopy_dialog.dismiss();
             }
-           // viewHolder.plant_img.setImageResource(cardview.getImage());
-            cardview_id = i;
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(home2.this);
-                    builder.setMessage("確定要刪除盆栽嗎?");
-                    builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            delete_cardview_id = cardview.getIndex();
-                            mThreadHandler.post(delete_cardview_r1);
+        });
 
-                        }
-                    });
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int id) {
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-//                    addItem(cardviewList.size());
-//                    record_name.setRecord_vege_name(cardview.getName());
-//                    Intent intent = new Intent(record.this, record_Information2.class);
-//                    startActivity(intent);
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return cardviewList.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder{
-            ImageView plant_img;
-            TextView plant_name;
-
-            ViewHolder(View itemView){
-                super(itemView);
-              //  plant_img = itemView.findViewById(R.id.home2_plant_img);
-                plant_name = itemView.findViewById(R.id.home2_plant_name);
-
+        add_area.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                canopy_dialog.dismiss();
             }
-        }
-        public  void addItem(int i){
-//            fg = true;
-//            num = cardviewList.size()-1;
-//            //add(位置,資料)
-//            cardviewList.add(i, new record_Cardview(id,"小白菜", R.drawable.icon201));
-//            id=id+1;
-//            notifyItemInserted(i);
-        }
+        });
+
+        // 調整Dialog從哪開始
+        Window dialogWindow = canopy_dialog.getWindow();
+        assert dialogWindow != null;
+        dialogWindow.setGravity(Gravity.CENTER );
+
+        // 去除四角黑色背景
+        dialogWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        /* 將Dialog用螢幕大小百分比方式設置 */
+        WindowManager m = getWindowManager();
+        Display d = m.getDefaultDisplay(); // 取得螢幕寬和高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值
+    //    p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8
+        p.width = (int) (d.getWidth() * 0.75);  // 寬度設為螢幕的0.75
+        dialogWindow.setAttributes(p);
+
     }
 
     private void showLoadingDialog(String message){

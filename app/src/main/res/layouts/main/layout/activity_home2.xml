@@ -33,7 +33,6 @@
             </LinearLayout>
 
 
-
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/edit_pot"
                 android:layout_width="40dp"
@@ -46,6 +45,17 @@
 
                  />
 
+            <TextView
+                android:id="@+id/canopy_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A區棚架"
+                android:textSize="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+                />
+
         </RelativeLayout>
 
 
@@ -54,19 +64,17 @@
             android:layout_height="0dp"
             android:layout_weight="4">
 
-
-
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/canopy_fg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home2_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/home2_viewpager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-            </LinearLayout>
-
+            </FrameLayout>
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/open_bottom_sheet"
                 android:layout_width="wrap_content"
