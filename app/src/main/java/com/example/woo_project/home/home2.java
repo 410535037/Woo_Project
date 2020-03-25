@@ -1,7 +1,8 @@
 package com.example.woo_project.home;
 
-import android.app.AlertDialog;
 
+
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -63,15 +66,18 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
     //宣告特約工人
     private HandlerThread mThread;
 
-    String user_vege,gmail;
+    String gmail;
     TextView canopy_area;
     ProgressDialog mLoadingDialog;
+
+
 
     private home2_canopy_A  home2_canopy_A = new home2_canopy_A();
     private home2_canopy_B  home2_canopy_B = new home2_canopy_B();
     private home2_canopy_C  home2_canopy_C = new home2_canopy_C();
     private home2_canopy_North  home2_canopy_North = new home2_canopy_North();
     private home2_canopy_Middle  home2_canopy_Millde = new home2_canopy_Middle();
+
 
 
     @Override
@@ -84,19 +90,14 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         canopy_area = findViewById(R.id.canopy_area);
 
 
-        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
-        mThread = new HandlerThread("");
 
 
         GV = (GlobalVariable) getApplicationContext();
         gmail = GV.getUser_gmail();
-        //讓Worker待命，等待其工作 (開啟Thread)
-        mThread.start();
-        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
-        mThreadHandler=new Handler(mThread.getLooper());
-        mThreadHandler.post(home2_cardview_r1);
+
+
         mLoadingDialog = new ProgressDialog(home2.this);
-        showLoadingDialog("載入中...");
+//        showLoadingDialog("載入中...");
 
         edit_pot= findViewById(R.id.edit_pot);
         edit_pot.setOnClickListener( new View.OnClickListener()
@@ -123,80 +124,13 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0: ;
-                        return home2_canopy_A;
-                    case 1:
-                        return home2_canopy_B;
-                    case 2:
-                        return home2_canopy_C;
-                    case 3:
-                        return home2_canopy_North;
-                    case 4:
-                        return home2_canopy_Millde;
-                }
-                return null;
-            }
-            @Override
-            public int getCount() {
-                return 5;
-            }
-        });
 
-    }
-
-
-
-
-
-
-    Runnable  home2_cardview_r1 = new Runnable() {
-        @Override
-        public void run() {
-            user_vege = webservice.Select_user_vege(gmail);
-
-            mThreadHandler.post(home2_cardview_r2);
-        }
-    };
-
-    Runnable  home2_cardview_r2 = new Runnable() {
-        @Override
-        public void run() {
-            new Handler(Looper.getMainLooper()).post(new Runnable(){
-                @Override
-                public void run() {
-                /**
-                    Log.v("test","user_vege: "+user_vege);
-                    if(user_vege.contains("找不到"))
-                    {
-                        cardviewList.clear();
-                        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
-                        //cardviewList.add(new home2_plant_img_cardview(0,"",R.drawable.gender,""));
-                        cardviewList.add(new home2_plant_img_cardview(1,"B  01",R.drawable.home_canopy,""));
-                        recyclerView.setAdapter(new home2.CardAdapter(home2.this, cardviewList));
-                    }
-                    else
-                    {
-                        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-                        recyclerView.setAdapter(new home2.CardAdapter(home2.this, cardviewList));
-                    }
-                 **/
-                    dismissLoadingDialog();
-                }
-            });
-
-        }
-    };
 
     Runnable delete_cardview_r1= new Runnable() {
         @Override
         public void run() {
             webservice.Delete_home2_cardview(delete_cardview_id);
-            mThreadHandler.post(home2_cardview_r1);
+            //mThreadHandler.post(home2_cardview_r1);
             mThreadHandler.post(delete_cardview_r2);
         }
     };
@@ -263,16 +197,46 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
 
     }
-
     public void showDialog(View view)
     {
         bottomSheetDialog.show();
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    //viewpager函式
+    private void setupViewPager(ViewPager viewPager) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        home2_canopy_A.setViewpager_id(0,"A");
+                        return home2_canopy_A;
+                    case 1:
+                        home2_canopy_B.setViewpager_id(1,"B");
+                        return home2_canopy_B;
+                    case 2:
+                        home2_canopy_C.setViewpager_id(2,"C");
+                        return home2_canopy_C;
+                    case 3:
+                        home2_canopy_North.setViewpager_id(3,"北");
+                        return home2_canopy_North;
+                    case 4:
+                        home2_canopy_Millde.setViewpager_id(4,"中");
+                        return home2_canopy_Millde;
+                }
+                return null;
+            }
+            @Override
+            public int getCount() {
+                return 5;
+            }
+        });
 
     }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
     @Override
     public void onPageSelected(int position) {
@@ -297,9 +261,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
+    public void onPageScrollStateChanged(int state) {}
 
 
     private void add_canopy_or_canopyArea(){
@@ -347,7 +309,6 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         dialogWindow.setAttributes(p);
 
     }
-
     private void showLoadingDialog(String message){
         message = "載入中...";
         mLoadingDialog.setMessage(message);
@@ -357,7 +318,6 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         }
         mLoadingDialog.show();
     }
-
     private void dismissLoadingDialog() {
         if (mLoadingDialog != null) {
             mLoadingDialog.dismiss();
