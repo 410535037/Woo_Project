@@ -63,6 +63,7 @@
         </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/record_traceability"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="bottom|end"
@@ -74,7 +75,7 @@
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:background="#FC9D33"
+        android:background="@drawable/record_traceability_shape"
         />
 
     </RelativeLayout>

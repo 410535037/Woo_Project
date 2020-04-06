@@ -17,20 +17,15 @@
             android:layout_weight="1"
             android:layout_marginTop="5dp">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
                 <ImageView
                     android:id="@+id/hat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/home_house" />
-
-            </LinearLayout>
+                    android:gravity="center"
+                    android:src="@drawable/home_house"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="35dp"
+                    />
 
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -45,16 +40,13 @@
 
                  />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/canopy_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A區棚架"
-                android:textSize="30dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-
-                />
+                android:background="@drawable/home2_canopyarea_dropdown_shape"/>
 
         </RelativeLayout>
 

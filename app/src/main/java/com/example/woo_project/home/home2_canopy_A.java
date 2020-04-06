@@ -66,8 +66,6 @@ public class home2_canopy_A extends Fragment {
         canopy_area = y;
     }
 
-
-
     private Runnable getCanopy_list = new Runnable() {
         @Override
         public void run() {
@@ -94,6 +92,7 @@ public class home2_canopy_A extends Fragment {
                         }
                         canopy_cardAdapter = new canopy_CardAdapter(getContext(), canopy_cardviewList);
                         recyclerView.setAdapter(canopy_cardAdapter);
+                        Log.v("test","canopy_list size: "+canopy_cardviewList.size());
                     }
 
                 }

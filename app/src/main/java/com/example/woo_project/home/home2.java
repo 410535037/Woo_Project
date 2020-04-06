@@ -21,14 +21,18 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -48,6 +52,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
 
 public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
@@ -67,7 +74,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
     private HandlerThread mThread;
 
     String gmail;
-    TextView canopy_area;
+    Spinner canopy_area;
     ProgressDialog mLoadingDialog;
 
 
@@ -78,8 +85,9 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
     private home2_canopy_North  home2_canopy_North = new home2_canopy_North();
     private home2_canopy_Middle  home2_canopy_Millde = new home2_canopy_Middle();
 
+    List<String> canopyarea_list = new ArrayList<>();
 
-
+    ViewPager home2_viewpager;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -109,41 +117,92 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
             }
         } );
-//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
-//        for(int i = 0 ;i < 20;i++)
-//        {
-//            canopy_cardviewList.add(new home2_plant_img_cardview(1,"B  "+i,R.drawable.home_canopy,""));
-//        }
-//        recyclerView.setAdapter(new home2.canopy_CardAdapter(home2.this, canopy_cardviewList));
+
         createBottomSheetDialog();
 
-        ViewPager home2_viewpager =  findViewById(R.id.home2_viewpager);
-        home2_viewpager.addOnPageChangeListener(this);
-        setupViewPager(home2_viewpager);
+//        home2_viewpager =  findViewById(R.id.home2_viewpager);
+//        home2_viewpager.addOnPageChangeListener(this);
+//        setupViewPager(home2_viewpager);
 
+        canopy_area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                if (fragmentManager.findFragmentById(R.id.canopy_fg)==null)
+                {
+                    selected_canopyarea();
+                }
+                else
+                {
+                    remove_selected_canopyarea();
+                    selected_canopyarea();
+                }
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
+        mThread = new HandlerThread("");
+        //讓Worker待命，等待其工作 (開啟Thread)
+        mThread.start();
+        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
+        mThreadHandler=new Handler(mThread.getLooper());
+
+        mThreadHandler.post(getCanopyarea_list);
     }
 
 
 
-    Runnable delete_cardview_r1= new Runnable() {
+    Runnable getCanopyarea_list= new Runnable() {
         @Override
         public void run() {
-            webservice.Delete_home2_cardview(delete_cardview_id);
-            //mThreadHandler.post(home2_cardview_r1);
-            mThreadHandler.post(delete_cardview_r2);
+            canopyarea_list = home2_webservice.canopyarea_list();
+            mThreadHandler.post(setCanopyarea_list);
         }
     };
 
-    Runnable delete_cardview_r2= new Runnable() {
+    Runnable setCanopyarea_list= new Runnable() {
         @Override
         public void run() {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    //給予對應item的資料
+                    ArrayAdapter<String> canopyarea_adapter = new ArrayAdapter<String>(home2.this,
+                            R.layout.home2_canopyarea_dropdown_item,                            //選項資料內容
+                            canopyarea_list);   //自訂getView()介面格式(Spinner介面未展開時的View)
+                    canopy_area.setAdapter(canopyarea_adapter);
+                    //Toast.makeText(home2.this,"刪除成功", Toast.LENGTH_SHORT).show();
+                }
 
-            Toast.makeText(home2.this,"刪除成功", Toast.LENGTH_SHORT).show();
+            });
         }
     };
 
+    //棚架fragment刷新
+    private void selected_canopyarea(){
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Log.v("test","canopy_area.getSelectedItem():  "+canopy_area.getSelectedItem()+"         "+canopy_area.getSelectedItemId());
+        home2_canopy_A = new home2_canopy_A();
+        home2_canopy_A.setViewpager_id((int) canopy_area.getSelectedItemId(),canopy_area.getSelectedItem().toString().substring(0,1));
+        fragmentTransaction.add(R.id.canopy_fg, home2_canopy_A).commit();
+    }
+    //移除棚架fragment
+    private void remove_selected_canopyarea(){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(home2_canopy_A).commit();
+    }
+
+
+    //建立功能Button
     private void createBottomSheetDialog()
     {
 
@@ -202,12 +261,12 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         bottomSheetDialog.show();
     }
 
-
     //viewpager函式
     private void setupViewPager(ViewPager viewPager) {
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+
                 switch (position) {
                     case 0:
                         home2_canopy_A.setViewpager_id(0,"A");
@@ -225,37 +284,50 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
                         home2_canopy_Millde.setViewpager_id(4,"中");
                         return home2_canopy_Millde;
                 }
+
+
+
                 return null;
+
+
             }
             @Override
             public int getCount() {
                 return 5;
             }
+            @Override
+            public int getItemPosition(@NonNull Object object) {
+                return POSITION_NONE;
+            }
+
         });
 
+
     }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
     @Override
     public void onPageSelected(int position) {
+
         switch (position) {
-            case 0:
-                canopy_area.setText("A區棚架");
-                break;
-            case 1:
-                canopy_area.setText("B區棚架");
-                break;
-            case 2:
-                canopy_area.setText("C區棚架");
-                break;
-            case 3:
-                canopy_area.setText("北區棚架");
-                break;
-            case 4:
-                canopy_area.setText("中區棚架");
-                break;
+//            case 0:
+//                canopy_area.("A區棚架");
+//                break;
+//            case 1:
+//                canopy_area.setText("B區棚架");
+//                break;
+//            case 2:
+//                canopy_area.setText("C區棚架");
+//                break;
+//            case 3:
+//                canopy_area.setText("北區棚架");
+//                break;
+//            case 4:
+//                canopy_area.setText("中區棚架");
+//                break;
         }
 
     }
@@ -309,6 +381,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         dialogWindow.setAttributes(p);
 
     }
+
     private void showLoadingDialog(String message){
         message = "載入中...";
         mLoadingDialog.setMessage(message);

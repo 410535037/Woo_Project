@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:gravity="center">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="選擇棚架編號"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            />
+
+        <Spinner
+            android:id="@+id/record_traceability_area_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/record_select_shape"
+         />
+
+    <Spinner
+        android:id="@+id/record_traceability_canopy_sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/record_select_shape"
+         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/record_traceability_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="確定"
+        android:background="@drawable/record_traceability_commit"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        />
+
+
+</LinearLayout>

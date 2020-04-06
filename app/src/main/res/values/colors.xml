@@ -17,6 +17,8 @@
     <color name="record_backgroundcolor">#89b094</color>
     <color name="test">#89b094</color>
 
+    <color name="record_select_sp">#61d169</color>
+
     //like_animation用
     <color name="primary_color">#FC9D33</color>
     <color name="secondary_color">#89B094</color>

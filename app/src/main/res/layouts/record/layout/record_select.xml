@@ -2,88 +2,159 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/record_select_shape"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-   >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="42dp"
-        android:layout_marginTop="34dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#EEEEEE">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:text="農地編號 : "
-            android:textColor="@color/record_backgroundcolor"
-            android:textSize="20sp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="作物記錄篩選"
+            android:textSize="35sp"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textStyle="bold"
+            android:textColor="#61d169"
 
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp" />
+            />
 
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#61d169"
+            />
 
     </LinearLayout>
 
-    <LinearLayout
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="42dp"
-        android:layout_marginTop="34dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="5dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="類別 : "
-            android:textColor="@color/record_backgroundcolor"
+            android:text="棚架編號 : "
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:textSize="20sp" />
 
         <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"/>
+            android:id="@+id/record_canopy_area_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/record_canopy_sp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/record_select_shape"
+            android:layout_alignParentBottom="true" />
 
-    </LinearLayout>
+        <Spinner
+            android:id="@+id/record_canopy_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/record_select_shape"
+            android:layout_marginEnd="10dp"/>
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="42dp"
-        android:layout_marginTop="34dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="5dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="作物名 : "
-            android:textColor="@color/record_backgroundcolor"
+            android:text="作物類別 : "
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:textSize="20sp" />
 
         <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="40dp"/>
+            android:id="@+id/record_plant_kind_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/record_select_shape"
+            android:layout_marginEnd="10dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="作物名稱 : "
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/reocrd_plant_name_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/record_select_shape"
+            android:layout_marginEnd="10dp"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        />
 
     <!--收成月份 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical">
 
     <TextView
-        android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="34dp"
         android:text="收成月份 : "
@@ -95,6 +166,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:text="01" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_gravity="center"
+                android:text="02"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="03"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="04"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +244,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="01 ‧ 02"
+                android:text="05"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 />
 
@@ -121,7 +256,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="03 ‧ 04"
+                android:text="06"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 />
 
@@ -133,7 +268,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="05 ‧ 06"
+                android:text="07"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="08"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 />
 
@@ -144,12 +292,6 @@
 
         </LinearLayout>
 
-    </com.google.android.material.chip.ChipGroup>
-
-    <com.google.android.material.chip.ChipGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,13 +299,14 @@
 
             <ImageView
                 android:layout_width="10dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                />
 
             <com.google.android.material.chip.Chip
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="07 ‧ 08"
+                android:text="09"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 />
 
@@ -175,7 +318,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="09 ‧ 10"
+                android:text="10"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 />
 
@@ -187,7 +330,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="11 ‧ 12"
+                android:text="11"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="12"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 />
 
@@ -200,6 +356,7 @@
 
     </com.google.android.material.chip.ChipGroup>
 
+    </LinearLayout>
 
     <Button
         android:id="@+id/record_select_item"
