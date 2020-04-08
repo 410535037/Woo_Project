@@ -35,6 +35,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import com.bumptech.glide.Glide;
 import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.R;
 import com.example.woo_project.webservice;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +78,7 @@ public class record extends AppCompatActivity
     Spinner record_traceability_area_sp, record_traceability_canopy_sp ;
     Button record_traceability_commit ;
     List<List<String>> record_traceability_list = new ArrayList<>();
-
+    ChipGroup traceability_ChipGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,37 +137,67 @@ public class record extends AppCompatActivity
 
     }
 
-
-
+    //生產履歷參數
+    String area_str,canopy_str,table_str="無";
+    String area, canopy, table;
     //生產履歷操作
     private void getTraceability()
     {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(record.this);
-        View mView = getLayoutInflater().inflate(R.layout.record_traceability_dialog, null);
+        final View mView = getLayoutInflater().inflate(R.layout.record_traceability_dialog, null);
         record_traceability_area_sp = mView.findViewById(R.id.record_traceability_area_sp);
         record_traceability_canopy_sp = mView.findViewById(R.id.record_traceability_canopy_sp);
         record_traceability_commit = mView.findViewById(R.id.record_traceability_commit);
-
+        traceability_ChipGroup = mView.findViewById(R.id.traceability_ChipGroup);
 
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
 
-//        record_traceability_commit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                record_month_select_string = mSpinner2.getSelectedItem().toString();
-//
-//                if(!record_month_select_string.equals("月份…"))
-//                {
-//                    record_month_select_string = record_month_select_string.replace("月", "");
-//                    Log.v("test", "record month:  " + record_month_select_string);
-//                    //請經紀人指派工作名稱 r，給工人做
-//                    //mThreadHandler.post(record_month_select_r1);
-//                }
-//                dialog.dismiss();
-//            }
-//        });
+
+
+
+        record_traceability_commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                area_str = record_traceability_area_sp.getSelectedItem().toString();
+                canopy_str = record_traceability_canopy_sp.getSelectedItem().toString();
+
+              //  load_Traceability_table();
+
+                dialog.dismiss();
+            }
+        });
+
+
+
+        traceability_ChipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, int checkedId) {
+                String test="";
+                switch(checkedId){
+                    case R.id.traceability_chip1:
+                        test = "全部!";
+                        table_str = "全部";
+                        break;
+                    case R.id.traceability_chip2:
+                        test = " 防治資材! ";
+                        table_str = "防治資材使用紀錄表";
+                        break;
+                    case R.id.traceability_chip3:
+                        test = " 肥料施用! ";
+                        table_str = "肥料施用表";
+                        break;
+                    case R.id.traceability_chip4:
+                        test = " 工作紀錄! ";
+                        table_str = "工作紀錄表";
+                        break;
+                    default:
+                        break;
+                }
+                Toast.makeText(record.this, test, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
@@ -181,13 +213,33 @@ public class record extends AppCompatActivity
         Display d = m.getDefaultDisplay(); // 取得螢幕寬和高
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值
         //p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8
-        p.width = (int) (d.getWidth() * 0.6);  // 寬度設為螢幕的0.75
+        p.width = (int) (d.getWidth() * 0.65);  // 寬度設為螢幕的0.75
         dialogWindow.setAttributes(p);
         load_Traceability_sp();     //從資料庫抓棚架list
 
 
 
     }
+
+    private void load_Traceability_table()
+    {
+        Runnable set_table = new Runnable() {
+            @Override
+            public void run() {
+                String  get= record_webservice.record_traceability(area,canopy,table);
+                Toast.makeText(record.this, get, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        Runnable get_table = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+        mThreadHandler.post(set_table);
+    }
+
 
     //跑生產履歷棚架資料
     private void load_Traceability_sp()

@@ -1,13 +1,18 @@
 package com.example.woo_project.record;
 
 import android.util.Log;
+import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +26,7 @@ public class record_webservice
     //private static final String URL = "http://192.168.43.42/ws_test1/webservice.asmx";
     private static final String SOAP_ACTION = "http://tempuri.org/VegeInfo_WS";          //命名空間+要用的函數名稱
     private static final String METHOD_NAME = "VegeInfo_WS";   //函數名稱
+
 
     public static List<List<String>> record_select_list_canopy()
     {
@@ -101,6 +107,45 @@ public class record_webservice
             Log.v("test","e的錯誤訊息 : "+e.toString());
             return result;
         }
+    }
+
+
+    public static String record_traceability(String area, String canopy,String table)
+    {
+        String SOAP_ACTION = "http://tempuri.org/record_traceability";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "record_traceability";   //函數名稱
+        String result="";
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("area",area);
+            request.addProperty("canopy",canopy);
+            request.addProperty("table",table);
+
+            
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            result = obj1.getProperty(0).toString();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            Log.v("test","result: "+result);
+
+            
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+
     }
 
 }
