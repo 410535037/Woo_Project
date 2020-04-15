@@ -112,8 +112,8 @@ public class record_webservice
 
     public static String record_traceability(String area, String canopy,String table)
     {
-        String SOAP_ACTION = "http://tempuri.org/record_traceability";          //命名空間+要用的函數名稱
-        String METHOD_NAME = "record_traceability";   //函數名稱
+        String SOAP_ACTION = "http://tempuri.org/z_GoodInfo_test";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "z_GoodInfo_test";   //函數名稱
         String result="";
         //必須用try catch包著
         try {
@@ -132,13 +132,13 @@ public class record_webservice
             ht.call(SOAP_ACTION, envelope);
             Log.v("test","有進WS");
             // 獲取回傳數據
-            SoapObject obj1 = (SoapObject) envelope.getResponse();
-            result = obj1.getProperty(0).toString();
-            Log.v("test","obj1: "+obj1);
-            Log.v("test","obj1: "+obj1.getProperty(0));
-            Log.v("test","result: "+result);
 
-            
+            Object obj1 =  envelope.getResponse();
+            result = obj1.toString();
+            Log.v("test","obj1: "+obj1);
+
+            result = result.replace("左","<").replace("右",">");
+            Log.v("test","result: " + result);
             return result;
         } catch (Exception e) {
 

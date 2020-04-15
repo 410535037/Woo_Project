@@ -2,12 +2,15 @@ package com.example.woo_project.home;
 
 
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -94,6 +97,9 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         super.onCreate( savedInstanceState );
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView( R.layout.activity_home2 );
+
+
+
 
         canopy_area = findViewById(R.id.canopy_area);
 

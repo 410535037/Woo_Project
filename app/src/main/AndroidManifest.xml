@@ -12,27 +12,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ship_detail"></activity>
-        <activity android:name=".ship" />
+
+
+
         <activity android:name=".user_setting.personal_info_edit" />
         <activity android:name=".user_setting.personal_help" />
         <activity android:name=".user_setting.personal_info" />
-        <activity android:name=".user_setting.like_post" />
-        <activity android:name=".user_setting.like_vege" />
-        <activity android:name=".user_setting.my_post" />
         <activity android:name=".login.login2" />
-        <activity android:name=".custom_vegeinfo" />
-        <activity android:name=".calendar.choose_calendar" />
-        <activity android:name=".calendar.choose_calendar_info" />
         <activity android:name=".calendar.calendar" />
-        <activity android:name=".record.record" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+
+
+        <activity android:name=".record.record" >
+
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".edit_pot" />
-        <activity android:name=".search.search" />
         <activity android:name=".calendar.calendar_memo" />
         <activity android:name=".calendar.calendar_memo2" />
-        <activity android:name=".forum.forum" />
+
 
         <activity android:name=".user_setting.user_setting" />
         <activity android:name=".record.record_Information" />
@@ -44,18 +69,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".search.VegeInfo" />
-        <activity android:name=".search.choose_vege" />
-        <activity android:name=".test_two" />
-        <activity android:name=".pot_size" />
-        <activity android:name=".thirdcard" />
-        <activity android:name=".secondcard" />
-        <activity android:name=".firstcard" />
-        <activity android:name=".select_model" />
         <activity android:name=".login.login" />
         <activity android:name=".home.home2" />
     </application>
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
 

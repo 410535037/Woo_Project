@@ -1,26 +1,32 @@
 package com.example.woo_project.record;
 
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Xml;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,12 +50,23 @@ import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.R;
 import com.example.woo_project.webservice;
 import com.google.android.material.chip.ChipGroup;
-
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static com.itextpdf.text.xml.xmp.XmpWriter.UTF8;
 
 public class record extends AppCompatActivity
 {
@@ -85,6 +102,12 @@ public class record extends AppCompatActivity
         super.onCreate(savedInstanceState);
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_record);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+        }
+
 
         //生產履歷button
         traceability = findViewById(R.id.record_traceability);
@@ -162,8 +185,8 @@ public class record extends AppCompatActivity
             public void onClick(View v) {
                 area_str = record_traceability_area_sp.getSelectedItem().toString();
                 canopy_str = record_traceability_canopy_sp.getSelectedItem().toString();
-
-              //  load_Traceability_table();
+                Log.v("test","area_str: " + area_str + "    canopy_str: "+canopy_str);
+                load_Traceability_table();
 
                 dialog.dismiss();
             }
@@ -220,25 +243,123 @@ public class record extends AppCompatActivity
 
 
     }
-
+    String traceability_str;
+    Runnable get_table;
     private void load_Traceability_table()
     {
+
+        get_table = new Runnable() {
+            @Override
+            public void run() {
+
+                //byte[] bt = traceability_str.getBytes(StandardCharsets.UTF_8);
+
+
+                Document doc = new Document();//创建一个document对象
+                FileOutputStream fos,fos2;
+                try {
+
+
+
+
+                    fos = new FileOutputStream(new File(getFilesDir(),"aaa")); //pdf_address为Pdf文件保存到sd卡的路径
+                    Log.v("test","路徑: "+fos.toString());
+                    PdfWriter.getInstance(doc, fos);
+                    doc.open();
+                    doc.setPageCount(0);
+
+                    Log.v("test","traceability_str: "+traceability_str);
+                    doc.add(new Paragraph(traceability_str)); //result为保存的字符串 ,setChineseFont()为pdf字体
+                    // 一定要记得关闭document对象
+                    doc.close();
+                    fos.flush();
+                    fos.close();
+                    mThreadHandler.sendEmptyMessage(123);//操作完毕后进行提醒
+
+
+
+
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.addCategory("android.intent.category.DEFAULT");
+
+
+                    String[] files =  record.this.fileList();
+
+                    for(String file : files){
+                        Log.e("test","file is :"+ getFilesDir().getAbsolutePath()+file);
+                    }
+                    //String path = getFilesDir().getAbsolutePath()+"/aaa.pdf";///data/data/包名/cache
+                    String path =  getFilesDir().getAbsolutePath()+"/aaa.pdf";///data/data/包名/cache
+
+                    File file = new File(path);
+                    Uri pdfUri;
+                    pdfUri = FileProvider.getUriForFile(
+                            record.this,
+                            "com.example.woo_project.provider", //(use your app signature + ".provider" )
+                            file);
+
+
+
+
+
+
+
+                    //pdfUri = Uri.fromFile(file);
+                    intent.putExtra(Intent.EXTRA_STREAM, pdfUri);
+                    intent.setType("application/pdf");
+
+                    try {
+                        record.this.startActivity(Intent.createChooser(intent, file.getName()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+
         Runnable set_table = new Runnable() {
             @Override
             public void run() {
-                String  get= record_webservice.record_traceability(area,canopy,table);
-                Toast.makeText(record.this, get, Toast.LENGTH_SHORT).show();
+
+                Log.v("test","area: " + area_str + "    canopy: "+ canopy_str + "   table: "+table_str);
+                traceability_str = record_webservice.record_traceability(area_str,canopy_str,table_str);
+                //Toast.makeText(record.this, traceability_str, Toast.LENGTH_SHORT).show();
+                mThreadHandler.post(get_table);
             }
         };
 
-        Runnable get_table = new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        };
         mThreadHandler.post(set_table);
+
     }
+
+    public Font setChineseFont() {
+        BaseFont bf = null;
+        Font fontChinese = null;
+        try {
+            // STSong-Light : Adobe的字体
+            // UniGB-UCS2-H : pdf 字体
+            bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",
+                    BaseFont.NOT_EMBEDDED);
+            fontChinese = new Font(bf, 12, Font.NORMAL);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fontChinese;
+    }
+
+
 
 
     //跑生產履歷棚架資料
