@@ -112,8 +112,8 @@ public class record_webservice
 
     public static String record_traceability(String area, String canopy,String table)
     {
-        String SOAP_ACTION = "http://tempuri.org/z_GoodInfo_test";          //命名空間+要用的函數名稱
-        String METHOD_NAME = "z_GoodInfo_test";   //函數名稱
+        String SOAP_ACTION = "http://tempuri.org/record_traceability";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "record_traceability";   //函數名稱
         String result="";
         //必須用try catch包著
         try {

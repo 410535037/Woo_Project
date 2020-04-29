@@ -87,6 +87,6 @@ dependencies {
     apply plugin:  'com.android.application'
 
     //
-    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.itextpdf:itextpdf:5.5.13.1'
 
 }

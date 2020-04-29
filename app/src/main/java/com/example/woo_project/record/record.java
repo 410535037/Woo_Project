@@ -53,15 +53,20 @@ import com.google.android.material.chip.ChipGroup;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -96,7 +101,7 @@ public class record extends AppCompatActivity
     Button record_traceability_commit ;
     List<List<String>> record_traceability_list = new ArrayList<>();
     ChipGroup traceability_ChipGroup;
-
+    String[] traceability_str_split;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,24 +257,39 @@ public class record extends AppCompatActivity
             @Override
             public void run() {
 
-                //byte[] bt = traceability_str.getBytes(StandardCharsets.UTF_8);
-
-
-                Document doc = new Document();//创建一个document对象
+                Document doc = new Document(PageSize.A4);//创建一个document对象
                 FileOutputStream fos,fos2;
-                try {
+                try
+                {
+                    //抓系統時間當黨名
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+                    Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
+                    String time = formatter.format(curDate);
 
-
-
-
-                    fos = new FileOutputStream(new File(getFilesDir(),"aaa")); //pdf_address为Pdf文件保存到sd卡的路径
+                    fos = new FileOutputStream(new File(getFilesDir(),"/"+time+".pdf")); //pdf_address为Pdf文件保存到sd卡的路径
                     Log.v("test","路徑: "+fos.toString());
                     PdfWriter.getInstance(doc, fos);
                     doc.open();
-                    doc.setPageCount(0);
+                    PdfPTable table = new PdfPTable(9);  //建立一個只有兩個欄位的表格
+//                    table.setWidthPercentage(100f);    //設定表格寬
+//                    table.setWidths(new float[]{0.20f, 0.90f});    //課定這兩個欄位的比例大小
 
-                    Log.v("test","traceability_str: "+traceability_str);
-                    doc.add(new Paragraph(traceability_str)); //result为保存的字符串 ,setChineseFont()为pdf字体
+                    PdfPCell cell = new PdfPCell();   //建立一個儲存格
+                    //透過 Paragraph 物件增加元素及指定編碼, 也可以直接存入字串
+                    Log.v("test","traceability_str_split.length : "+traceability_str_split.length);
+                    for(int i =0;i<traceability_str_split.length;i++)
+                    {
+                        cell.addElement(new Paragraph(traceability_str_split[i],setChineseFont()));
+                        table.addCell(cell);
+                        cell = new PdfPCell();
+
+                    }
+
+
+
+//                    Log.v("test","traceability_str: "+traceability_str);
+
+                    doc.add(table);
                     // 一定要记得关闭document对象
                     doc.close();
                     fos.flush();
@@ -278,7 +298,7 @@ public class record extends AppCompatActivity
 
 
 
-
+                    //存檔
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_SEND);
                     intent.addCategory("android.intent.category.DEFAULT");
@@ -289,8 +309,7 @@ public class record extends AppCompatActivity
                     for(String file : files){
                         Log.e("test","file is :"+ getFilesDir().getAbsolutePath()+file);
                     }
-                    //String path = getFilesDir().getAbsolutePath()+"/aaa.pdf";///data/data/包名/cache
-                    String path =  getFilesDir().getAbsolutePath()+"/aaa.pdf";///data/data/包名/cache
+                    String path =  getFilesDir().getAbsolutePath()+"/"+time+".pdf";///data/data/包名/cache
 
                     File file = new File(path);
                     Uri pdfUri;
@@ -298,12 +317,6 @@ public class record extends AppCompatActivity
                             record.this,
                             "com.example.woo_project.provider", //(use your app signature + ".provider" )
                             file);
-
-
-
-
-
-
 
                     //pdfUri = Uri.fromFile(file);
                     intent.putExtra(Intent.EXTRA_STREAM, pdfUri);
@@ -333,6 +346,7 @@ public class record extends AppCompatActivity
 
                 Log.v("test","area: " + area_str + "    canopy: "+ canopy_str + "   table: "+table_str);
                 traceability_str = record_webservice.record_traceability(area_str,canopy_str,table_str);
+                traceability_str_split = traceability_str.split("zzz");
                 //Toast.makeText(record.this, traceability_str, Toast.LENGTH_SHORT).show();
                 mThreadHandler.post(get_table);
             }
@@ -343,14 +357,14 @@ public class record extends AppCompatActivity
     }
 
     public Font setChineseFont() {
-        BaseFont bf = null;
+
         Font fontChinese = null;
         try {
-            // STSong-Light : Adobe的字体
-            // UniGB-UCS2-H : pdf 字体
-            bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",
-                    BaseFont.NOT_EMBEDDED);
-            fontChinese = new Font(bf, 12, Font.NORMAL);
+            //字型 標楷體
+            BaseFont chinese = BaseFont.createFont("assets/kaiu.ttf"
+                    , BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);//設置中文字型
+
+            fontChinese = new Font(chinese, 12, Font.NORMAL);
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (IOException e) {
