@@ -658,10 +658,10 @@ public class calendar extends AppCompatActivity {
             ViewHolder(View itemView){
                 super(itemView);
                 //downloadImageTask = new DownloadImageTask((ImageView)itemView.findViewById(R.id.choose_calendar_img));
-                img = itemView.findViewById(R.id.choose_calendar_img);
-                day =  itemView.findViewById(R.id.choose_calendar_day);
-                time =  itemView.findViewById(R.id.choose_calendar_time);
-                message =  itemView.findViewById(R.id.choose_calendar_message);
+//                img = itemView.findViewById(R.id.choose_calendar_img);
+//                day =  itemView.findViewById(R.id.choose_calendar_day);
+//                time =  itemView.findViewById(R.id.choose_calendar_time);
+//                message =  itemView.findViewById(R.id.choose_calendar_message);
             }
         }
         public  void addItem(int i){

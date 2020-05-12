@@ -5,10 +5,13 @@ public class record_information_cardview
 
     private int id;
     private String week,day1,day2,day3,day4,day5,day6,day7;
+    private String day_or_week_num,datetime,content;
+
     public record_information_cardview(){
             super();
         }
-        public record_information_cardview(int id,String week,String day1,String day2,String day3,String day4,String day5,String day6,String day7)
+        //public record_information_cardview(int id,String week,String day1,String day2,String day3,String day4,String day5,String day6,String day7)
+        public record_information_cardview(int id, String day_or_week_num,String datetime,String content)
         {
             super();
             this.id = id;
@@ -20,9 +23,39 @@ public class record_information_cardview
             this.day5 = day5;
             this.day6 = day6;
             this.day7 = day7;
+            this.day_or_week_num = day_or_week_num;
+            this.datetime = datetime;
+            this.content = content;
+
 
 
         }
+
+
+    public String getDay_or_week_num(){
+        return day_or_week_num;
+    }
+    public void setDay_or_week_num(){
+        this.day_or_week_num = day_or_week_num;
+    }
+
+    public String getDatetime(){
+        return datetime;
+    }
+    public void setDatetime(){
+        this.datetime = datetime;
+    }
+
+    public String getContent(){
+        return content;
+    }
+    public void setContent(){
+        this.content = content;
+    }
+
+
+
+
 
     public String getWeek(){
             return week;

@@ -38,6 +38,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -62,7 +63,8 @@ import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
 public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
     BottomSheetDialog bottomSheetDialog;
-    ImageButton record,calendar,setting,user,edit_pot;
+    ImageButton record,calendar,setting,user;
+    AppCompatImageButton add_canopy_area;
 
     String delete_cardview_id;
     GlobalVariable GV; //首頁作物照片(暫時)
@@ -80,7 +82,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
     Spinner canopy_area;
     ProgressDialog mLoadingDialog;
 
-
+    String test="";
 
     private home2_canopy_A  home2_canopy_A = new home2_canopy_A();
     private home2_canopy_B  home2_canopy_B = new home2_canopy_B();
@@ -99,36 +101,30 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         setContentView( R.layout.activity_home2 );
 
 
-
-
         canopy_area = findViewById(R.id.canopy_area);
-
-
-
-
         GV = (GlobalVariable) getApplicationContext();
         gmail = GV.getUser_gmail();
 
 
         mLoadingDialog = new ProgressDialog(home2.this);
 //        showLoadingDialog("載入中...");
-
-        edit_pot= findViewById(R.id.edit_pot);
-        edit_pot.setOnClickListener( new View.OnClickListener()
+        add_canopy_area = findViewById(R.id.add_canopy_area);
+        add_canopy_area.setOnClickListener( new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 add_canopy_or_canopyArea();
-
             }
         } );
+
 
         createBottomSheetDialog();
 
 //        home2_viewpager =  findViewById(R.id.home2_viewpager);
 //        home2_viewpager.addOnPageChangeListener(this);
 //        setupViewPager(home2_viewpager);
+
 
         canopy_area.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -359,6 +355,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         add_canopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mThreadHandler.post(add_canopy_or_area);
                 canopy_dialog.dismiss();
             }
         });
@@ -387,6 +384,32 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         dialogWindow.setAttributes(p);
 
     }
+
+    private Runnable add_canopy_or_area = new Runnable() {
+        @Override
+        public void run() {
+            test = home2_webservice.home_add_canopy_or_area("1","09",0);
+            mThreadHandler.post(set_fragment);
+        }
+    };
+
+    private Runnable set_fragment= new Runnable() {
+        @Override
+        public void run() {
+
+            if(test.equals("ok"))
+            {
+                remove_selected_canopyarea();
+                selected_canopyarea();
+                Log.v("test","kkkkkk");
+            }
+
+        }
+    };
+
+
+
+
 
     private void showLoadingDialog(String message){
         message = "載入中...";

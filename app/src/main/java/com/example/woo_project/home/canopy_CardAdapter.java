@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,29 +76,32 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
                             break;
 
                     }
-                    if(endTime > 0)
-                    {
-                    if( ((int) pressTime) < 500)
-                    {
-                        removeAllItem(cardviewList.size());
-                        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                        home2_fg1 home2_fg1= new home2_fg1();
-                        FragmentTransaction fragmentTransaction;
-                        fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.add(R.id.canopy_fg, home2_fg1);
-                        fragmentTransaction.commit();
-                        Log.v("test","fg presstime: "+ pressTime );
-                        endTime = -1;
-                    }
-                    else if(500 <= ((int) pressTime) || ((int) pressTime) < 2500)
-                    {
-                        Log.v("test","createinfo presstime: "+ pressTime );
-                        createPlantInfo(context);
-                        endTime = -1;
-                    }
-                    else
-                    {}
-                    }
+                    //感應觸控時間長度
+//                    if(endTime > 0)
+//                    {
+//                        if( ((int) pressTime) < 500)
+//                        {
+//                            removeAllItem(cardviewList.size());
+//                            FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+//                            home2_fg1 home2_fg1= new home2_fg1();
+//                            FragmentTransaction fragmentTransaction;
+//                            fragmentTransaction = fragmentManager.beginTransaction();
+//                            fragmentTransaction.add(R.id.canopy_fg, home2_fg1);
+//                            fragmentTransaction.commit();
+//                            Log.v("test","fg presstime: "+ pressTime );
+//                            endTime = -1;
+//                        }
+//                        else if(500 <= ((int) pressTime) || ((int) pressTime) < 2500)
+//                        {
+//                            Log.v("test","createinfo presstime: "+ pressTime );
+//                            createPlantInfo(context);
+//                            endTime = -1;
+//                        }
+//                        else
+//                        {}
+//                    }
+
+                    createPlantInfo(context,cardview.getName());
                     return true;
                 }
             });
@@ -173,28 +177,70 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 //            notifyItemInserted(i);
         }
 
-        public  void createPlantInfo(Context context){
+        private TextView set_plant_name,set_plant_num,set_plant_date;
+
+
+        private canopy_dialog canopy_dialog;
+        private List<home2_dialog_cardview> canopy_plant_cardviewList = new ArrayList<>();
+        public  void createPlantInfo(final Context context,String canopy_name){
 
             View view = LayoutInflater.from( context ).inflate( R.layout.home_canopy_dialog, null );
 
             TextView home_canopy_name,home_canopy_mode;
+            ImageView add_info;
             home_canopy_name = view.findViewById(R.id.home_canopy_name);
             home_canopy_mode = view.findViewById(R.id.home_canopy_mode);
-            RecyclerView home_canopy_dialog_recyclerview = view.findViewById(R.id.home_canopy_dialog_recyclerview);
-            List<home2_dialog_cardview> canopy_cardviewList = new ArrayList<>();
+            add_info = view.findViewById(R.id.add_info);
+            set_plant_name = view.findViewById(R.id.set_plant_name);
+            set_plant_num = view.findViewById(R.id.set_plant_num);
+            set_plant_date = view.findViewById(R.id.set_plant_date);
+
+            //棚架名稱
+            home_canopy_name.setText(canopy_name);
+
+
+            //棚架內蔬菜
+             final RecyclerView home_canopy_dialog_recyclerview = view.findViewById(R.id.home_canopy_dialog_recyclerview);
+
 
             home_canopy_dialog_recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-            canopy_cardviewList.add(new home2_dialog_cardview(0,"高麗菜",10,"2020-03-23"));
-            canopy_cardviewList.add(new home2_dialog_cardview(1,"乃白",20,"2020-03-22"));
-            canopy_cardviewList.add(new home2_dialog_cardview(2,"青江菜",50,"2020-03-24"));
-
-            canopy_dialog canopy_dialog = new canopy_dialog(context, canopy_cardviewList);
-            home_canopy_dialog_recyclerview.setAdapter(canopy_dialog);
+            //canopy_plant_cardviewList.clear();
 
 
+            int index = 0;
+
+            //按+ 把蔬菜加入
+            add_info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!set_plant_name.getText().toString().equals("") &&
+                    Integer.parseInt(set_plant_num.getText().toString())> 0 && !set_plant_date.getText().toString().equals(""))
+                    {
+                        Log.v("test","canopy_plant_cardviewList.size(): "+canopy_plant_cardviewList.size());
+                        canopy_plant_cardviewList.add(new home2_dialog_cardview(canopy_plant_cardviewList.size(),set_plant_name.getText().toString(),
+                                Integer.parseInt(set_plant_num.getText().toString()),set_plant_date.getText().toString()));
+                        Log.v("test","canopy_plant_cardviewList.size()2: "+canopy_plant_cardviewList.size());
+                        canopy_dialog = new canopy_dialog(context, canopy_plant_cardviewList);
+                        Log.v("test","canopy_plant_cardviewList.size()3: "+canopy_plant_cardviewList.size());
+                        home_canopy_dialog_recyclerview.setAdapter(canopy_dialog);
+                        Log.v("test","canopy_plant_cardviewList.size()4: "+canopy_plant_cardviewList.size());
+
+                    }
+                    else
+                    {
+                        Toast.makeText(context,"格式錯誤!",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
 
 
-        Dialog createPlantInfoDialog = new Dialog(context);
+
+
+
+
+
+            Dialog createPlantInfoDialog = new Dialog(context);
             createPlantInfoDialog.setContentView(view);
 
             // 調整Dialog從哪開始
