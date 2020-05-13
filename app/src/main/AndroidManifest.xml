@@ -21,6 +21,7 @@
         <activity android:name=".user_setting.personal_help" />
         <activity android:name=".user_setting.personal_info" />
         <activity android:name=".login.login2" />
+
         <activity android:name=".calendar.calendar" />
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -55,7 +56,7 @@
         <activity android:name=".edit_pot" />
         <activity android:name=".calendar.calendar_memo" />
         <activity android:name=".calendar.calendar_memo2" />
-
+        <activity android:name=".chart.chart_1"/>
 
         <activity android:name=".user_setting.user_setting" />
         <activity android:name=".record.record_Information" />

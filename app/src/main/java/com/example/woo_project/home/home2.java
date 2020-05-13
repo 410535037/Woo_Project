@@ -2,15 +2,9 @@ package com.example.woo_project.home;
 
 
 
-import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.DataSetObserver;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -20,19 +14,13 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -43,22 +31,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.R;
 
 import com.example.woo_project.user_setting.user_setting;
-import com.example.woo_project.webservice;
+import com.example.woo_project.chart.chart_1;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
 
 public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
@@ -234,8 +217,9 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
                 @Override
                 public void onClick(View v)
                 {
-                    //Intent a = new Intent(home2.this, search.class);
-                    //startActivity(a);
+                    Intent a = new Intent(home2.this, chart_1.class);
+                    startActivity(a);
+
                 }
             } );
             user= view.findViewById( R.id.user );
