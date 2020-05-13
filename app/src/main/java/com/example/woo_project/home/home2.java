@@ -4,6 +4,10 @@ package com.example.woo_project.home;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 
@@ -139,6 +144,22 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         mThreadHandler=new Handler(mThread.getLooper());
 
         mThreadHandler.post(getCanopyarea_list);
+
+
+
+        final Button goto_record = findViewById(R.id.goto_record);
+        final Button goto_home = findViewById(R.id.goto_home);
+        goto_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+
+            }
+        });
+
+
     }
 
 
@@ -191,55 +212,55 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
     private void createBottomSheetDialog()
     {
 
-        if (bottomSheetDialog == null) {
-            View view = LayoutInflater.from( this ).inflate( R.layout.bottom_sheet, null );
-
-            record= view.findViewById( R.id.record );
-            record.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent a = new Intent(home2.this, com.example.woo_project.record.record.class);
-                    startActivity(a);
-                }
-            } );
-            calendar= view.findViewById( R.id.calendar );
-            calendar.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent a = new Intent(home2.this, com.example.woo_project.calendar.calendar.class);
-                    startActivity(a);
-                }
-            } );
-            setting= view.findViewById( R.id.setting );
-            setting.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent a = new Intent(home2.this, chart_1.class);
-                    startActivity(a);
-
-                }
-            } );
-            user= view.findViewById( R.id.user );
-            user.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    Intent a = new Intent(home2.this, user_setting.class);
-                    startActivity(a);
-                }
-            } );
-
-
-            bottomSheetDialog = new BottomSheetDialog( this );
-            bottomSheetDialog.setContentView( view );
-
-            //設置bottomsheet圓角
-            bottomSheetDialog.getWindow().findViewById(R.id.design_bottom_sheet)
-                    .setBackgroundResource(android.R.color.transparent);
-        }
+//        if (bottomSheetDialog == null) {
+//            View view = LayoutInflater.from( this ).inflate( R.layout.bottom_sheet, null );
+//
+//            record= view.findViewById( R.id.record );
+//            record.setOnClickListener( new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent a = new Intent(home2.this, com.example.woo_project.record.record.class);
+//                    startActivity(a);
+//                }
+//            } );
+//            calendar= view.findViewById( R.id.calendar );
+//            calendar.setOnClickListener( new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent a = new Intent(home2.this, com.example.woo_project.calendar.calendar.class);
+//                    startActivity(a);
+//                }
+//            } );
+//            setting= view.findViewById( R.id.setting );
+//            setting.setOnClickListener( new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent a = new Intent(home2.this, chart_1.class);
+//                    startActivity(a);
+//
+//                }
+//            } );
+//            user= view.findViewById( R.id.user );
+//            user.setOnClickListener( new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v)
+//                {
+//                    Intent a = new Intent(home2.this, user_setting.class);
+//                    startActivity(a);
+//                }
+//            } );
+//
+//
+//            bottomSheetDialog = new BottomSheetDialog( this );
+//            bottomSheetDialog.setContentView( view );
+//
+//            //設置bottomsheet圓角
+//            bottomSheetDialog.getWindow().findViewById(R.id.design_bottom_sheet)
+//                    .setBackgroundResource(android.R.color.transparent);
+//        }
 
     }
     public void showDialog(View view)

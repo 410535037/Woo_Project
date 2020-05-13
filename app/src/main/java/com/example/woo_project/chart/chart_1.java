@@ -1,6 +1,7 @@
 package com.example.woo_project.chart;
 
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +16,11 @@ import com.example.woo_project.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -37,6 +40,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.itextpdf.text.pdf.GrayColor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -159,15 +164,19 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
      */
     private void initBarChart() {
         mChart.setOnChartValueSelectedListener(this);
-        mChart.setDrawBarShadow(false);
+        mChart.setDrawBarShadow(false); //沒陰影
         mChart.setDrawValueAboveBar(true);
         mChart.getDescription().setEnabled(false);
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
         mChart.setMaxVisibleValueCount(60);
         // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false);
+        mChart.setPinchZoom(false); // X,Y軸同時縮放，false則X,Y軸單獨縮放,預設false
         mChart.setDrawGridBackground(false);
+
+
+
+
 
 //        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(mChart);
         setBarChartData();
@@ -180,24 +189,19 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         xAxis.setGranularity(1f);// 設定X軸值之間最小距離。正常放大到一定地步，標籤變為小數值，到一定地步，相鄰標籤都是一樣的。這裡是指定相鄰標籤間最小差，防止重複。
         xAxis.setValueFormatter(xAxisFormatter);
         xAxis.setDrawGridLines(false);
-
-
-        //xAxis.setDrawLabels(false);//不顯示X軸的對應標籤 (預設顯示)
-        xAxis.setSpaceMin(1f);//折線起點距離左側Y軸距離
+        xAxis.setDrawLabels(true);//不顯示X軸的對應標籤 (預設顯示)
+        xAxis.setSpaceMin(0.5f);//折線起點距離左側Y軸距離
         xAxis.setTextSize(10);
+        xAxis.setAxisLineWidth(mChart.getWidth()); //設置此軸的坐標軸的寬度
 
-        String[] xStrs = new String[]{"大王菜舖子", "花蓮市農會", "永豐餘", "壽豐農會","李秋涼","吳媽媽"};
-        List<String> chartLabels = new ArrayList <>();
-        for(int i=0;i<xStrs.length;i++)
-        {
-            chartLabels.add(xStrs[i]);
-        }
 
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(chartLabels));
 
-//        //自定義座標軸介面卡，配置在Y軸。leftAxis.setValueFormatter(custom);
-//        ValueFormatter custom = new XAxisValueFormatter();
+        String[] xStrs = new String[]{"大王菜舖子","花蓮市農會","永豐餘" ,"壽豐農會","李秋涼","吳媽媽"};
+        List<String> chartLabels = new ArrayList<>(Arrays.asList(xStrs));
 
+        xAxis.setLabelCount(chartLabels.size());
+
+        xAxis.setValueFormatter(new  IndexAxisValueFormatter(chartLabels));
 
 
         //獲取到圖形左邊的Y軸
@@ -251,12 +255,12 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
         //在這裡設定自己的資料來源,BarEntry 只接收float的引數，
         //圖形橫縱座標預設為float形式，如果想展示文字形式，需要自定義介面卡，
-        yVals1.add(new BarEntry(0, 23));
-        yVals1.add(new BarEntry(2f, 65));
-        yVals1.add(new BarEntry(4f, 182));
-        yVals1.add(new BarEntry(6f, 120));
-        yVals1.add(new BarEntry(8f, 10));
-        yVals1.add(new BarEntry(10f, 5));
+        yVals1.add(new BarEntry(0, 23f));
+        yVals1.add(new BarEntry(1f, 65f));
+        yVals1.add(new BarEntry(2f, 182f));
+        yVals1.add(new BarEntry(3f, 120f));
+        yVals1.add(new BarEntry(4f, 10f));
+        yVals1.add(new BarEntry(5f, 5f));
 
         BarDataSet set1;
 
@@ -277,8 +281,10 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
             BarData data = new BarData(dataSets);
             data.setValueTextSize(10f);
-            data.setBarWidth(1.5f);
+            data.setBarWidth(0.8f);
+
             mChart.setData(data);
+
         }
     }
 
@@ -374,7 +380,7 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
             BarData data = new BarData(dataSets);
             data.setValueTextSize(10f);
             data.setValueTypeface(mTfLight);//可以去掉，沒什麼用
-            data.setBarWidth(1f);
+            data.setBarWidth(0.5f);
             hBarChart.setData(data);
         }
     }

@@ -77,8 +77,8 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 
                     }
                     //感應觸控時間長度
-//                    if(endTime > 0)
-//                    {
+                    if(endTime > 0)
+                    {
 //                        if( ((int) pressTime) < 500)
 //                        {
 //                            removeAllItem(cardviewList.size());
@@ -91,17 +91,14 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 //                            Log.v("test","fg presstime: "+ pressTime );
 //                            endTime = -1;
 //                        }
-//                        else if(500 <= ((int) pressTime) || ((int) pressTime) < 2500)
-//                        {
-//                            Log.v("test","createinfo presstime: "+ pressTime );
-//                            createPlantInfo(context);
-//                            endTime = -1;
-//                        }
-//                        else
-//                        {}
-//                    }
+                        if(400 < ((int) pressTime))
+                        {
+                            Log.v("test","createinfo presstime: "+ pressTime );
+                            createPlantInfo(context,cardview.getName());
+                            endTime = -1;
+                        }
 
-                    createPlantInfo(context,cardview.getName());
+                    }
                     return true;
                 }
             });

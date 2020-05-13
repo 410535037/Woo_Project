@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <ripple
+            android:color="@color/colorPrimaryDark2">
+        </ripple>
+    </item>
+
+    <item
+        android:width="30dp"
+        android:height="30dp"
+        android:gravity="center"
+        android:drawable="@drawable/_record2" />
+
+</layer-list>

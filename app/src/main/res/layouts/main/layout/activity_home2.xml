@@ -14,7 +14,7 @@
             android:id="@+id/level_RL"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_marginTop="5dp">
 
                 <ImageView
@@ -56,7 +56,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4">
+            android:layout_weight="9">
 
             <FrameLayout
                 android:id="@+id/canopy_fg"
@@ -69,6 +69,8 @@
                 android:layout_height="wrap_content"/>
 
             </FrameLayout>
+
+            <!--
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/open_bottom_sheet"
                 android:layout_width="wrap_content"
@@ -84,9 +86,49 @@
 
                 tools:ignore="RtlHardcoded" />
 
+            -->
+
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight ="1"
+            android:orientation="horizontal"
+            android:background="#e3e8e4">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_home"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_home_style" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_edit_style"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_record"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_record_style"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_chart_style"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_transportation_style"/>
+
+
+
+
+        </LinearLayout>
 
 
 
