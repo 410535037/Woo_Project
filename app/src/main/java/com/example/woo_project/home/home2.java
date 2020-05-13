@@ -41,6 +41,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.R;
 
+import com.example.woo_project.record.record;
 import com.example.woo_project.user_setting.user_setting;
 import com.example.woo_project.chart.chart_1;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -107,7 +108,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         } );
 
 
-        createBottomSheetDialog();
+        createBottomButton();
 
 //        home2_viewpager =  findViewById(R.id.home2_viewpager);
 //        home2_viewpager.addOnPageChangeListener(this);
@@ -147,17 +148,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
 
 
-        final Button goto_record = findViewById(R.id.goto_record);
-        final Button goto_home = findViewById(R.id.goto_home);
-        goto_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
-                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-
-            }
-        });
 
 
     }
@@ -209,58 +200,88 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
 
     //建立功能Button
-    private void createBottomSheetDialog()
+    Button goto_home,goto_edit,goto_record,goto_chart,goto_transportation;
+    private void createBottomButton()
     {
+        goto_home = findViewById(R.id.goto_home);
+        goto_edit = findViewById(R.id.goto_edit);
+        goto_record = findViewById(R.id.goto_record);
+        goto_chart = findViewById(R.id.goto_chart);
+        goto_transportation = findViewById(R.id.goto_transportation);
 
-//        if (bottomSheetDialog == null) {
-//            View view = LayoutInflater.from( this ).inflate( R.layout.bottom_sheet, null );
-//
-//            record= view.findViewById( R.id.record );
-//            record.setOnClickListener( new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    Intent a = new Intent(home2.this, com.example.woo_project.record.record.class);
-//                    startActivity(a);
-//                }
-//            } );
-//            calendar= view.findViewById( R.id.calendar );
-//            calendar.setOnClickListener( new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    Intent a = new Intent(home2.this, com.example.woo_project.calendar.calendar.class);
-//                    startActivity(a);
-//                }
-//            } );
-//            setting= view.findViewById( R.id.setting );
-//            setting.setOnClickListener( new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    Intent a = new Intent(home2.this, chart_1.class);
-//                    startActivity(a);
-//
-//                }
-//            } );
-//            user= view.findViewById( R.id.user );
-//            user.setOnClickListener( new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v)
-//                {
-//                    Intent a = new Intent(home2.this, user_setting.class);
-//                    startActivity(a);
-//                }
-//            } );
-//
-//
-//            bottomSheetDialog = new BottomSheetDialog( this );
-//            bottomSheetDialog.setContentView( view );
-//
-//            //設置bottomsheet圓角
-//            bottomSheetDialog.getWindow().findViewById(R.id.design_bottom_sheet)
-//                    .setBackgroundResource(android.R.color.transparent);
-//        }
+        goto_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style2));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
+                startActivity(intent);
+            }
+        });
+
+
+        goto_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style2));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
+//                startActivity(intent);
+            }
+        });
+
+
+        goto_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
+                startActivity(intent);
+            }
+        });
+
+
+        goto_chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+                Intent intent = new Intent(home2.this, com.example.woo_project.chart.chart_1.class);
+                startActivity(intent);
+            }
+        });
+
+
+        goto_transportation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style2));
+
+//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
+//                startActivity(intent);
+            }
+        });
 
     }
     public void showDialog(View view)

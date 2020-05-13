@@ -104,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bottom_button_home_style" />
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_edit"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -115,11 +116,13 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bottom_button_record_style"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_chart"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bottom_button_chart_style"/>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_transportation"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
