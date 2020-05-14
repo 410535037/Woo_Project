@@ -1,5 +1,6 @@
 package com.example.woo_project.chart;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 
 import com.example.woo_project.R;
+import com.example.woo_project.home.home2;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -73,7 +75,7 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         year=year.substring(0,3);
         month = select_date.getText().toString();
         month = month.substring(4,5);
-
+        createBottomButton();
         Log.v("test","month: "+month);
         Log.v("test","year: "+year);
 
@@ -458,6 +460,93 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
         lineChart.setData(lineData);
         lineChart.invalidate();
+    }
+
+
+    //建立功能Button
+    Button goto_home,goto_edit,goto_record,goto_chart,goto_transportation;
+    private void createBottomButton()
+    {
+        goto_home = findViewById(R.id.goto_home);
+        goto_edit = findViewById(R.id.goto_edit);
+        goto_record = findViewById(R.id.goto_record);
+        goto_chart = findViewById(R.id.goto_chart);
+        goto_transportation = findViewById(R.id.goto_transportation);
+        goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
+        goto_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style2));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+                Intent intent = new Intent(chart_1.this, com.example.woo_project.home.home2.class);
+                startActivity(intent);
+            }
+        });
+
+
+        goto_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style2));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+//                Intent intent = new Intent(chart_1.this, com.example.woo_project.home.home2.class);
+//                startActivity(intent);
+            }
+        });
+
+
+        goto_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+                Intent intent = new Intent(chart_1.this, com.example.woo_project.record.record.class);
+                startActivity(intent);
+            }
+        });
+
+
+        goto_chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
+
+//                Intent intent = new Intent(home2.this, com.example.woo_project.chart.chart_1.class);
+//                startActivity(intent);
+            }
+        });
+
+
+        goto_transportation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
+                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
+                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
+                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style2));
+
+//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
+//                startActivity(intent);
+            }
+        });
+
     }
 
 }

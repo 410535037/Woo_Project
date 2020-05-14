@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="11">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -83,6 +90,7 @@
             android:id="@+id/customSliderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:layout_centerInParent="true"
             android:orientation="horizontal"
             android:gravity="center"
@@ -125,9 +133,10 @@
         </LinearLayout>
 
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/factory_list">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/factory_list"
+            android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/chartNN"
@@ -146,11 +155,7 @@
                     android:layout_margin="15dp"
                     android:padding="15dp" />
 
-
         </RelativeLayout>
-
-
-
 
         <TextView
             android:layout_width="match_parent"
@@ -181,6 +186,57 @@
             android:layout_height="400dp"
             android:layout_margin="15dp"
             android:padding="20dp" />
-    </LinearLayout>
 
-</ScrollView>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight ="1"
+            android:orientation="horizontal"
+            android:background="#e3e8e4">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_home"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_home_style" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_edit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_edit_style"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_record"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_record_style"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_chart"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_chart_style"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/goto_transportation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_button_transportation_style"/>
+
+
+
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

@@ -208,7 +208,7 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
         goto_record = findViewById(R.id.goto_record);
         goto_chart = findViewById(R.id.goto_chart);
         goto_transportation = findViewById(R.id.goto_transportation);
-
+        goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style2));
         goto_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,8 +218,8 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
 
-                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
-                startActivity(intent);
+//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
+//                startActivity(intent);
             }
         });
 
