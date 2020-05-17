@@ -2,12 +2,10 @@ package com.example.woo_project.home;
 
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +14,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,14 +21,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -39,12 +37,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.woo_project.GlobalVariable;
+import com.example.woo_project.QRCode.Constant;
 import com.example.woo_project.R;
 
-import com.example.woo_project.record.record;
-import com.example.woo_project.user_setting.user_setting;
-import com.example.woo_project.chart.chart_1;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +106,16 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
 
         createBottomButton();
+
+        //QRCode
+        Button qrcode = findViewById(R.id.goto_qrcode);
+        qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startQrCode();
+            }
+        });
+
 
 //        home2_viewpager =  findViewById(R.id.home2_viewpager);
 //        home2_viewpager.addOnPageChangeListener(this);
@@ -432,6 +439,75 @@ public class home2 extends AppCompatActivity implements ViewPager.OnPageChangeLi
 
         }
     };
+
+
+
+    // 開始掃描
+    private void startQrCode() {
+        // 申請相機讀取權限
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // 申請權限
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
+                    .CAMERA)) {
+                Toast.makeText(this, "請到設定開啟使用相機權限", Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(home2.this, new String[]{Manifest.permission.CAMERA}, Constant.REQ_PERM_CAMERA);
+            return;
+        }
+        // 申請文件讀取權限
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // 申請權限
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(this, "請到設定開啟使用文件權限", Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(home2.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constant.REQ_PERM_EXTERNAL_STORAGE);
+            return;
+        }
+        // 掃描
+        Intent intent = new Intent(home2.this, CaptureActivity.class);
+        startActivityForResult(intent, Constant.REQ_QR_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //掃描结果回傳
+        if (requestCode == Constant.REQ_QR_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString(Constant.INTENT_EXTRA_KEY_QR_SCAN);
+            //掃描訊息
+            Toast.makeText(home2.this,"QRCode內容 : "+scanResult,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case Constant.REQ_PERM_CAMERA:
+                // 相機權限申請
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 取得授權
+                    startQrCode();
+                } else {
+                    // 被禁止授權
+                    Toast.makeText( home2.this, "請到設定開啟使用相機權限", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case Constant.REQ_PERM_EXTERNAL_STORAGE:
+                // 文件讀寫權限申請
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // 取得權限
+                    startQrCode();
+                } else {
+                    // 被禁止授權
+                    Toast.makeText(home2.this, "請到設定開啟使用文件權限", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
 
 
 

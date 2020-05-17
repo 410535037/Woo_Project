@@ -146,8 +146,8 @@ public class record extends AppCompatActivity
         //cardview 建立
 
         cardviewList = new ArrayList<>();
-        cardviewList.add(new record_Cardview("0","非十字花科 皇宮菜","20/03/11"));
-
+        cardviewList.add(new record_Cardview(0,"非十字花科 皇宮菜","20/03/11"));
+        cardviewList.add(new record_Cardview(1,"非十字花科 皇宮菜","20/03/11"));
         RecyclerView recyclerView =  findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(new record.CardAdapter(record.this, cardviewList));

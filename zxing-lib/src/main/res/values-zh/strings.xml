@@ -1,0 +1,10 @@
+<resources>
+    <string name="layout_scan">掃描</string>
+    <string name="layout_album">相簿</string>
+    <string name="layout_focus_qrcode">請對準再進行掃描</string>
+
+    <string name="note_processing">處理中...</string>
+    <string name="note_identify_failed">識別失敗</string>
+    <string name="note_scan_failed">掃描失敗</string>
+    <string name="note_no_flashlight">暫時無法開啟閃光燈</string>
+</resources>

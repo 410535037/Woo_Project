@@ -89,7 +89,15 @@ dependencies {
     //
     implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    //implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
+    //implementation 'com.journeyapps:zxing-android-integration:2.0.1@aar'
+    implementation 'com.google.zxing:core:3.3.3'
+
+    implementation project(':zxing-lib')
 }
 
 repositories
-{ maven { url 'https://jitpack.io' } }
+{
+    maven { url 'https://jitpack.io' }
+    maven { url 'http://dl.bintray.com/journeyapps/maven' }
+}
