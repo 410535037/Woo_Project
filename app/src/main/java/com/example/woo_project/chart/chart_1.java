@@ -2,65 +2,56 @@ package com.example.woo_project.chart;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-
+import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatRadioButton;
-
 import com.example.woo_project.R;
-import com.example.woo_project.home.home2;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.itextpdf.text.pdf.GrayColor;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-
 
 public class chart_1 extends AppCompatActivity implements OnChartValueSelectedListener
 {
-
     private Typeface mTfRegular;
     private Typeface mTfLight;
     protected BarChart mChart;
-    private HorizontalBarChart hBarChart;
-    private LineChart lineChart;
     TextView select_date;
     String year,month;
     Integer i_year,i_month;
     Button date_back,date_after;
 
-    AppCompatRadioButton rbLeft,rbRight;
+    private RadioButton[] radioButton=new RadioButton[3];
+    private LinearLayout[] linearLayout=new LinearLayout[3];
+    private RadioGroup radioGroup;
+
+    private float[] yData = {25.3f, 10.6f, 52.76f, 44.32f, 46.01f, 16.89f, 23.9f,14f};
+    private String[] xData = {"青江", "小白" , "青花椰" , "白花椰", "小松", "奶白", "空心","絲瓜"};
+    PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +80,6 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
                 {
                     i_month = Integer.valueOf(month)-2;
                     month = String.valueOf(i_month);
-
                 }
                 else if(Integer.valueOf(month)==1)
                 {
@@ -119,47 +109,127 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
                 }
                 select_date.setText(year+"年"+month+"-"+(Integer.valueOf(month)+1)+"月");
             }
-
         });
 
-
-
-        rbLeft = findViewById(R.id.rbLeft);
-        rbRight = findViewById(R.id.rbRight);
+        radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
+        radioButton[0]=(RadioButton)findViewById(R.id.rbLeft);
+        radioButton[1]=(RadioButton)findViewById(R.id.rbRight);
+        linearLayout[0]= (LinearLayout) findViewById(R.id.chart_layout_pie);
+        linearLayout[1]= (LinearLayout) findViewById(R.id.chart_layout_bar);
 
         mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
         mTfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
 
-        mChart = findViewById(R.id.chart1);
-        hBarChart = findViewById(R.id.hBarChart);
-        lineChart = findViewById(R.id.lineChart);
-
+        mChart = findViewById(R.id.chart_bar_block);
         initBarChart();
-        initHBarChart();
-        initLineChart();
-    }
 
-    public  void onRatioButtonClicked(View view)
-    {
-        boolean isSelected = ((AppCompatRadioButton)view).isChecked();
-        switch (view.getId())
+        pieChart = (PieChart) findViewById(R.id.chart_pie_block);
+        pieChart.setRotationEnabled(true);
+        pieChart.setHoleRadius(65f);
+        pieChart.setTransparentCircleAlpha(0);
+        pieChart.setCenterText("所有作物收成比例");
+        pieChart.setCenterTextSize(14);
+
+        addDataSet();
+
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+                int pos1 = e.toString().indexOf("(sum): ");
+                String sales = e.toString().substring(pos1 + 7);
+
+                for(int i = 0; i < yData.length; i++){
+                    if(yData[i] == Float.parseFloat(sales)){
+                        pos1 = i;
+                        break;
+                    }
+                }
+//                String employee = xData[pos1 + 1];
+            }
+
+            @Override
+            public void onNothingSelected() {}
+
+        });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
-            case R.id.rbLeft:
-                if (isSelected)
-                {
-                    rbLeft.setTextColor(Color.WHITE);
-                    rbRight.setTextColor(Color.GRAY);
-                }
-                break;
 
-            case R.id.rbRight:
-                if (isSelected){
-                    rbLeft.setTextColor(Color.GRAY);
-                    rbRight.setTextColor(Color.WHITE);
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId)
+            {
+                Log.v("msg",checkedId+"checkedId");
+                switch(checkedId)
+                {
+                    case R.id.rbLeft:
+                        Log.v("msg",R.id.rbLeft+"R.id.rbLeft");
+                        changeradio(0);
+                        break;
+                    case R.id.rbRight:
+                        changeradio(1);
+                        break;
                 }
-                break;
-        }
+            }
+        });
+
+
     }
+
+    int old=0;
+    public void changeradio(int i)
+    {
+        Log.e("msg",i+"");
+        linearLayout[old].setVisibility(View.INVISIBLE);
+        linearLayout[i].setVisibility(View.VISIBLE);
+        old=i;
+    }
+
+
+    /**
+     * 圓餅圖控制元件屬性
+     */
+    private void addDataSet() {
+        ArrayList<PieEntry> yEntrys = new ArrayList<>();
+        ArrayList<String> xEntrys = new ArrayList<>();
+
+        for(int i = 0; i < yData.length; i++){
+            yEntrys.add(new PieEntry(yData[i] , i));
+        }
+
+        for(int i = 1; i < xData.length; i++){
+            xEntrys.add(xData[i]);
+        }
+
+        //create the data set
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "作物");
+        pieDataSet.setSliceSpace(2);
+        pieDataSet.setValueTextSize(14);
+
+        //add colors to dataset
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.argb(255,255,173,173));
+        colors.add(Color.argb(255,255,214,165));
+        colors.add(Color.argb(255,253,255,182));
+        colors.add(Color.argb(255,202,255,191));
+        colors.add(Color.argb(255,155,246,255));
+        colors.add(Color.argb(255,160,196,255));
+        colors.add(Color.argb(255,189,178,255));
+        colors.add(Color.argb(255,255,198,255));
+        colors.add(Color.argb(255,255,255,252));
+        pieDataSet.setColors(colors);
+
+        //add legend to chart
+        Legend legend = pieChart.getLegend();
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        //legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
+
+        //create pie data object
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+    }
+
 
     /**
      * 初始化柱形圖控制元件屬性
@@ -291,176 +361,6 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
     }
 
 
-    /**初始化水平柱形圖圖控制元件屬性*/
-    private void initHBarChart() {
-        hBarChart.setOnChartValueSelectedListener(this);
-        hBarChart.setDrawBarShadow(false);
-        hBarChart.setDrawValueAboveBar(true);
-        hBarChart.getDescription().setEnabled(false);
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        hBarChart.setMaxVisibleValueCount(60);
-
-        // scaling can now only be done on x- and y-axis separately
-        hBarChart.setPinchZoom(false);
-
-        // draw shadows for each bar that show the maximum value
-        // mChart.setDrawBarShadow(true);
-
-        hBarChart.setDrawGridBackground(false);
-
-        //自定義座標軸介面卡，設定在X軸
-        DecimalFormatter formatter = new DecimalFormatter();
-        XAxis xl = hBarChart.getXAxis();
-        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xl.setTypeface(mTfLight);
-        xl.setLabelRotationAngle(-45f);
-        xl.setDrawAxisLine(true);
-        xl.setDrawGridLines(false);
-        xl.setGranularity(1f);
-//        xl.setAxisMinimum(0);
-        xl.setValueFormatter(formatter);
-
-        //對Y軸進行設定
-        YAxis yl = hBarChart.getAxisLeft();
-        yl.setTypeface(mTfLight);
-        yl.setDrawAxisLine(true);
-        yl.setDrawGridLines(true);
-        yl.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-//        yl.setInverted(true);
-
-        hBarChart.getAxisRight().setEnabled(false);
-
-        //圖例設定
-        Legend l = hBarChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setFormSize(8f);
-        l.setXEntrySpace(4f);
-
-        //右下方description label：設置圖表資訊
-        Description description = lineChart.getDescription();
-        description.setEnabled(false);//不顯示Description Label (預設顯示)
-        description.setText("百合花包");//顯示文字名稱
-        description.setTextSize(14);//字體大小
-        description.setTextColor(getResources().getColor(R.color.colorAccent));//字體顏色
-        description.setPosition(680, 80);//顯示位置座標 (預設右下方)
-
-        setHBarChartData();
-        hBarChart.setFitBars(true);
-        hBarChart.animateY(2500);
-    }
-
-
-    /** 設定水平柱形圖資料的方法*/
-    private void setHBarChartData() {
-        //填充資料，在這裡換成自己的資料來源
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-
-        yVals1.add(new BarEntry(0, 4));
-        yVals1.add(new BarEntry(1, 2));
-        yVals1.add(new BarEntry(2, 6));
-        yVals1.add(new BarEntry(3, 1));
-        BarDataSet set1;
-
-        if (hBarChart.getData() != null &&
-                hBarChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) hBarChart.getData().getDataSetByIndex(0);
-            set1.setValues(yVals1);
-            hBarChart.getData().notifyDataChanged();
-            hBarChart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(yVals1, "DataSet 1");
-
-            set1.setDrawIcons(false);
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
-
-            BarData data = new BarData(dataSets);
-            data.setValueTextSize(10f);
-            data.setValueTypeface(mTfLight);//可以去掉，沒什麼用
-            data.setBarWidth(0.5f);
-            hBarChart.setData(data);
-        }
-    }
-
-
-    /** 初始化折線圖控制元件屬性*/
-    private void initLineChart() {
-        lineChart.setOnChartValueSelectedListener(this);
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setBackgroundColor(Color.WHITE);
-
-        //自定義介面卡，適配於X軸
-        ValueFormatter xAxisFormatter = new XAxisValueFormatter();
-
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTypeface(mTfLight);
-        xAxis.setGranularity(1f);
-        xAxis.setValueFormatter(xAxisFormatter);
-
-        //自定義介面卡，適配於Y軸
-        ValueFormatter custom = new MyAxisValueFormatter();
-
-        YAxis leftAxis = lineChart.getAxisLeft();
-        leftAxis.setTypeface(mTfLight);
-        leftAxis.setLabelCount(8, false);
-        leftAxis.setValueFormatter(custom);
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        leftAxis.setSpaceTop(15f);
-        leftAxis.setAxisMinimum(0f);
-        leftAxis.setDrawGridLines(false);//是否畫線
-
-        lineChart.getAxisRight().setEnabled(false);
-
-        setLineChartData();
-    }
-
-
-    /**設定折線圖的資料*/
-    private void setLineChartData() {
-        //填充資料，在這裡換成自己的資料來源
-        List <Entry> valsComp1 = new ArrayList <>();
-        List<Entry> valsComp2 = new ArrayList<>();
-
-        valsComp1.add(new Entry(0, 2));
-        valsComp1.add(new Entry(1, 4));
-        valsComp1.add(new Entry(2, 0));
-        valsComp1.add(new Entry(3, 2));
-
-        valsComp2.add(new Entry(0, 2));
-        valsComp2.add(new Entry(1, 0));
-        valsComp2.add(new Entry(2, 4));
-        valsComp2.add(new Entry(3, 2));
-
-        //這裡，每重新new一個LineDataSet，相當於重新畫一組折線
-        //每一個LineDataSet相當於一組折線。比如:這裡有兩個LineDataSet：setComp1，setComp2。
-        //則在影象上會有兩條折線圖，分別表示公司1 和 公司2 的情況.還可以設定更多
-        LineDataSet setComp1 = new LineDataSet(valsComp1, "Company 1 ");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setComp1.setColor(getResources().getColor(R.color.green));
-        setComp1.setDrawCircles(false);
-        setComp1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-
-        LineDataSet setComp2 = new LineDataSet(valsComp2, "Company 2 ");
-        setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
-        setComp2.setDrawCircles(true);
-        setComp2.setColor(getResources().getColor(R.color.gray));
-        setComp2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-
-        List<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(setComp1);
-        dataSets.add(setComp2);
-
-        LineData lineData = new LineData(dataSets);
-
-        lineChart.setData(lineData);
-        lineChart.invalidate();
-    }
 
 
     //建立功能Button

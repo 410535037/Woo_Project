@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/chart_layout_pie">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/factory_list">
+
+<!--            <TextView-->
+<!--                android:id="@+id/chartNN"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="作物數量統計表"-->
+<!--                android:textSize="20dp"-->
+<!--                android:layout_marginTop="20dp"/>-->
+
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/chart_pie_block"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_margin="15dp"
+                android:padding="15dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>

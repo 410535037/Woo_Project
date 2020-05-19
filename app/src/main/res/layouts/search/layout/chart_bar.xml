@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:background="@color/cardview_light_background"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:id="@+id/chart_layout_bar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/factory_list"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/chartNN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="廠商出貨數量統計表"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"/>
+
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart_bar_block"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="15dp"
+            android:padding="15dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
