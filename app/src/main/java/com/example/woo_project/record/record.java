@@ -16,7 +16,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -47,7 +49,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.woo_project.GlobalVariable;
+import com.example.woo_project.QRCode.Constant;
 import com.example.woo_project.R;
+import com.example.woo_project.home.home2;
 import com.example.woo_project.webservice;
 import com.google.android.material.chip.ChipGroup;
 import com.itextpdf.text.Document;
@@ -73,49 +77,53 @@ import java.util.function.Predicate;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static com.itextpdf.text.xml.xmp.XmpWriter.UTF8;
 
-public class record extends AppCompatActivity
+public class record extends Fragment
 {
-    boolean fg = false;
+    private boolean fg = false;
     int num = 0,id=2;
-    Button  select_item , traceability;
-    ImageButton showDialog ;
     //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
     private Handler mUI_Handler = new Handler();
     //宣告特約工人的經紀人
     private Handler mThreadHandler;
-    //宣告特約工人
-    private HandlerThread mThread;
-    AutoCompleteTextView record_search;
-    String record_search_string="",record_month_select_string="",record_month_select_info="can't not found";
+    private AutoCompleteTextView record_search;
+    private String record_search_string="",record_month_select_string="",record_month_select_info="can't not found";
 
 
-    List<record_Cardview> cardviewList;
-    Spinner mSpinner2;
-    GlobalVariable record_name;
+    private List<record_Cardview> cardviewList;
+    private Spinner mSpinner2;
+    private GlobalVariable record_name;
 
     //篩選的物件
-    Spinner record_canopy_sp,record_canopy_area_sp,record_plant_kind_sp,reocrd_plant_name_sp;
+    private Spinner record_canopy_sp,record_canopy_area_sp,record_plant_kind_sp,reocrd_plant_name_sp;
 
     //生產履歷的物件
-    Spinner record_traceability_area_sp, record_traceability_canopy_sp ;
-    Button record_traceability_commit ;
-    List<List<String>> record_traceability_list = new ArrayList<>();
-    ChipGroup traceability_ChipGroup;
-    String[] traceability_str_split;
+    private Spinner record_traceability_area_sp, record_traceability_canopy_sp ;
+    private List<List<String>> record_traceability_list = new ArrayList<>();
+    private String[] traceability_str_split;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_record);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+       // getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        View view = inflater.inflate(R.layout.activity_record, container, false);
+
+
+
+        // 申請文件讀取權限
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // 申請權限
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission
+                    .WRITE_EXTERNAL_STORAGE)) {
+                Toast.makeText(getContext(), "請到設定開啟使用文件權限", Toast.LENGTH_SHORT).show();
+            }
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constant.REQ_PERM_EXTERNAL_STORAGE);
+
         }
 
 
         //生產履歷button
-        traceability = findViewById(R.id.record_traceability);
+        Button traceability = view.findViewById(R.id.record_traceability);
         traceability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,22 +131,23 @@ public class record extends AppCompatActivity
             }
         });
 
-        record_name = (GlobalVariable) getApplicationContext();
+        record_name = (GlobalVariable) getActivity().getApplicationContext();
         //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
-        mThread = new HandlerThread("");
+        //宣告特約工人
+        HandlerThread mThread = new HandlerThread("");
         //讓Worker待命，等待其工作 (開啟Thread)
         mThread.start();
         //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
         mThreadHandler=new Handler(mThread.getLooper());
 
-        record_search = findViewById(R.id.search_record);
+        record_search = view.findViewById(R.id.search_record);
         record_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //點擊後抓searchview的文字並跳轉到作物資訊
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.v("test","record TextView:"+record_search.getText());
 
-                Intent x=new Intent(record.this,record_Information2.class);
+                Intent x=new Intent(getContext(),record_Information2.class);
                 startActivity(x);
             }
         });
@@ -148,12 +157,12 @@ public class record extends AppCompatActivity
         cardviewList = new ArrayList<>();
         cardviewList.add(new record_Cardview(0,"非十字花科 皇宮菜","20/03/11"));
         cardviewList.add(new record_Cardview(1,"非十字花科 皇宮菜","20/03/11"));
-        RecyclerView recyclerView =  findViewById(R.id.recyclerView);
+        RecyclerView recyclerView =  view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(new record.CardAdapter(record.this, cardviewList));
+        recyclerView.setAdapter(new record.CardAdapter(getContext(), cardviewList));
 
         //Dialog 建立
-        showDialog =  findViewById(R.id.Select_item);
+        ImageButton showDialog = view.findViewById(R.id.Select_item);
         showDialog.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -162,21 +171,21 @@ public class record extends AppCompatActivity
                 setSelect_dialog();
             }
         });
-
+        return view;
     }
 
     //生產履歷參數
-    String area_str,canopy_str,table_str="無";
+    private String area_str,canopy_str,table_str="無";
     String area, canopy, table;
     //生產履歷操作
     private void getTraceability()
     {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(record.this);
-        final View mView = getLayoutInflater().inflate(R.layout.record_traceability_dialog, null);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        View mView = getLayoutInflater().inflate(R.layout.record_traceability_dialog, null);
         record_traceability_area_sp = mView.findViewById(R.id.record_traceability_area_sp);
         record_traceability_canopy_sp = mView.findViewById(R.id.record_traceability_canopy_sp);
-        record_traceability_commit = mView.findViewById(R.id.record_traceability_commit);
-        traceability_ChipGroup = mView.findViewById(R.id.traceability_ChipGroup);
+        Button record_traceability_commit = mView.findViewById(R.id.record_traceability_commit);
+        ChipGroup traceability_ChipGroup = mView.findViewById(R.id.traceability_ChipGroup);
 
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
@@ -223,7 +232,7 @@ public class record extends AppCompatActivity
                     default:
                         break;
                 }
-                Toast.makeText(record.this, test, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -237,7 +246,7 @@ public class record extends AppCompatActivity
         dialogWindow.setBackgroundDrawable(new BitmapDrawable());
 
         /* 將Dialog用螢幕大小百分比方式設置 */
-        WindowManager m = getWindowManager();
+        WindowManager m = getActivity().getWindowManager();
         Display d = m.getDefaultDisplay(); // 取得螢幕寬和高
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值
         //p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8
@@ -266,7 +275,7 @@ public class record extends AppCompatActivity
                     Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間
                     String time = formatter.format(curDate);
 
-                    fos = new FileOutputStream(new File(getFilesDir(),"/"+time+".pdf")); //pdf_address为Pdf文件保存到sd卡的路径
+                    fos = new FileOutputStream(new File(getActivity().getFilesDir(),"/"+time+".pdf")); //pdf_address为Pdf文件保存到sd卡的路径
                     Log.v("test","路徑: "+fos.toString());
                     PdfWriter.getInstance(doc, fos);
                     doc.open();
@@ -304,17 +313,17 @@ public class record extends AppCompatActivity
                     intent.addCategory("android.intent.category.DEFAULT");
 
 
-                    String[] files =  record.this.fileList();
+                    String[] files =  getActivity().fileList();
 
                     for(String file : files){
-                        Log.e("test","file is :"+ getFilesDir().getAbsolutePath()+file);
+                        Log.e("test","file is :"+ getActivity().getFilesDir().getAbsolutePath()+file);
                     }
-                    String path =  getFilesDir().getAbsolutePath()+"/"+time+".pdf";///data/data/包名/cache
+                    String path =  getActivity().getFilesDir().getAbsolutePath()+"/"+time+".pdf";///data/data/包名/cache
 
                     File file = new File(path);
                     Uri pdfUri;
                     pdfUri = FileProvider.getUriForFile(
-                            record.this,
+                            getContext(),
                             "com.example.woo_project.provider", //(use your app signature + ".provider" )
                             file);
 
@@ -393,7 +402,7 @@ public class record extends AppCompatActivity
                             canopy_area.add(record_traceability_list.get(i).get(0));
                             Log.v("test", "record_select_list_canopy:  " + record_traceability_list.get(i).get(0));
                         }
-                        ArrayAdapter<String> area_adapter = new ArrayAdapter<String>(record.this,
+                        ArrayAdapter<String> area_adapter = new ArrayAdapter<String>(getContext(),
                                 R.layout.record_select_dropdown_item,                            //選項資料內容
                                 canopy_area);   //自訂getView()介面格式(Spinner介面未展開時的View)
                         record_traceability_area_sp.setAdapter(area_adapter);
@@ -406,7 +415,7 @@ public class record extends AppCompatActivity
                                     record_plant_canopy.add(record_traceability_list.get(position).get(i));
                                 }
 
-                                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(record.this,
+                                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(),
                                         R.layout.record_select_dropdown_item,                            //選項資料內容
                                         record_plant_canopy);   //自訂getView()介面格式(Spinner介面未展開時的View)
                                 record_traceability_canopy_sp.setAdapter(adapter1);
@@ -436,7 +445,7 @@ public class record extends AppCompatActivity
     //篩選操作
     private void setSelect_dialog()
     {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(record.this);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         View mView = getLayoutInflater().inflate(R.layout.record_select, null);
         record_canopy_area_sp = mView.findViewById(R.id.record_canopy_area_sp);
         record_canopy_sp = mView.findViewById(R.id.record_canopy_sp);
@@ -444,7 +453,7 @@ public class record extends AppCompatActivity
         record_plant_kind_sp = mView.findViewById(R.id.record_plant_kind_sp);
 
         //篩選
-        select_item = mView.findViewById(R.id.record_select_item);
+        Button select_item = mView.findViewById(R.id.record_select_item);
 
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
@@ -476,7 +485,7 @@ public class record extends AppCompatActivity
         dialogWindow.setBackgroundDrawable(new BitmapDrawable());
 
         /* 將Dialog用螢幕大小百分比方式設置 */
-        WindowManager m = getWindowManager();
+        WindowManager m = getActivity().getWindowManager();
         Display d = m.getDefaultDisplay(); // 取得螢幕寬和高
         WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值
         // p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8
@@ -517,7 +526,7 @@ public class record extends AppCompatActivity
                         Log.v("test","record_select_list_canopy1:  "+record_select_list_canopy.get(i));
                         //record_select_list_canopy.get(i).remove(0);
                     }
-                    ArrayAdapter<String> area_adapter = new ArrayAdapter<String>(record.this,
+                    ArrayAdapter<String> area_adapter = new ArrayAdapter<String>(getContext(),
                             R.layout.record_select_dropdown_item,                            //選項資料內容
                             canopy_area);   //自訂getView()介面格式(Spinner介面未展開時的View)
                     record_canopy_area_sp.setAdapter(area_adapter);
@@ -533,7 +542,7 @@ public class record extends AppCompatActivity
                             }
 
 
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(record.this,
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(),
                                     R.layout.record_select_dropdown_item,                            //選項資料內容
                                     record_plant_canopy);   //自訂getView()介面格式(Spinner介面未展開時的View)
                             record_canopy_sp.setAdapter(adapter1);
@@ -555,7 +564,7 @@ public class record extends AppCompatActivity
                     }
 
                     //作物種類
-                    ArrayAdapter<String> plant_adapter = new ArrayAdapter<String>(record.this,
+                    ArrayAdapter<String> plant_adapter = new ArrayAdapter<String>(getContext(),
                             R.layout.record_select_dropdown_item,                            //選項資料內容
                             plant_kind);   //自訂getView()介面格式(Spinner介面未展開時的View)
                     record_plant_kind_sp.setAdapter(plant_adapter);
@@ -572,7 +581,7 @@ public class record extends AppCompatActivity
                             }
 
 
-                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(record.this,
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(),
                                     R.layout.record_select_dropdown_item,                            //選項資料內容
                                     record_plant_name);   //自訂getView()介面格式(Spinner介面未展開時的View)
                             reocrd_plant_name_sp.setAdapter(adapter1);
@@ -767,7 +776,7 @@ public class record extends AppCompatActivity
  //                   addItem(cardviewList.size());
                     //record_name.setRecord_vege_name(cardview.getName());
 
-                    Intent intent = new Intent(record.this, record_Information.class);
+                    Intent intent = new Intent(getContext(), record_Information.class);
                     intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }

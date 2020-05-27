@@ -61,7 +61,7 @@
         </activity>
 
         <activity android:name="com.google.zxing.activity.CaptureActivity" />
-
+        <activity android:name=".home.home"/>
         <activity android:name=".edit_pot" />
         <activity android:name=".calendar.calendar_memo" />
         <activity android:name=".calendar.calendar_memo2" />

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.woo_project.home.home;
 import com.example.woo_project.home.home2;
 import com.example.woo_project.login.login;
 import com.example.woo_project.record.record;
@@ -59,7 +60,7 @@ public class   MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent( MainActivity.this, home2.class);
+                Intent a = new Intent( MainActivity.this, home.class);
                 startActivity(a);
                 MainActivity.this.finish();
 

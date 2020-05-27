@@ -22,6 +22,7 @@ import com.example.woo_project.R;
 
 import java.util.List;
 
+//棚架dialog
 public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHolder>
 {
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.home2"
+    android:orientation="vertical"
+    android:background="#E6EAE7">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11">
+    <FrameLayout
+        android:id="@+id/home_fg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/home_viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight ="1"
+        android:orientation="horizontal"
+        android:background="#e3e8e4">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goto_home"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_button_home_style" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goto_edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_button_edit_style"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goto_record"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_button_record_style"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goto_chart"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_button_chart_style"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/goto_transportation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_button_transportation_style"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

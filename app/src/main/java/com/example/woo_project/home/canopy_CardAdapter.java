@@ -179,6 +179,7 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 
         private canopy_dialog canopy_dialog;
         private List<home2_dialog_cardview> canopy_plant_cardviewList = new ArrayList<>();
+
         public  void createPlantInfo(final Context context,String canopy_name){
 
             View view = LayoutInflater.from( context ).inflate( R.layout.home_canopy_dialog, null );
@@ -203,8 +204,6 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
             home_canopy_dialog_recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
             //canopy_plant_cardviewList.clear();
 
-
-            int index = 0;
 
             //按+ 把蔬菜加入
             add_info.setOnClickListener(new View.OnClickListener() {
