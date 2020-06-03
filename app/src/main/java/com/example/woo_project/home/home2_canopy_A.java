@@ -55,8 +55,6 @@ public class home2_canopy_A extends Fragment {
         mThreadHandler=new Handler(mThread.getLooper());
         mThreadHandler.post(getCanopy_list);
 
-
-
         return view;
     }
 

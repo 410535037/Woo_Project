@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -13,7 +17,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.example.woo_project.R;
+import com.example.woo_project.home.canopy_CardAdapter;
+import com.example.woo_project.home.home2_plant_img_cardview;
+import com.example.woo_project.home.home2_webservice;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -28,18 +37,31 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class chart_1 extends AppCompatActivity implements OnChartValueSelectedListener
 {
+
     private Typeface mTfRegular;
     private Typeface mTfLight;
     protected BarChart mChart;
+
+
+    private List<String> ship_to_vendor_num_kg = new ArrayList<>();
+    //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
+    private android.os.Handler mUI_Handler = new android.os.Handler();
+    //宣告特約工人的經紀人
+    private Handler mThreadHandler;
+    //宣告特約工人
+    private HandlerThread mThread;
+    String[] split_line={}; //將傳回值分割
+    float kg_num=0;
+
+
+
     TextView select_date;
     String year,month;
     Integer i_year,i_month;
@@ -173,9 +195,62 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
             }
         });
 
+        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
+        mThread = new HandlerThread("");
+
+        //讓Worker待命，等待其工作 (開啟Thread)
+        mThread.start();
+        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
+        mThreadHandler=new Handler(mThread.getLooper());
+        mThreadHandler.post(get_ship_to_vendor_num_kg);
 
     }
 
+    public Runnable get_ship_to_vendor_num_kg = new Runnable() {
+        @Override
+        public void run() {
+            ship_to_vendor_num_kg = chart_webservice.ship_to_vendor_num_kg();
+            mThreadHandler.post(set_ship_to_vendor_num_kg);
+        }
+    };
+
+    String str1;
+    List<String> vendor_x = new ArrayList<>();
+    List<String> vendor_y = new ArrayList<>();
+    public Runnable set_ship_to_vendor_num_kg = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            new Handler(Looper.getMainLooper()).post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    if(!ship_to_vendor_num_kg.contains("錯誤"))
+                    {
+                        for(int i = 0 ; i < ship_to_vendor_num_kg.size() ; i++)
+                        {
+                            //split_line 是Array
+                            str1 = ship_to_vendor_num_kg.get(i);//list用"()" Array才用中括號
+                            split_line = str1.split("%%");
+                            vendor_x.add(split_line[0]);
+                            vendor_y.add(split_line[1]);
+                        }
+                        Log.v("test","vendor_x "+vendor_x);
+                        Log.v("test","vendor_y "+vendor_y);
+                    }
+                }
+            });
+        }
+    };
+
+
+
+
+    /**
+     *  切換圖表的控制
+     **/
     int old=0;
     public void changeradio(int i)
     {
@@ -189,7 +264,7 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
     /**
      * 圓餅圖控制元件屬性
      */
-    private void addDataSet() {
+    public void addDataSet() {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
 
@@ -222,6 +297,9 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         //add legend to chart
         Legend legend = pieChart.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setFormSize(10f);//標籤圖案大小
+        legend.setFormToTextSpace(5f);
+        legend.setTextSize(12f);
         //legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
 
         //create pie data object
@@ -232,9 +310,9 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
 
     /**
-     * 初始化柱形圖控制元件屬性
+     * 柱形圖初始化+控制元件屬性
      */
-    private void initBarChart() {
+    public void initBarChart() {
         mChart.setOnChartValueSelectedListener(this);
         mChart.setDrawBarShadow(false); //沒陰影
         mChart.setDrawValueAboveBar(true);
@@ -245,10 +323,6 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         // scaling can now only be done on x- and y-axis separately
         mChart.setPinchZoom(false); // X,Y軸同時縮放，false則X,Y軸單獨縮放,預設false
         mChart.setDrawGridBackground(false);
-
-
-
-
 
 //        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(mChart);
         setBarChartData();
@@ -263,18 +337,13 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         xAxis.setDrawGridLines(false);
         xAxis.setDrawLabels(true);//不顯示X軸的對應標籤 (預設顯示)
         xAxis.setSpaceMin(0.5f);//折線起點距離左側Y軸距離
-        xAxis.setTextSize(10);
+        xAxis.setTextSize(9);
         xAxis.setAxisLineWidth(mChart.getWidth()); //設置此軸的坐標軸的寬度
 
-
-
-        String[] xStrs = new String[]{"大王菜舖子","花蓮市農會","永豐餘" ,"壽豐農會","李秋涼","吳媽媽"};
-        List<String> chartLabels = new ArrayList<>(Arrays.asList(xStrs));
-
+        List<String> chartLabels = new ArrayList<>(vendor_x);//把vendor_x的值加入到x軸資料
+        Log.v("test","chartLabels:"+ chartLabels);
         xAxis.setLabelCount(chartLabels.size());
-
         xAxis.setValueFormatter(new  IndexAxisValueFormatter(chartLabels));
-
 
         //獲取到圖形左邊的Y軸
         YAxis leftAxis = mChart.getAxisLeft();
@@ -321,42 +390,56 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
     /**
      *柱形圖數值設定
      */
-    private void setBarChartData() {
+    public void setBarChartData() {
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
         //在這裡設定自己的資料來源,BarEntry 只接收float的引數，
         //圖形橫縱座標預設為float形式，如果想展示文字形式，需要自定義介面卡，
-        yVals1.add(new BarEntry(0, 23f));
-        yVals1.add(new BarEntry(1f, 65f));
-        yVals1.add(new BarEntry(2f, 182f));
-        yVals1.add(new BarEntry(3f, 120f));
-        yVals1.add(new BarEntry(4f, 10f));
-        yVals1.add(new BarEntry(5f, 5f));
 
-        BarDataSet set1;
+        for(int i = 0 ; i < ship_to_vendor_num_kg.size() ; i++)
+        {
+            yVals1.add(new BarEntry(i,Float.parseFloat(vendor_y.get(i))));
+            Log.v("test","柱形圖數值設定ship_to_vendor_num_kg:"+ship_to_vendor_num_kg);
+        }
+//        yVals1.add(new BarEntry(0, 23f));
+//        yVals1.add(new BarEntry(1f, 65f));
+//        yVals1.add(new BarEntry(2f, 182f));
 
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setValues(yVals1);
-            set1.setColor(Color.rgb(242, 247, 158));
+        BarDataSet barDataSet;
+
+        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0)
+        {
+            barDataSet = (BarDataSet) mChart.getData().getDataSetByIndex(0);
+            barDataSet.setValues(yVals1);
+            barDataSet.setColor(Color.rgb(242, 247, 158));
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(yVals1, "百合花苞");
-            set1.setDrawIcons(false);
-            set1.setColors(ColorTemplate.JOYFUL_COLORS);//柱狀圖條狀顏色
-            set1.setValueTextColor(Color.BLUE);
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
+        }
+        else
+        {
+            barDataSet = new BarDataSet(yVals1, "百合花苞");
 
-            BarData data = new BarData(dataSets);
+            //add colors to dataset
+            ArrayList<Integer> colors = new ArrayList<>();
+            colors.add(Color.argb(255,255,173,173));
+            colors.add(Color.argb(255,255,214,165));
+            colors.add(Color.argb(255,253,255,182));
+            colors.add(Color.argb(255,202,255,191));
+            colors.add(Color.argb(255,155,246,255));
+            colors.add(Color.argb(255,160,196,255));
+            colors.add(Color.argb(255,189,178,255));
+            colors.add(Color.argb(255,255,198,255));
+            colors.add(Color.argb(255,255,255,252));
+            barDataSet.setColors(colors);
+            barDataSet.setValueTextColor(Color.BLUE);
+            barDataSet.setDrawIcons(false);
+
+            BarData data = new BarData(barDataSet);
             data.setValueTextSize(10f);
             data.setBarWidth(0.8f);
 
             mChart.setData(data);
-
         }
     }
 
