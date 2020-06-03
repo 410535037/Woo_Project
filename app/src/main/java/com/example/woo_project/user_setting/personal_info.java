@@ -27,7 +27,7 @@ public class personal_info extends AppCompatActivity {
     GlobalVariable gl;
     ImageButton user_info_edit,back_user;
     String user_email,user_data;
-    TextView name_tv,phone_tv,email_tv,addr_tv,age_tv,gender_tv,expri_tv;
+    TextView name_tv,email_tv,addr_tv,gender_tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +50,12 @@ public class personal_info extends AppCompatActivity {
         user_info_edit=findViewById(R.id.user_info_edit);
         back_user=findViewById(R.id.back_user);
         name_tv=findViewById(R.id.name_tv);
-        phone_tv=findViewById(R.id.phone_tv);
+
         email_tv=findViewById(R.id.email_tv);
         addr_tv=findViewById(R.id.addr_tv);
-        age_tv=findViewById(R.id.age_tv);
+
         gender_tv=findViewById(R.id.gender_tv);
-        expri_tv=findViewById(R.id.expri_tv);
+
 
         back_user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,22 +101,17 @@ public class personal_info extends AppCompatActivity {
                 String[] split_user_data = user_data.split("%");
 
                 name_tv.setText(split_user_data[0]);
-                phone_tv.setText(split_user_data[1]);
                 email_tv.setText(split_user_data[2]);
                 addr_tv.setText(split_user_data[3]);
-                age_tv.setText(split_user_data[4]);
                 gender_tv.setText(split_user_data[5]);
-                expri_tv.setText(split_user_data[6]);
             }
             else
             {
                 name_tv.setText(can);
-                phone_tv.setText(can);
                 email_tv.setText(can);
                 addr_tv.setText(can);
-                age_tv.setText(can);
                 gender_tv.setText(can);
-                expri_tv.setText(can);
+
             }
         }
 

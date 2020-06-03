@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.woo_project.R;
@@ -42,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class chart_1 extends AppCompatActivity implements OnChartValueSelectedListener
+public class chart_1 extends Fragment implements OnChartValueSelectedListener
 {
 
     private Typeface mTfRegular;
@@ -62,10 +65,10 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
 
 
-    TextView select_date;
-    String year,month;
-    Integer i_year,i_month;
-    Button date_back,date_after;
+    private TextView select_date;
+    private String year,month;
+    private Integer i_year,i_month;
+    private Button date_back,date_after;
 
     private RadioButton[] radioButton=new RadioButton[3];
     private LinearLayout[] linearLayout=new LinearLayout[3];
@@ -73,22 +76,24 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
     private float[] yData = {25.3f, 10.6f, 52.76f, 44.32f, 46.01f, 16.89f, 23.9f,14f};
     private String[] xData = {"青江", "小白" , "青花椰" , "白花椰", "小松", "奶白", "空心","絲瓜"};
-    PieChart pieChart;
+    private PieChart pieChart;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.chart_view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.chart_view, container, false);
 
-        select_date = findViewById(R.id.select_date);
-        date_back = findViewById(R.id.date_back);
 
-        date_after = findViewById(R.id.date_after);
+        select_date = view.findViewById(R.id.select_date);
+        date_back = view.findViewById(R.id.date_back);
+
+        date_after = view.findViewById(R.id.date_after);
         year = select_date.getText().toString();
         year=year.substring(0,3);
         month = select_date.getText().toString();
         month = month.substring(4,5);
-        createBottomButton();
+
         Log.v("test","month: "+month);
         Log.v("test","year: "+year);
 
@@ -98,16 +103,16 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
             public void onClick(View view)
             {
                 Log.v("test","i_month: "+i_month);
-                if (Integer.valueOf(month)>1)
+                if (Integer.parseInt(month)>1)
                 {
-                    i_month = Integer.valueOf(month)-2;
+                    i_month = Integer.parseInt(month)-2;
                     month = String.valueOf(i_month);
                 }
-                else if(Integer.valueOf(month)==1)
+                else if(Integer.parseInt(month)==1)
                 {
                     i_month = 11;
                     month = String.valueOf(i_month);
-                    i_year = Integer.valueOf(year)-1;
+                    i_year = Integer.parseInt(year)-1;
                     year = String.valueOf(i_year);
                 }
                 select_date.setText(year+"年"+month+"-"+(Integer.valueOf(month)+1)+"月");
@@ -119,33 +124,34 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
             @Override
             public void onClick(View view)
             {
-                if (Integer.valueOf(month)<10)
-                {month=String.valueOf(Integer.valueOf(month)+2);}
+                if (Integer.parseInt(month)<10)
+                {month=String.valueOf(Integer.parseInt(month)+2);}
 
                 else //month==11
                 {
                     month="1";
-                    year=String.valueOf(Integer.valueOf(year)+1);
+                    year=String.valueOf(Integer.parseInt(year)+1);
                     Log.v("test","month: "+month);
                     Log.v("test","year: "+year);
                 }
-                select_date.setText(year+"年"+month+"-"+(Integer.valueOf(month)+1)+"月");
+                select_date.setText(year+"年"+month+"-"+(Integer.parseInt(month)+1)+"月");
             }
         });
 
-        radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
-        radioButton[0]=(RadioButton)findViewById(R.id.rbLeft);
-        radioButton[1]=(RadioButton)findViewById(R.id.rbRight);
-        linearLayout[0]= (LinearLayout) findViewById(R.id.chart_layout_pie);
-        linearLayout[1]= (LinearLayout) findViewById(R.id.chart_layout_bar);
+        radioGroup=(RadioGroup)view.findViewById(R.id.radioGroup);
+        radioButton[0]=(RadioButton)view.findViewById(R.id.rbLeft);
+        radioButton[1]=(RadioButton)view.findViewById(R.id.rbRight);
+        linearLayout[0]= (LinearLayout) view.findViewById(R.id.chart_layout_pie);
+        linearLayout[1]= (LinearLayout) view.findViewById(R.id.chart_layout_bar);
 
-        mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-        mTfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
+//        mTfRegular = Typeface.createFromAsset( getActivity().getAssets(), "OpenSans-Regular.ttf");
+//        mTfLight = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
 
-        mChart = findViewById(R.id.chart_bar_block);
-        initBarChart();
+        mChart = view.findViewById(R.id.chart_bar_block);
+        mChart.setBackgroundColor(getResources().getColor(R.color.barchart_1));
+        //initBarChart();
 
-        pieChart = (PieChart) findViewById(R.id.chart_pie_block);
+        pieChart = (PieChart) view.findViewById(R.id.chart_pie_block);
         pieChart.setRotationEnabled(true);
         pieChart.setHoleRadius(65f);
         pieChart.setTransparentCircleAlpha(0);
@@ -175,6 +181,14 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
         });
 
+        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
+        mThread = new HandlerThread("");
+
+        //讓Worker待命，等待其工作 (開啟Thread)
+        mThread.start();
+        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
+        mThreadHandler=new Handler(mThread.getLooper());
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
 
@@ -185,25 +199,22 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
                 switch(checkedId)
                 {
                     case R.id.rbLeft:
-                        Log.v("msg",R.id.rbLeft+"R.id.rbLeft");
+                        Log.v("msg","R.id.rbLeft: " +R.id.rbLeft);
                         changeradio(0);
                         break;
                     case R.id.rbRight:
-                        changeradio(1);
+                        Log.v("msg","rbright: "+R.id.rbRight);
+                        mThreadHandler.post(get_ship_to_vendor_num_kg);
+                        Log.v("msg","get_ship_to_vendor_num_kg: "+ship_to_vendor_num_kg);
+                        //changeradio(1);
                         break;
                 }
             }
         });
 
-        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
-        mThread = new HandlerThread("");
 
-        //讓Worker待命，等待其工作 (開啟Thread)
-        mThread.start();
-        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
-        mThreadHandler=new Handler(mThread.getLooper());
-        mThreadHandler.post(get_ship_to_vendor_num_kg);
 
+        return view;
     }
 
     public Runnable get_ship_to_vendor_num_kg = new Runnable() {
@@ -215,8 +226,8 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
     };
 
     String str1;
-    List<String> vendor_x = new ArrayList<>();
-    List<String> vendor_y = new ArrayList<>();
+    List<String> vendor_x ;
+    List<String> vendor_y ;
     public Runnable set_ship_to_vendor_num_kg = new Runnable()
     {
         @Override
@@ -229,6 +240,8 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
                 {
                     if(!ship_to_vendor_num_kg.contains("錯誤"))
                     {
+                        vendor_x = new ArrayList<>();
+                        vendor_y = new ArrayList<>();
                         for(int i = 0 ; i < ship_to_vendor_num_kg.size() ; i++)
                         {
                             //split_line 是Array
@@ -239,6 +252,8 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
                         }
                         Log.v("test","vendor_x "+vendor_x);
                         Log.v("test","vendor_y "+vendor_y);
+                        initBarChart();
+                        changeradio(1);
                     }
                 }
             });
@@ -254,7 +269,7 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
     int old=0;
     public void changeradio(int i)
     {
-        Log.e("msg",i+"");
+        Log.v("msg",i+"");
         linearLayout[old].setVisibility(View.INVISIBLE);
         linearLayout[i].setVisibility(View.VISIBLE);
         old=i;
@@ -316,6 +331,7 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         mChart.setOnChartValueSelectedListener(this);
         mChart.setDrawBarShadow(false); //沒陰影
         mChart.setDrawValueAboveBar(true);
+
         mChart.getDescription().setEnabled(false);
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
@@ -324,6 +340,8 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         mChart.setPinchZoom(false); // X,Y軸同時縮放，false則X,Y軸單獨縮放,預設false
         mChart.setDrawGridBackground(false);
 
+        mChart.setBackgroundColor(Color.rgb(123,123,123));
+        mChart.setLogEnabled(true);
 //        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(mChart);
         setBarChartData();
         //自定義座標軸介面卡，配置在X軸，xAxis.setValueFormatter(xAxisFormatter);
@@ -374,7 +392,8 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
         legend.setXEntrySpace(5f);
 
         //如果點選柱形圖，會彈出pop提示框.XYMarkerView為自定義彈出框
-        XYMarkerView mv = new XYMarkerView(this, xAxisFormatter);
+        XYMarkerView mv = new XYMarkerView(getContext(), xAxisFormatter);
+
         mv.setChartView(mChart);
         mChart.setMarker(mv);
     }
@@ -410,9 +429,9 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
         if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0)
         {
-            barDataSet = (BarDataSet) mChart.getData().getDataSetByIndex(0);
-            barDataSet.setValues(yVals1);
-            barDataSet.setColor(Color.rgb(242, 247, 158));
+//            barDataSet = (BarDataSet) mChart.getData().getDataSetByIndex(0);
+//            barDataSet.setValues(yVals1);
+//            barDataSet.setColor(Color.rgb(242, 247, 158));
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
         }
@@ -422,17 +441,28 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
 
             //add colors to dataset
             ArrayList<Integer> colors = new ArrayList<>();
-            colors.add(Color.argb(255,255,173,173));
-            colors.add(Color.argb(255,255,214,165));
-            colors.add(Color.argb(255,253,255,182));
-            colors.add(Color.argb(255,202,255,191));
-            colors.add(Color.argb(255,155,246,255));
-            colors.add(Color.argb(255,160,196,255));
-            colors.add(Color.argb(255,189,178,255));
-            colors.add(Color.argb(255,255,198,255));
-            colors.add(Color.argb(255,255,255,252));
+//            colors.add(Color.argb(255,255,173,173));
+//            colors.add(Color.argb(255,255,214,165));
+//            colors.add(Color.argb(255,253,255,182));
+//            colors.add(Color.argb(255,202,255,191));
+//            colors.add(Color.argb(255,155,246,255));
+//            colors.add(Color.argb(255,160,196,255));
+//            colors.add(Color.argb(255,189,178,255));
+//            colors.add(Color.argb(255,255,198,255));
+//            colors.add(Color.argb(255,255,255,252));
+            colors.add(getResources().getColor(R.color.barchart_1));
+            colors.add(getResources().getColor(R.color.barchart_2));
+            colors.add(getResources().getColor(R.color.barchart_3));
+            colors.add(getResources().getColor(R.color.barchart_4));
+            colors.add(getResources().getColor(R.color.barchart_5));
+            colors.add(getResources().getColor(R.color.barchart_6));
+            colors.add(getResources().getColor(R.color.barchart_7));
+            colors.add(getResources().getColor(R.color.barchart_8));
+            colors.add(getResources().getColor(R.color.barchart_9));
+
+
             barDataSet.setColors(colors);
-            barDataSet.setValueTextColor(Color.BLUE);
+            barDataSet.setValueTextColor(getResources().getColor(R.color.barchart_9));
             barDataSet.setDrawIcons(false);
 
             BarData data = new BarData(barDataSet);
@@ -440,96 +470,7 @@ public class chart_1 extends AppCompatActivity implements OnChartValueSelectedLi
             data.setBarWidth(0.8f);
 
             mChart.setData(data);
+
         }
     }
-
-
-
-
-    //建立功能Button
-    Button goto_home,goto_edit,goto_record,goto_chart,goto_transportation;
-    private void createBottomButton()
-    {
-        goto_home = findViewById(R.id.goto_home);
-        goto_edit = findViewById(R.id.goto_edit);
-        goto_record = findViewById(R.id.goto_record);
-        goto_chart = findViewById(R.id.goto_chart);
-        goto_transportation = findViewById(R.id.goto_transportation);
-        goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
-        goto_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style2));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
-                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
-                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
-                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
-
-                Intent intent = new Intent(chart_1.this, com.example.woo_project.home.home2.class);
-                startActivity(intent);
-            }
-        });
-
-
-        goto_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style2));
-                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
-                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
-                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
-
-//                Intent intent = new Intent(chart_1.this, com.example.woo_project.home.home2.class);
-//                startActivity(intent);
-            }
-        });
-
-
-        goto_record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
-                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
-                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
-                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
-
-                Intent intent = new Intent(chart_1.this, com.example.woo_project.record.record.class);
-                startActivity(intent);
-            }
-        });
-
-
-        goto_chart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
-                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
-                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
-                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
-
-//                Intent intent = new Intent(home2.this, com.example.woo_project.chart.chart_1.class);
-//                startActivity(intent);
-            }
-        });
-
-
-        goto_transportation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
-                goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
-                goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
-                goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style2));
-
-//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
-//                startActivity(intent);
-            }
-        });
-
-    }
-
 }

@@ -5,14 +5,17 @@
         android:id="@+id/framlayoutall"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
         <include
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/transparent"
             layout="@layout/chart_pie"/>
         <include
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/barchart_background"
             android:visibility="invisible"
             layout="@layout/chart_bar" />
 

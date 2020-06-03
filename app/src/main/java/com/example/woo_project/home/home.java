@@ -40,6 +40,7 @@ import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.QRCode.Constant;
 import com.example.woo_project.R;
 
+import com.example.woo_project.chart.chart_1;
 import com.example.woo_project.record.record;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.activity.CaptureActivity;
@@ -61,6 +62,7 @@ public class home extends AppCompatActivity {
 
     private home2  getHome2 = new home2();
     private record  getRecord = new record();
+    private chart_1 getChart_1 = new chart_1();
     FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -165,8 +167,13 @@ public class home extends AppCompatActivity {
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
 
-                Intent intent = new Intent(home.this, com.example.woo_project.chart.chart_1.class);
-                startActivity(intent);
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                //Fragment切換
+                getChart_1 = new chart_1();
+                fragmentTransaction.replace(R.id.home_fg, getChart_1).commit();
+//                Intent intent = new Intent(home.this, com.example.woo_project.chart.chart_1.class);
+//                startActivity(intent);
             }
         });
 

@@ -218,7 +218,7 @@ public class webservice
     }
 
 
-    public static String Update_user_info(String email,String name,String phone,String addr,String age,String gender,String expri)
+    public static String Update_user_info(String email,String name,String addr,String gender)
     {
         String SOAP_ACTION = "http://tempuri.org/Update_user_info";          //命名空間+要用的函數名稱
         String METHOD_NAME = "Update_user_info";   //函數名稱
@@ -228,11 +228,8 @@ public class webservice
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
             request.addProperty("UPmail",email);
             request.addProperty("UPname",name);
-            request.addProperty("UPphone",phone);
             request.addProperty("UPaddr",addr);
-            request.addProperty("UPage",age);
             request.addProperty("UPgender",gender);
-            request.addProperty("UPexpri",expri);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.bodyOut = request;
@@ -247,7 +244,7 @@ public class webservice
             // 獲取返回的結果
             String result = object.getProperty(0).toString();
 
-            Log.v("test1","ws的result: "+result);
+            Log.v("test","user info的result: "+result);
             return result;
         } catch (Exception e) {
             return e.toString();

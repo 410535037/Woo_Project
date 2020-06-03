@@ -45,4 +45,24 @@
     <color name="transparent">#00000000</color>
     <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#60000000</color>
+
+
+
+    //Barchart 顏色
+    <color name="barchart_blue">#0000ff</color>
+    <color name="barchart_1">#ffadad</color>
+    <color name="barchart_2">#ffd6a5</color>
+    <color name="barchart_3">#fdffb6</color>
+    <color name="barchart_4">#caffbf</color>
+    <color name="barchart_5">#9bf6ff</color>
+    <color name="barchart_6">#a0c4ff</color>
+    <color name="barchart_7">#bdb2ff</color>
+    <color name="barchart_8">#ffc6ff</color>
+    <color name="barchart_9">#fffffc</color>
+
+
+
+
+    //
+    <color name="barchart_background">#00ffffff</color>
 </resources>

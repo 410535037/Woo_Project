@@ -10,15 +10,23 @@
       "client_info": {
         "mobilesdk_app_id": "1:980041908163:android:5beb5762b5bec772",
         "android_client_info": {
-          "package_name": "com.example.woo_project"
+          "package_name": "com.example.hy"
         }
       },
       "oauth_client": [
         {
+          "client_id": "980041908163-lod9atb1ojit70a8fug4d41lk7qns9cm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hy",
+            "certificate_hash": "65524247501b00677ab4b0a3afa966dbc354ec2b"
+          }
+        },
+        {
           "client_id": "980041908163-5qik3s7icvati2fiehefkckius3c9tsq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.woo_project",
+            "package_name": "com.example.hy",
             "certificate_hash": "ecddd43bc6a804b656479b28696a14a285915a40"
           }
         },
@@ -26,7 +34,7 @@
           "client_id": "980041908163-172rkk9k00atm2pu6cno5g4svq3ntqph.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.woo_project",
+            "package_name": "com.example.hy",
             "certificate_hash": "ad9d44bc872402a5189866b2d9a3a16ac501fcbb"
           }
         },
@@ -34,7 +42,7 @@
           "client_id": "980041908163-90l4s7fa94gc53fph1qf4063b32rrlbt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.woo_project",
+            "package_name": "com.example.hy",
             "certificate_hash": "e652700c27d302e3cf5527497e77483b28c58b8c"
           }
         },
@@ -42,7 +50,7 @@
           "client_id": "980041908163-82rol7gpa91ptmvnkfduis00bm4llnpt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.woo_project",
+            "package_name": "com.example.hy",
             "certificate_hash": "e0fbdf9977cb6f90b00924bf21c26795aa9ce811"
           }
         },
@@ -50,12 +58,65 @@
           "client_id": "980041908163-ad6lgndref758rhdlnc2ha8r500q6fjq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.woo_project",
+            "package_name": "com.example.hy",
             "certificate_hash": "0ad42285aeba5a863d7294a21786926a7f0f76f4"
           }
         },
         {
           "client_id": "980041908163-v904rsoineib9692v3kdm6ghl89ggq4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hy",
+            "certificate_hash": "05f44bded70bfc165f8efc2f0d5ec4b3a2f86352"
+          }
+        },
+        {
+          "client_id": "980041908163-bp3unkgkjr0p6k7t9e27km4172hs8jtt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOR_fGemscWPRT0RoBLvRRNOmImsvxnd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980041908163-bp3unkgkjr0p6k7t9e27km4172hs8jtt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980041908163:android:8a7bec668fc8a50b27c776",
+        "android_client_info": {
+          "package_name": "com.example.woo_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980041908163-dpt47cgtmust8mke4d9ugrp1bee7sn01.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.woo_project",
+            "certificate_hash": "65524247501b00677ab4b0a3afa966dbc354ec2b"
+          }
+        },
+        {
+          "client_id": "980041908163-f0ikf9k1j67ii54ubrqj6b3l3hj17id8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.woo_project",
+            "certificate_hash": "0ad42285aeba5a863d7294a21786926a7f0f76f4"
+          }
+        },
+        {
+          "client_id": "980041908163-43ktvgvnte08479ddo3ndivabe4b4bhb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.woo_project",

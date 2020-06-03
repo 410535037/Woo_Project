@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.R;
 
+import com.example.woo_project.home.home;
 import com.example.woo_project.home.home2;
 import com.example.woo_project.webservice;
 
@@ -33,12 +34,12 @@ public class login2 extends AppCompatActivity  {
     //宣告特約工人
     private HandlerThread mThread;
 
-    EditText name,phone,email;
+    EditText name,email;
     Button user_info_confrim,Man,Woman;
     int gender=0, //判斷目前選到哪個性別
             experience=0; //判斷目前種植經驗多久
-    Spinner County,Age;
-    String insert_vege_item="",countryshow,areashow,addr,select_gender="",select_age="";
+    Spinner County;
+    String countryshow,areashow,addr,select_gender="";
     GlobalVariable gl;
     Intent intent;
     private  String[] type= new String[]{"臺北市","新北市","基隆市","桃園市","新竹縣","新竹市",
@@ -117,7 +118,6 @@ public class login2 extends AppCompatActivity  {
 
 
         name=findViewById(R.id.name);
-        phone=findViewById(R.id.phone);
         email=findViewById(R.id.email);
         user_info_confrim  = (Button) findViewById(R.id.user_info_confirm);
 
@@ -127,9 +127,9 @@ public class login2 extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Log.v("test","onClick");
-               Intent a = new Intent(login2.this, home2.class);
-                if(name.getText().toString().equals("") || phone.getText().toString().equals("")||email.getText().toString().equals("")||
-                        addr.equals("")||select_age.equals("")||select_gender.equals(""))
+               Intent a = new Intent(login2.this, home.class);
+                if(name.getText().toString().equals("") || email.getText().toString().equals("")||
+                        addr.equals("")||select_gender.equals(""))
                 {
                     Toast.makeText(login2.this,"資料未輸入完整 !",Toast.LENGTH_SHORT).show();
                 }
@@ -189,27 +189,6 @@ public class login2 extends AppCompatActivity  {
         });
 
 
-        Age = (Spinner) findViewById(R.id.age);
-
-//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(login2.this,
-//                R.layout.login2_select_dropdown_item,                            //選項資料內容
-//                getResources().getStringArray(R.array.county_item));
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(login2.this,
-                R.layout.login2_select_dropdown_item,                            //選項資料內容
-                getResources().getStringArray(R.array.age_item));
-
-//        adapter1.setDropDownViewResource(R.layout.login2_select_dropdown_item);
-//
-//        County.setAdapter(adapter1);
-        Age.setAdapter(adapter2);
-        Age.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
-            public void onItemSelected(AdapterView adapterView, View view, int position, long id){
-                select_age=Age.getSelectedItem().toString();
-            }
-            public void onNothingSelected(AdapterView arg0) {
-            }
-        });
-
         //程式剛啟始時載入第一個下拉選單
         adapter = new ArrayAdapter<String>(this,R.layout.login2_select_dropdown_item, type);
         adapter.setDropDownViewResource(R.layout.login2_select_dropdown_item);
@@ -260,15 +239,12 @@ public class login2 extends AppCompatActivity  {
     private Runnable r1=new Runnable () {
 
         public void run() {
-            webservice.Update_user_info(email.getText().toString(),name.getText().toString(),phone.getText().toString(),addr,select_age,select_gender,"0");
+            //(String email,String name,String addr,String gender)
+            webservice.Update_user_info(email.getText().toString(),name.getText().toString(),addr,select_gender);
 
         }
 
     };
-
-
-
-
 
     @Override
     protected void onDestroy() {

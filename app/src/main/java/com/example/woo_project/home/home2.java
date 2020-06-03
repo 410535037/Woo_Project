@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,11 +40,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.woo_project.DownloadImageTask;
 import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.QRCode.Constant;
 import com.example.woo_project.R;
 
 import com.example.woo_project.record.record;
+import com.example.woo_project.user_setting.user_setting;
+import com.example.woo_project.webservice;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.activity.CaptureActivity;
 
@@ -55,9 +59,9 @@ import static androidx.core.provider.FontsContractCompat.FontRequestCallback.RES
 
 public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
 
-    BottomSheetDialog bottomSheetDialog;
-    ImageButton record,calendar,setting,user;
-    AppCompatImageButton add_canopy_area;
+    private BottomSheetDialog bottomSheetDialog;
+
+    private AppCompatImageButton add_canopy_area;
 
     String delete_cardview_id;
     GlobalVariable GV; //首頁作物照片(暫時)
@@ -71,7 +75,6 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
     //宣告特約工人
     private HandlerThread mThread;
 
-    private String gmail;
     private Spinner canopy_area;
     private ProgressDialog mLoadingDialog;
 
@@ -81,6 +84,10 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
 
 
     private List<String> canopyarea_list = new ArrayList<>();
+
+    //使用者圖片
+    private String user_img_link="",account="";
+    private DownloadImageTask downloadImageTask;
 
     ViewPager home2_viewpager;
     @Override
@@ -92,7 +99,7 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
 
         canopy_area = view.findViewById(R.id.canopy_area);
         GV = (GlobalVariable) Objects.requireNonNull(getActivity()).getApplicationContext();
-        gmail = GV.getUser_gmail();
+        account = GV.getUser_gmail();
 
 
         mLoadingDialog = new ProgressDialog(getContext());
@@ -153,14 +160,47 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
         mThreadHandler.post(getCanopyarea_list);
 
 
+        ImageView setting = view.findViewById(R.id.setting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(getContext(), user_setting.class);
+                startActivity(a);
+
+            }
+        });
+        //更換首頁圖片
+        downloadImageTask = new DownloadImageTask(setting);
+        mThreadHandler.post(download_user_img_r1);
 
 
 
         return view;
     }
 
+    private Runnable download_user_img_r1 = new Runnable() {
+        @Override
+        public void run() {
+            user_img_link = webservice.user_img_down(account);
+            Log.v("test","account : "+account);
+            if(user_img_link.contains("http"))
+            {
+                mThreadHandler.post(user_img_r2);
+            }
 
 
+        }
+    };
+
+    private Runnable user_img_r2 = new Runnable() {
+        @Override
+        public void run() {
+            downloadImageTask.execute(user_img_link);
+        }
+    };
+
+
+    //抓區域list
     private Runnable getCanopyarea_list= new Runnable() {
         @Override
         public void run() {
@@ -168,7 +208,7 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
             mThreadHandler.post(setCanopyarea_list);
         }
     };
-
+    //把區域list放進spinner
     private Runnable setCanopyarea_list= new Runnable() {
         @Override
         public void run() {

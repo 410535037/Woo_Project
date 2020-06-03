@@ -9,8 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="800dp"
-        >
+        android:layout_height="wrap_content">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,178 +118,196 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#ECECEC"
             android:layout_marginTop="370dp">
 
-        </RelativeLayout>
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="#fff"
+            android:id="@+id/personal_info_RL"
             android:layout_marginTop="400dp">
+            <!--
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/personal_user_data_icon"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/personal_user_data"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_user_data_icon"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/personal_user_data"/>
 
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/personal_user_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="85dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#00000000"
+                            android:gravity="fill_horizontal"
+                            android:text="個人資料"
+                            android:textSize="22dp"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_user_info"
+                           -->
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="85dp"
-                android:layout_marginTop="10dp"
-                android:background="#00000000"
-                android:gravity="fill_horizontal"
-                android:text="個人資料"
-                android:textSize="22dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="姓名"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="徐維彬"
+                    android:textColor="@color/gray"/>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="85dp"
+                    android:background="@drawable/personal_line"/>
+
+                <TextView
+                    android:id="@+id/textV2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:text="電子郵件"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/email_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="zx85hy6538@gmail.com"
+                    android:textColor="@color/gray"/>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="85dp"
+                    android:background="@drawable/personal_line"/>
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:text="所在地"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/addr_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20dp"
+                    android:text="桃園市新屋區"
+                    android:textColor="@color/gray"/>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="85dp"
+                    android:background="@drawable/personal_line"/>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:text="性別"
+                    android:textSize="17sp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/gender_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20dp"
+                    android:text="男"
+                    android:textColor="@color/gray"/>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="85dp"
+                    android:background="@drawable/personal_line"/>
+
+            </LinearLayout>
 
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginLeft="85dp"
-                android:background="@drawable/personal_line">
 
-            </ImageView>
+
+
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#ffffff"
-            android:layout_marginTop="460dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_article_icon"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/personal_article"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_article"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="85dp"
-                android:layout_marginTop="10dp"
-                android:background="#00000000"
-                android:gravity="fill_horizontal"
-                android:text="我的文章"
-                android:textSize="22dp"/>
-
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginLeft="85dp"
-                android:background="@drawable/personal_line">
-
-            </ImageView>
-
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#ffffff"
-            android:layout_marginTop="520dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_collect_icon"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/personal_collect"/>
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_collect"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="85dp"
-                android:background="#00000000"
-                android:text="收藏作物"
-                android:textSize="22dp"
-                android:gravity="fill_horizontal"/>
-
-
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginLeft="85dp"
-                android:background="@drawable/personal_line">
-
-            </ImageView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#ffffff"
-            android:layout_marginTop="580dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_article_like_icon"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/personal_article_like"/>
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/personal_article_like"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="85dp"
-                android:background="#00000000"
-                android:text="收藏文章"
-                android:textSize="22dp"
-                android:gravity="fill_horizontal"/>
-
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#ECECEC"
-            android:layout_marginTop="640dp">
+            android:layout_marginTop="30dp">
 
-        </RelativeLayout>
+        </ImageView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#ffffff"
-            android:layout_marginTop="670dp">
+           >
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/personal_help_icon"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/personal_help"/>
@@ -322,13 +339,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#ffffff"
-            android:layout_marginTop="730dp">
+            android:background="#ffffff">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/personal_signout_icon"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/personal_signout"/>
@@ -339,7 +355,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="85dp"
+                android:layout_marginStart="85dp"
                 android:background="#00000000"
                 android:text="登出"
                 android:textSize="22dp"
@@ -363,6 +379,8 @@
             </ImageView>
 
         </RelativeLayout>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

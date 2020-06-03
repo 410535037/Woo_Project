@@ -49,7 +49,7 @@ public class user_setting extends AppCompatActivity
 {
     GlobalVariable gl;
     public TextView user_name;
-    Button model,level,personal_user_info,personal_article,personal_collect,personal_article_like,personal_help,personal_signout;
+    Button model,level,personal_user_info,personal_help,personal_signout;
     ProgressDialog mLoadingDialog;
     private final int REQUEST_PICK_IMAGE = 1;
     DownloadImageTask downloadImageTask;
@@ -102,10 +102,8 @@ public class user_setting extends AppCompatActivity
         level=findViewById(R.id.level);
         model=findViewById(R.id.model);
         user_name=findViewById(R.id.personal_user_name);
-        personal_user_info=findViewById(R.id.personal_user_info);
-        personal_article=findViewById(R.id.personal_article);
-        personal_collect=findViewById(R.id.personal_collect);
-        personal_article_like=findViewById(R.id.personal_article_like);
+//        personal_user_info=findViewById(R.id.personal_user_info);
+
         personal_help=findViewById(R.id.personal_help);
         personal_signout=findViewById(R.id.personal_signout);
         gl = (GlobalVariable)getApplicationContext();
@@ -143,6 +141,9 @@ public class user_setting extends AppCompatActivity
                 dialog.show();
             }
         });
+
+        /***
+
         personal_user_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,33 +152,8 @@ public class user_setting extends AppCompatActivity
                 user_setting.this.finish();
             }
         });
-        personal_article.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(user_setting.this, my_post.class);
-                //(intent);
-                user_setting.this.finish();
-            }
-        });
-      /**
-        personal_collect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(user_setting.this, like_vege.class);
-                startActivity(intent);
-                user_setting.this.finish();
-            }
-        });
-        personal_article_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(user_setting.this, like_post.class);
-                startActivity(intent);
-                user_setting.this.finish();
-            }
-        });
 
-        **/
+     ***/
         personal_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

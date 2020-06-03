@@ -355,7 +355,7 @@ public class personal_info_edit extends AppCompatActivity {
 
         public void run() {
 
-            webservice.Update_user_info(edit_email.getText().toString(),edit_name.getText().toString(),edit_phone.getText().toString(),addr,select_age,gender,expri);
+            webservice.Update_user_info(edit_email.getText().toString(),edit_name.getText().toString(),addr,gender);
             mUI_Handler.post(r4);
 
         }

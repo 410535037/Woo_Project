@@ -66,14 +66,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:text="姓名"
@@ -84,38 +84,19 @@
                 android:id="@+id/name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:text="哈哈哈"
                 android:textColor="@color/gray"/>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_weight="1"
-                android:text="電話"
-                android:textSize="17sp"
-                android:textColor="@color/black"/>
 
-            <TextView
-                android:id="@+id/phone_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:textSize="20dp"
-                android:text="西西"
-                android:textColor="@color/gray"/>
 
             <TextView
                 android:id="@+id/textV2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:text="電子郵件"
@@ -126,7 +107,7 @@
                 android:id="@+id/email_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:text="西西"
@@ -147,28 +128,7 @@
                 android:id="@+id/addr_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:textSize="20dp"
-                android:text="西西"
-                android:textColor="@color/gray"/>
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_weight="1"
-                android:text="年紀"
-                android:textSize="17sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/age_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
+                android:layout_marginStart="20dp"
                 android:textSize="20dp"
                 android:text="西西"
                 android:textColor="@color/gray"/>
@@ -177,7 +137,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:text="性別"
@@ -192,26 +152,6 @@
                 android:layout_weight="1"
                 android:textSize="20dp"
                 android:text="西西"
-                android:textColor="@color/gray"/>
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_weight="1"
-                android:text="種植經驗"
-                android:textSize="17sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/expri_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
                 android:textColor="@color/gray"/>
 
             <TextView

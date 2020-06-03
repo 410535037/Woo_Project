@@ -92,6 +92,7 @@ dependencies {
     //implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
     //implementation 'com.journeyapps:zxing-android-integration:2.0.1@aar'
     implementation 'com.google.zxing:core:3.3.3'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation project(':zxing-lib')
 }

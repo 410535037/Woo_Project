@@ -27,14 +27,17 @@
 
                     />
 
-                <ImageView
-                    android:id="@+id/hat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView
+
+                    android:id="@+id/setting"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:gravity="center"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/home_house"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="35dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#FC9D33"
                     />
 
 
@@ -56,7 +59,9 @@
                     android:id="@+id/canopy_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/setting"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/home2_canopyarea_dropdown_shape"/>
 
@@ -66,7 +71,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="9">
+                android:layout_weight="8">
 
                 <FrameLayout
                     android:id="@+id/canopy_fg"
