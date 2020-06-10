@@ -65,7 +65,8 @@
 
 
 
-
+    //至底灰色button顏色
+    <color name="home_gray">#b2aeac</color>
     //
     <color name="barchart_background">#00ffffff</color>
 </resources>

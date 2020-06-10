@@ -46,11 +46,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_button_home_style" />
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/goto_edit"
+            android:id="@+id/goto_inform"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottom_button_edit_style"/>
+            android:background="@drawable/bottom_button_inform_style"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/goto_record"
             android:layout_width="0dp"

@@ -42,7 +42,6 @@ import com.example.woo_project.R;
 
 import com.example.woo_project.chart.chart_1;
 import com.example.woo_project.record.record;
-import com.example.woo_project.remind.main_remind;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.activity.CaptureActivity;
 
@@ -64,7 +63,6 @@ public class home extends AppCompatActivity {
     private home2  getHome2 = new home2();
     private record  getRecord = new record();
     private chart_1 getChart_1 = new chart_1();
-    private main_remind getmain_remind = new main_remind();
     FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -94,11 +92,11 @@ public class home extends AppCompatActivity {
     }
 
     //建立功能Button
-    Button goto_home,goto_edit,goto_record,goto_chart,goto_transportation;
+    Button goto_home,goto_inform,goto_record,goto_chart,goto_transportation;
     private void createBottomButton()
     {
         goto_home = findViewById(R.id.goto_home);
-        goto_edit = findViewById(R.id.goto_edit);
+        goto_inform = findViewById(R.id.goto_inform);
         goto_record = findViewById(R.id.goto_record);
         goto_chart = findViewById(R.id.goto_chart);
         goto_transportation = findViewById(R.id.goto_transportation);
@@ -111,7 +109,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style2));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
@@ -127,21 +125,19 @@ public class home extends AppCompatActivity {
         });
 
 
-        goto_edit.setOnClickListener(new View.OnClickListener() {
+        goto_inform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style2));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style2));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
 
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                //Fragment切換
-                getmain_remind = new main_remind();
-                fragmentTransaction.replace(R.id.home_fg, getmain_remind).commit();
-//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
-//                startActivity(intent);
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                //Fragment切換
+//                getHome2 = new home2();
+//                fragmentTransaction.replace(R.id.home_fg, getHome2).commit();
             }
         });
 
@@ -150,7 +146,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
@@ -168,7 +164,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
@@ -188,7 +184,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style2));
