@@ -92,11 +92,11 @@ public class home extends AppCompatActivity {
     }
 
     //建立功能Button
-    Button goto_home,goto_edit,goto_record,goto_chart,goto_transportation;
+    Button goto_home,goto_inform,goto_record,goto_chart,goto_transportation;
     private void createBottomButton()
     {
         goto_home = findViewById(R.id.goto_home);
-        goto_edit = findViewById(R.id.goto_edit);
+        goto_inform = findViewById(R.id.goto_inform);
         goto_record = findViewById(R.id.goto_record);
         goto_chart = findViewById(R.id.goto_chart);
         goto_transportation = findViewById(R.id.goto_transportation);
@@ -109,7 +109,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style2));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
@@ -125,17 +125,19 @@ public class home extends AppCompatActivity {
         });
 
 
-        goto_edit.setOnClickListener(new View.OnClickListener() {
+        goto_inform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style2));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style2));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
 
-//                Intent intent = new Intent(home2.this, com.example.woo_project.record.record.class);
-//                startActivity(intent);
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                //Fragment切換
+//                getHome2 = new home2();
+//                fragmentTransaction.replace(R.id.home_fg, getHome2).commit();
             }
         });
 
@@ -144,7 +146,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style2));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
@@ -162,7 +164,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style2));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style));
@@ -182,7 +184,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goto_home.setBackground(getResources().getDrawable(R.drawable.bottom_button_home_style));
-                goto_edit.setBackground(getResources().getDrawable(R.drawable.bottom_button_edit_style));
+                goto_inform.setBackground(getResources().getDrawable(R.drawable.bottom_button_inform_style));
                 goto_record.setBackground(getResources().getDrawable(R.drawable.bottom_button_record_style));
                 goto_chart.setBackground(getResources().getDrawable(R.drawable.bottom_button_chart_style));
                 goto_transportation.setBackground(getResources().getDrawable(R.drawable.bottom_button_transportation_style2));
