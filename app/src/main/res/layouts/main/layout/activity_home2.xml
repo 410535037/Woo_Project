@@ -12,63 +12,89 @@
         android:orientation="vertical">
 
 
-            <RelativeLayout
-                android:id="@+id/level_RL"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+        <LinearLayout
+            android:id="@+id/level_RL"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_weight="2"
-                android:layout_marginTop="5dp">
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/goto_qrcode"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:text="掃描QRCode"
-
+                    android:background="@drawable/home2_scan_qrcode"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="15dp"
                     />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-
-                    android:id="@+id/setting"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/home_house"
-                    android:layout_centerHorizontal="true"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FC9D33"
-                    />
+            </LinearLayout>
 
 
+
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/setting"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="3"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/home_house"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#FC9D33"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/canopy_area"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="3dp"
+                        android:background="@drawable/home2_canopyarea_dropdown_shape"/>
+
+
+                </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/add_canopy_area"
                     android:layout_width="40dp"
-
                     android:layout_height="40dp"
-                    android:background="@drawable/home_add"
-                    android:layout_alignParentEnd="true"
-
                     android:layout_marginTop="20dp"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
+                    android:background="@drawable/home_add"
 
                     />
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/canopy_area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/home2_canopyarea_dropdown_shape"/>
 
             </RelativeLayout>
 
 
-            <RelativeLayout
+
+
+
+        </LinearLayout>
+
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="8">
