@@ -28,7 +28,8 @@
         <activity android:name=".user_setting.personal_help" />
         <activity android:name=".user_setting.personal_info" />
         <activity android:name=".login.login2" />
-
+        <activity android:name=".remind.main_remind" />
+        <activity android:name=".remind.set_remind" />
         <activity android:name=".calendar.calendar" />
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -7,6 +7,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#000000</color>
+    <color name="red">#F62F2F</color>
+    <color name="silver">#C0C0C0</color>
 
     <color name="green">#00AA00</color>
     <color name="colorPrimary1">#61d169</color>
@@ -28,6 +30,7 @@
     //floatingactionbtn用
     <color name="floating_main_color">#FC9D33</color>
 
+    <color name="bg">#E5EAE5</color>
 
 
 
