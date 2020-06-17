@@ -11,15 +11,6 @@
             android:layout_height="match_parent"
             android:id="@+id/factory_list">
 
-<!--            <TextView-->
-<!--                android:id="@+id/chartNN"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center_horizontal"-->
-<!--                android:text="作物數量統計表"-->
-<!--                android:textSize="20dp"-->
-<!--                android:layout_marginTop="20dp"/>-->
-
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chart_pie_block"

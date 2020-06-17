@@ -4,12 +4,12 @@
     android:id="@+id/customSliderLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:layout_centerInParent="true"
     android:orientation="horizontal"
     android:gravity="center"
     android:padding="10dp"
     tools:content=".MainActivity">
+
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="300dp"

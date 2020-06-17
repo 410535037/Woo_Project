@@ -8,11 +8,5 @@
             <padding android:right="5dp" />
         </shape>
     </item>
-    <!--
-    <item>
-        <bitmap
-            android:gravity="end"
-            android:src="@drawable/btn_botton" />
-    </item>
-    -->
+
 </layer-list>
