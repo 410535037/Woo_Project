@@ -11,15 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.woo_project.R;
@@ -44,6 +47,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class chart_1 extends Fragment implements OnChartValueSelectedListener
 {
@@ -52,7 +56,12 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
     private Typeface mTfLight;
     protected BarChart mChart;
 
+    /*** 作物相關webservice ***/
+    private List<String> corp_list = new ArrayList<>();
+    private Spinner crop_name_spinner;
 
+
+    /**廠商相關webservice**/
     private List<String> ship_to_vendor_num_kg = new ArrayList<>();
     //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
     private android.os.Handler mUI_Handler = new android.os.Handler();
@@ -84,6 +93,7 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
     {
         View view = inflater.inflate(R.layout.chart_view, container, false);
 
+        crop_name_spinner = view.findViewById(R.id.crop_spinner);
 
         select_date = view.findViewById(R.id.select_date);
         date_back = view.findViewById(R.id.date_back);
@@ -213,10 +223,73 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
         });
 
 
+//        crop_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+//                if (fragmentManager.findFragmentById(R.id.canopy_fg)==null)
+//                {
+//                    selected_canopyarea();
+//                }
+//                else
+//                {
+//                    remove_selected_canopyarea();
+//                    selected_canopyarea();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
+        mThread = new HandlerThread("");
+        //讓Worker待命，等待其工作 (開啟Thread)
+        mThread.start();
+        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
+        mThreadHandler=new Handler(mThread.getLooper());
+        mThreadHandler.post(getCrop_list);
+
 
         return view;
     }
 
+
+
+    //抓作物list
+    private Runnable getCrop_list= new Runnable() {
+        @Override
+        public void run() {
+            corp_list = chart_webservice.crop_list();
+            Log.v("test","getCrop "+corp_list);
+            mThreadHandler.post(setCrop_list);
+        }
+    };
+    //把作物list放進spinner
+    private Runnable setCrop_list = new Runnable() {
+        @Override
+        public void run() {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    //給予對應item的資料
+                    ArrayAdapter<String> crop_adapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()),
+                            R.layout.chart_crop_dropdown_item,                            //選項資料內容
+                            corp_list);   //自訂getView()介面格式(Spinner介面未展開時的View)
+                    crop_name_spinner.setAdapter(crop_adapter);
+                }
+
+            });
+        }
+    };
+
+
+
+
+    /** 廠商相關webservice **/
     public Runnable get_ship_to_vendor_num_kg = new Runnable() {
         @Override
         public void run() {

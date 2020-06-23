@@ -54,6 +54,41 @@ public class chart_webservice
         }
     }
 
+    public static List<String> crop_list()
+    {
+        String SOAP_ACTION = "http://tempuri.org/crpo_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "crop_list";   //函數名稱
+        List<String> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            //request.addProperty("","");
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 獲取返回的結果
+
+            String getString=object.getProperty(0).toString();
+            Log.v("test"," getString0012: "+ getString);
+            getString = getString.replace(" ","").replace("string=","");
+            getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+            Log.v("test"," getString2: "+ getString);
+            result = Arrays.asList(getString.split(";"));
+            Log.v("test","ws的result: "+result);
+            return result;
+        } catch (Exception e) {
+//            result.add(e.toString());
+            Log.v("test"," getString: "+ e);
+            return result;
+        }
+    }
 }
 
 

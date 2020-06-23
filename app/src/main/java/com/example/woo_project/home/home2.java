@@ -1,7 +1,4 @@
 package com.example.woo_project.home;
-
-
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -60,10 +57,8 @@ import static androidx.core.provider.FontsContractCompat.FontRequestCallback.RES
 public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
 
     private BottomSheetDialog bottomSheetDialog;
-
     private AppCompatImageButton add_canopy_area;
 
-    String delete_cardview_id;
     GlobalVariable GV; //首頁作物照片(暫時)
     int cardview_id;
 
@@ -77,12 +72,8 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
 
     private Spinner canopy_area;
     private ProgressDialog mLoadingDialog;
-
     private String test="";
-
     private home2_canopy_A  home2_canopy_A = new home2_canopy_A();
-
-
     private List<String> canopyarea_list = new ArrayList<>();
 
     //使用者圖片
@@ -141,7 +132,6 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
                     remove_selected_canopyarea();
                     selected_canopyarea();
                 }
-
             }
 
             @Override
@@ -178,9 +168,11 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
         return view;
     }
 
-    private Runnable download_user_img_r1 = new Runnable() {
+    private Runnable download_user_img_r1 = new Runnable()
+    {
         @Override
-        public void run() {
+        public void run()
+        {
             user_img_link = webservice.user_img_down(account);
             Log.v("test","account : "+account);
             if(user_img_link.contains("http"))
@@ -188,11 +180,11 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
                 mThreadHandler.post(user_img_r2);
             }
 
-
         }
     };
 
-    private Runnable user_img_r2 = new Runnable() {
+    private Runnable user_img_r2 = new Runnable()
+    {
         @Override
         public void run() {
             downloadImageTask.execute(user_img_link);
