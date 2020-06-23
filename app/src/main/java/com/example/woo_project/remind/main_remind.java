@@ -36,6 +36,7 @@ public class main_remind extends Fragment {
     private twoFragment twoFragment = new twoFragment();
     private threeFragment threeFragment = new threeFragment();
     private fourFragment fourFragment = new fourFragment();
+    int pp=1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

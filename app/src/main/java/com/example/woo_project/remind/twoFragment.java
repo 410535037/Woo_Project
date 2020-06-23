@@ -40,12 +40,17 @@ public class twoFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ArrayList<Integer> image = new ArrayList<>();
         ArrayList<String> parentList = new ArrayList<>();
         ArrayList<ArrayList> childListHolder = new ArrayList<>();
 
         parentList.add("胡蘿蔔");
         parentList.add("番茄");
-        parentList.add("青椒");
+        parentList.add("玉米");
+
+        image.add(R.drawable.cute_carrot);
+        image.add(R.drawable.tomato);
+        image.add(R.drawable.corn);
 
         ArrayList<String> childList = new ArrayList<>();
         childList.add("#A1");
@@ -69,7 +74,7 @@ public class twoFragment extends Fragment {
         childListHolder.add(childList);
 
         ExpandableRecyclerViewAdapter expandableCategoryRecyclerViewAdapter =
-                new ExpandableRecyclerViewAdapter(getActivity().getApplicationContext(), parentList,
+                new ExpandableRecyclerViewAdapter(getActivity().getApplicationContext(),image, parentList,
                         childListHolder);
 
         expanderRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));

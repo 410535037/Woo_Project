@@ -32,7 +32,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/carrot" />
+                    android:src="@drawable/cute_carrot" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="2dp"
-                            android:text="育苗日 : 今日"
+                            android:text="定植日 : 今日"
                             android:textColor="#89B094"
                             android:textSize="12dp" />
 
@@ -69,7 +69,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="#20盤"
+                            android:text="#25盤"
                             android:textColor="#89B094"
                             android:textSize="12dp" />
 

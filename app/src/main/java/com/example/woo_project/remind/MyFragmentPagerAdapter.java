@@ -8,6 +8,7 @@ import java.util.List;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> list;
+    int pp=1;
 
     public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> list){
         super(fm);

@@ -81,7 +81,7 @@
                         android:id="@+id/utv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="育苗時間" />
+                        android:hint="育苗天數" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
@@ -100,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@+id/date_bt2"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout8"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
@@ -153,7 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    app:layout_constraintEnd_toEndOf="@+id/textInputLayout14"
+                    app:layout_constraintEnd_toEndOf="@+id/date_bt"
                     app:layout_constraintStart_toStartOf="@+id/textInputLayout14"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
 
@@ -169,8 +170,9 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintEnd_toEndOf="@+id/date_bt"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/date_bt"
                     app:layout_constraintStart_toStartOf="@+id/textView8"
                     app:layout_constraintTop_toBottomOf="@+id/textView8">
 
@@ -185,11 +187,11 @@
                     android:id="@+id/date_bt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
                     android:text="選擇日期"
+                    app:layout_constraintBottom_toBottomOf="@+id/textInputLayout14"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView8"
-                    app:layout_constraintTop_toBottomOf="@+id/parent_linear_layout" />
+                    app:layout_constraintTop_toTopOf="@+id/textInputLayout14" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout6"
@@ -197,8 +199,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-                    app:layout_constraintEnd_toStartOf="@+id/date_bt"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/date_bt2"
                     app:layout_constraintStart_toStartOf="@+id/textView5"
                     app:layout_constraintTop_toBottomOf="@+id/textView5">
 
@@ -253,7 +255,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/estimate_bt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="預估" />
@@ -287,7 +289,8 @@
                                 android:id="@+id/tv11"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="TextView" />
+                                android:gravity="center"
+                                android:text="" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -301,7 +304,7 @@
                                 android:layout_width="85dp"
                                 android:layout_height="100dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/spinach" />
+                                android:src="@drawable/spinach2" />
 
                             <TextView
                                 android:id="@+id/tv2"
@@ -314,7 +317,8 @@
                                 android:id="@+id/tv21"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="TextView" />
+                                android:gravity="center"
+                                android:text="" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -341,7 +345,8 @@
                                 android:id="@+id/tv31"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="TextView" />
+                                android:gravity="center"
+                                android:text="" />
                         </LinearLayout>
                     </LinearLayout>
 

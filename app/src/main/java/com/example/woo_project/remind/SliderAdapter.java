@@ -17,6 +17,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     private List<SlideItem> sliderItems;
     private ViewPager2 viewPager2;
+    int pp=1;
 
     SliderAdapter(List<SlideItem> sliderItems, ViewPager2 viewPager2) {
         this.sliderItems = sliderItems;

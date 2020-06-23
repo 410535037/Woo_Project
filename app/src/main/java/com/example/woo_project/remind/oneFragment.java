@@ -40,20 +40,22 @@ public class oneFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ArrayList<Integer> imageList = new ArrayList<>();
         ArrayList<String> parentList = new ArrayList<>();
         ArrayList<ArrayList> childListHolder = new ArrayList<>();
 
         parentList.add("胡蘿蔔");
         parentList.add("番茄");
-        parentList.add("青椒");
+        parentList.add("玉米");
+
+        imageList.add(R.drawable.cute_carrot);
+        imageList.add(R.drawable.tomato);
+        imageList.add(R.drawable.corn);
 
         ArrayList<String> childList = new ArrayList<>();
         childList.add("#A1");
         childList.add("#A2");
         childList.add("#A3");
-        childList.add("#A4");
-        childList.add("#A5");
-
 
         childListHolder.add(childList);
 
@@ -71,8 +73,10 @@ public class oneFragment extends Fragment {
 
         childListHolder.add(childList);
 
+
+
         ExpandableRecyclerViewAdapter expandableCategoryRecyclerViewAdapter =
-                new ExpandableRecyclerViewAdapter(getActivity().getApplicationContext(), parentList,
+                new ExpandableRecyclerViewAdapter(getActivity().getApplicationContext(),imageList, parentList,
                         childListHolder);
 
         expanderRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));

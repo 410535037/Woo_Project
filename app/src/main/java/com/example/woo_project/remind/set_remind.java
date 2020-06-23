@@ -23,6 +23,7 @@ public class set_remind extends AppCompatActivity {
     RadioButton radio2;
     private ViewPager viewPager;
     private List<Fragment> fragmentList=new ArrayList<>();
+    int pp=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

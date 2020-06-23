@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.example.woo_project.R;
 
 public class OtherFragment extends Fragment {
+    int pp=1;
     public OtherFragment(){
 
     }

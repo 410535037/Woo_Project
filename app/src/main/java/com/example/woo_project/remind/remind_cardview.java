@@ -5,6 +5,7 @@ public class remind_cardview {
     private String name,tag1,tag2;
     private int image;
     private boolean isSelected;
+    int pp=1;
 
     public remind_cardview(){
         super();

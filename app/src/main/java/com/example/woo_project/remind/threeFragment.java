@@ -24,6 +24,7 @@ public class threeFragment extends Fragment {
     private TextView mTextTitle;
     List<remind_cardview> remindList;
     RecyclerView remind_rv;
+    int pp=1;
 
     public threeFragment() {
         // Requires empty public constructor

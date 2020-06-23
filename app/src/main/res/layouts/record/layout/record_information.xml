@@ -86,7 +86,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="十字花科 小白"
+                        android:text="小白菜"
                         android:textSize="15sp"/>
 
                 </LinearLayout>

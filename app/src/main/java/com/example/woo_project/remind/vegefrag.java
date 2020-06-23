@@ -3,6 +3,7 @@ package com.example.woo_project.remind;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.woo_project.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -28,10 +30,11 @@ public class vegefrag extends Fragment implements View.OnClickListener, DatePick
     private LinearLayout parentLinearLayout;
     private ImageButton plus,delete1;
     View view;
-    Button date_bt;
+    Button date_bt,estimate_bt;
     TextView date_tv,tv1,tv2,tv3;
-    String date;
-    Calendar c,c2;
+    String date,currentDateString,currentDateString2,currentDateString3;
+    Editable addday,addday2;
+    Calendar c,c2,c3;
     TextInputEditText gtv,utv;
     public vegefrag(){ }
 
@@ -53,14 +56,15 @@ public class vegefrag extends Fragment implements View.OnClickListener, DatePick
 //        });
         //Inflate the layout for this fragment
         tv1=view.findViewById(R.id.tv11);
-        tv2=view.findViewById(R.id.tv11);
-        tv3=view.findViewById(R.id.tv11);
+        tv2=view.findViewById(R.id.tv21);
+        tv3=view.findViewById(R.id.tv31);
         gtv=view.findViewById(R.id.gtv);
         utv=view.findViewById(R.id.utv);
-        gtv.setText("30");
-        utv.setText("3");
+        addday=gtv.getText();
+        addday2=utv.getText();
         date_bt=view.findViewById(R.id.date_bt);
         date_tv=view.findViewById(R.id.date_tv);
+        estimate_bt=view.findViewById(R.id.estimate_bt);
 
         date_tv.setKeyListener(null);
 
@@ -71,8 +75,23 @@ public class vegefrag extends Fragment implements View.OnClickListener, DatePick
             @Override
             public void onClick(View view) {
                 DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setTargetFragment(vegefrag.this,0);
                 datePicker.show(getActivity().getSupportFragmentManager(),"date picker");
 
+            }
+        });
+        c2.add(Calendar.DAY_OF_MONTH, -(Integer.valueOf(gtv.getText().toString())));
+        currentDateString2 =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c2.getTime());
+
+        c3.add(Calendar.DAY_OF_MONTH, -(Integer.parseInt(gtv.getText().toString())) - (Integer.parseInt(utv.getText().toString())));
+        currentDateString3 =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c3.getTime());
+
+        estimate_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tv1.setText(currentDateString3);
+                tv2.setText(currentDateString2);
+                tv3.setText(currentDateString);
             }
         });
 
@@ -104,12 +123,9 @@ public class vegefrag extends Fragment implements View.OnClickListener, DatePick
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayofmonth);
 
-        c2.set(Calendar.YEAR,year);
-        c2.set(Calendar.MONTH,month);
-        c2.set(Calendar.DAY_OF_MONTH,dayofmonth);
-
-        String currentDateString =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
+        currentDateString =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
         date_tv.setText(currentDateString);
+
 
     }
 

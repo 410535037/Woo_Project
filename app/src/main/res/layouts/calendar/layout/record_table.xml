@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/home_add_canopy_background"
+    android:orientation="vertical">
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add1"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:text="農場工作紀錄表"
+        android:textSize="15sp"
+        android:textColor="#402C2B"
+        android:layout_gravity="center"
+        android:background="@drawable/home_add_canopy_item"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add2"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/home_add_canopy_item"
+        android:text="肥料施用表"
+        android:textColor="#402C2B"
+        android:textSize="15sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add3"
+        android:layout_width="190dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/home_add_canopy_item"
+        android:text="病蟲草害等防治資材使用表"
+        android:textColor="#402C2B"
+        android:textSize="15sp" />
+
+</LinearLayout>

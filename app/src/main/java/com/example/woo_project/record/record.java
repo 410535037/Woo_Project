@@ -171,6 +171,16 @@ public class record extends Fragment
                 setSelect_dialog();
             }
         });
+
+        Button showDialog2 = view.findViewById(R.id.record_table);
+        showDialog2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                setRecord_dialog();
+            }
+        });
         return view;
     }
 
@@ -493,6 +503,37 @@ public class record extends Fragment
         dialogWindow.setAttributes(p);
 
         mThreadHandler.post(getRecord_select_list);
+    }
+
+    //篩選操作
+    private void setRecord_dialog()
+    {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        View mView = getLayoutInflater().inflate(R.layout.record_table, null);
+        Button one,two,three;
+        one = mView.findViewById(R.id.add1);
+        two = mView.findViewById(R.id.add2);
+        three = mView.findViewById(R.id.add3);
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+
+        // 調整Dialog從哪開始
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.CENTER);
+
+        // 去除四角黑色背景
+        dialogWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        /* 將Dialog用螢幕大小百分比方式設置 */
+        WindowManager m = getActivity().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 取得螢幕寬和高
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值
+        // p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8
+        p.width = (int) (d.getWidth() * 0.75);  // 寬度設為螢幕的0.75
+        dialogWindow.setAttributes(p);
     }
 
 

@@ -30,7 +30,7 @@ import static android.media.CamcorderProfile.get;
 public class ExpandableRecyclerViewAdapter extends RecyclerView.Adapter<ExpandableRecyclerViewAdapter.ViewHolder> {
 
     ArrayList<String> nameList = new ArrayList<String>();
-    ArrayList<String> image = new ArrayList<String>();
+    ArrayList<Integer> imageList = new ArrayList<Integer>();
     ArrayList<Integer> counter = new ArrayList<Integer>();
     ArrayList<ArrayList> itemNameList = new ArrayList<ArrayList>();
     Context context;
@@ -40,8 +40,10 @@ public class ExpandableRecyclerViewAdapter extends RecyclerView.Adapter<Expandab
     boolean check=false;
 
     public ExpandableRecyclerViewAdapter(Context context,
+                                         ArrayList<Integer> imageList,
                                          ArrayList<String> nameList,
                                          ArrayList<ArrayList> itemNameList) {
+        this.imageList=imageList;
         this.nameList = nameList;
         this.itemNameList = itemNameList;
         this.context = context;
@@ -92,6 +94,7 @@ public class ExpandableRecyclerViewAdapter extends RecyclerView.Adapter<Expandab
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.name.setText(nameList.get(position));
 
+        holder.image.setImageResource(imageList.get(position));
         InnerRecyclerViewAdapter itemInnerRecyclerView = new InnerRecyclerViewAdapter(itemNameList.get(position));
 
 
