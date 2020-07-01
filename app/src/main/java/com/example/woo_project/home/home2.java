@@ -400,8 +400,6 @@ public class home2 extends Fragment implements ViewPager.OnPageChangeListener{
 
 
 
-
-
     private void showLoadingDialog(String message){
         message = "載入中...";
         mLoadingDialog.setMessage(message);

@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_button_chart_style"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/goto_transportation"
+            android:id="@+id/goto_shipping"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

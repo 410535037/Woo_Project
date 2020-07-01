@@ -164,7 +164,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:background="@drawable/shipping_polygon"/>
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/a061701"/>
 
 
 

@@ -79,8 +79,8 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
     private Integer i_year,i_month;
     private Button date_back,date_after;
 
-    private RadioButton[] radioButton=new RadioButton[3];
-    private LinearLayout[] linearLayout=new LinearLayout[3];
+    private RadioButton[] radioButton=new RadioButton[2];
+    private LinearLayout[] linearLayout=new LinearLayout[2];
     private RadioGroup radioGroup;
 
     private float[] yData = {25.3f, 10.6f, 52.76f, 44.32f, 46.01f, 16.89f, 23.9f,14f};

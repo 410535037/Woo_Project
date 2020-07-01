@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customSliderLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="10dp"
+    tools:content=".MainActivity">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbLeft"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textColor="@color/color_radiobutton"
+            android:textStyle="bold"
+            android:text="待出貨"
+            android:checked="true"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_weight="1"
+            android:background="@drawable/ratio_button_left_selector"/>
+
+
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/rbRight"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:textColor="@color/color_radiobutton"
+            android:textStyle="bold"
+            android:text="已出貨"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:layout_weight="1"
+            android:background="@drawable/ratio_button_right_selector"/>
+
+    </RadioGroup>
+
+</LinearLayout>
