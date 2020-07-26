@@ -1,5 +1,6 @@
 package com.example.woo_project.home;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +29,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.woo_project.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-
+import java.util.Locale;
 
 
 public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapter.ViewHolder>
@@ -40,7 +44,8 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
        public List<home2_plant_img_cardview> cardviewList;
         private long startTime ,endTime,pressTime;
 
-
+        //種植作物日期
+        String set_plant_date_str = "";
         canopy_CardAdapter(Context context,List<home2_plant_img_cardview> cardviewList) {
             this.context = context;
             this.cardviewList = cardviewList;
@@ -180,7 +185,8 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
         private canopy_dialog canopy_dialog;
         private List<home2_dialog_cardview> canopy_plant_cardviewList = new ArrayList<>();
 
-        public  void createPlantInfo(final Context context,String canopy_name){
+        public  void createPlantInfo(final Context context,String canopy_name)
+        {
 
             View view = LayoutInflater.from( context ).inflate( R.layout.home_canopy_dialog, null );
 
@@ -188,10 +194,21 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
             ImageView add_info;
             home_canopy_name = view.findViewById(R.id.home_canopy_name);
             home_canopy_mode = view.findViewById(R.id.home_canopy_mode);
+
             add_info = view.findViewById(R.id.add_info);
             set_plant_name = view.findViewById(R.id.set_plant_name);
             set_plant_num = view.findViewById(R.id.set_plant_num);
             set_plant_date = view.findViewById(R.id.set_plant_date);
+
+            ImageButton select_plant_date = view.findViewById(R.id.select_plant_date);
+
+            select_plant_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    set_plant_date(context);
+                }
+            });
+
 
             //棚架名稱
             home_canopy_name.setText(canopy_name);
@@ -209,6 +226,7 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
             add_info.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if(!set_plant_name.getText().toString().equals("") &&
                     Integer.parseInt(set_plant_num.getText().toString())> 0 && !set_plant_date.getText().toString().equals(""))
                     {
@@ -252,6 +270,33 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
             p.width = (int) (dm.widthPixels * 0.9);  // 寬度設為螢幕的0.8
             dialogWindow.setAttributes(p);
             createPlantInfoDialog.show();
+
+        }
+
+        public void set_plant_date(Context date_context)
+        {
+
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(date_context);
+            View mView = LayoutInflater.from( date_context ).inflate( R.layout.home_canopy_dialog_calendar, null );
+            mBuilder.setView(mView);
+            final AlertDialog select_date_dialog = mBuilder.create();
+            select_date_dialog.show();
+
+
+            CalendarView get_date = mView.findViewById(R.id.select_date);
+            get_date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(@NonNull CalendarView calendarView, int y, int m, int dm) {
+                    set_plant_date_str = y+"."+(m+1)+"."+dm;
+                    if(!set_plant_date_str.equals(""))
+                    {
+                        set_plant_date.setText(set_plant_date_str);
+                        Log.v("test","onClick: "+set_plant_date_str);
+                        Log.v("test","set_plant_date: "+set_plant_date.getText());
+                    }
+                    select_date_dialog.dismiss();
+                }
+            });
 
         }
 

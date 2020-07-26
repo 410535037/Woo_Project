@@ -89,14 +89,23 @@
                 android:id="@+id/add_info"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+
                 android:src="@drawable/home_dialog_add"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginEnd="3dp"/>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/select_plant_date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@drawable/calendar"
+                android:layout_height="wrap_content"/>
 
             <EditText
                 android:id="@+id/set_plant_name"
                 android:hint="作物名"
+                android:layout_marginStart="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
@@ -114,14 +123,16 @@
                 android:inputType="number"
                 android:singleLine="true"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/set_plant_date"
                 android:hint="種植日期"
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
-                android:inputType="date"
+                android:layout_gravity="center"
+                android:gravity="center"
+
                 android:singleLine="true"/>
 
 
