@@ -1,8 +1,5 @@
 package com.example.woo_project.record;
 
-
-import android.graphics.Bitmap;
-
 public class record_Cardview
 {
     private int id;

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vege_instock_cardview"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="6dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0dp"
+    android:background="#00000000">
+
+    <LinearLayout
+            android:id="@+id/linearLayoutHolder"
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:animateLayoutChanges="true"
+            android:layout_gravity="center">
+
+            <ImageView
+
+                    android:id="@+id/instock_circle"
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:background="@drawable/shipping_instock_crop_circle"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"/>
+
+            <TextView
+                    android:id="@+id/vege_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    android:text="奶白"
+                    android:textColor="#402C2B"
+                    android:textSize="18sp" />
+
+            <TextView
+                    android:id="@+id/instock_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center"
+                    android:text="50"
+                    android:textColor="#402C2B"
+                    android:textSize="18sp"
+                    android:gravity="center"/>
+            <TextView
+                android:id="@+id/kg_tx1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_gravity="center"
+                android:text="公斤"
+                android:textColor="#402C2B"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/weight_inorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center"
+                android:text="15"
+                android:textColor="#402C2B"
+                android:textSize="18sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/kg_tx2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_gravity="center"
+                android:text="公斤"
+                android:textColor="#402C2B"
+                android:textSize="18sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/shipping_next_page"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
+                android:background="@drawable/shipping_next_page"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+

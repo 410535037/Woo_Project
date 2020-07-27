@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E6EAE7">
 
+    <!--title-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -21,17 +23,9 @@
             android:textStyle="bold" />
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:id="@+id/left_arrow"
-            android:background="@drawable/chart_left_arrow" />
-
-
     </RelativeLayout>
 
+    <!--search bar,...etc -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -70,6 +64,7 @@
 
     </RelativeLayout>
 
+    <!--目前庫存摺疊按鈕欄    -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
@@ -99,8 +94,9 @@
 
     </RelativeLayout>
 
+    <!--目前庫存項目    -->
     <RelativeLayout
-        android:id="@+id/crop_in_stock"
+        android:id="@+id/instock_field_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -126,8 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/shipping_tx3"
-                android:layout_marginEnd="60dp"
+                android:layout_marginStart="30dp"
                 android:text="作物"
                 android:textColor="#666666"
                 android:textSize="16sp" />
@@ -137,8 +132,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:text="庫存總量"
+                android:layout_toRightOf="@+id/shipping_tx2"
+                android:layout_marginStart="45dp"
+                android:text="庫存量"
                 android:textColor="#666666"
                 android:textSize="16sp" />
 
@@ -147,30 +143,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/shipping_tx3"
-                android:layout_marginLeft="60dp"
+                android:layout_toEndOf="@+id/shipping_tx3"
+                android:layout_marginStart="45dp"
                 android:text="待出貨量"
                 android:textColor="#666666"
                 android:textSize="16sp" />
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/a061701"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/instock_Recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-
-
-        </RelativeLayout>
+        </ScrollView>
 
     </RelativeLayout>
+
 
 </LinearLayout>

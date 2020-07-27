@@ -53,24 +53,24 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="70dp">
 
-        <ImageButton
-            android:layout_centerVertical="true"
-            android:id="@+id/vege_name"
+        <Spinner
+            android:id="@+id/vege_name_spinner"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_width="135dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shipping_vege_name"/>
-
-        <ImageButton
             android:layout_centerVertical="true"
-            android:id="@+id/vendor_name"
-            android:layout_marginStart="15dp"
-            android:layout_width="135dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shipping_vendor_name"
-            android:layout_toEndOf="@+id/vege_name"/>
+            android:background="@drawable/shipping_spinner_background" />
+
+        <Spinner
+            android:id="@+id/vendor_name_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/vege_name_spinner"
+            android:background="@drawable/shipping_spinner_background" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_vendor"
@@ -79,7 +79,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:background="@drawable/home_add"
-            android:layout_toEndOf="@+id/vendor_name" />
+            android:layout_toEndOf="@+id/vendor_name_spinner" />
 
     </RelativeLayout>
 
@@ -88,12 +88,42 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-        <ImageButton
-            android:id="@+id/sale_num"
-            android:layout_marginStart="20dp"
-            android:layout_width="135dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shipping_num" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sale_num"
+                android:layout_marginStart="20dp"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:hint="  銷售數量(公斤)"
+                android:text=""
+                android:layout_marginTop="10dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/til3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/total_earnings"
+                android:layout_marginStart="20dp"
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:hint="  銷售總金額(元)"
+                android:text=""
+                android:layout_marginTop="10dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </RelativeLayout>
 
@@ -102,18 +132,43 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-        <ImageButton
-            android:id="@+id/shipping_date"
-            android:layout_marginStart="20dp"
-            android:layout_width="160dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shipping_date" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/set_ship_date"
+                android:layout_marginStart="20dp"
+                android:layout_width="135dp"
+                android:layout_height="50dp"
+                android:hint="  預計/實際出貨日期"
+                android:text=""
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"/>
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/select_ship_date"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@+id/til5"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/calendar" />
+
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/shipping_status"
@@ -128,7 +183,6 @@
             android:textStyle="bold"/>
 
     </RelativeLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"

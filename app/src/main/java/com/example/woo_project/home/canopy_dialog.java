@@ -75,7 +75,8 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder
+    {
         TextView plant_name,plant_num,plant_date;
 
         ViewHolder(View itemView){

@@ -47,6 +47,8 @@ public class login extends AppCompatActivity implements GoogleApiClient.Connecti
     private  Handler mThreadHandler;
     //宣告特約工人
     private HandlerThread mThread;
+
+
     GlobalVariable user;
 
     GlobalVariable gl;

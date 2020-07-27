@@ -104,17 +104,15 @@ public class record extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
        // getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         View view = inflater.inflate(R.layout.activity_record, container, false);
-
-
 
         // 申請文件讀取權限
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // 申請權限
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission
-                    .WRITE_EXTERNAL_STORAGE)) {
+                    .WRITE_EXTERNAL_STORAGE))
+            {
                 Toast.makeText(getContext(), "請到設定開啟使用文件權限", Toast.LENGTH_SHORT).show();
             }
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constant.REQ_PERM_EXTERNAL_STORAGE);
@@ -840,6 +838,7 @@ public class record extends Fragment
                         tx2 = (TextView) itemView.findViewById(R.id.tx2);
                     }
         }
+
         public  void addItem(int i){
             fg = true;
 //            num = cardviewList.size()-1;

@@ -3,11 +3,9 @@ package com.example.woo_project.home;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,19 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.woo_project.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
 
 
 public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapter.ViewHolder>
@@ -41,12 +34,13 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 
 
         Context context;
-       public List<home2_plant_img_cardview> cardviewList;
+        public List<home2_plant_img_cardview> cardviewList;
         private long startTime ,endTime,pressTime;
 
         //種植作物日期
         String set_plant_date_str = "";
-        canopy_CardAdapter(Context context,List<home2_plant_img_cardview> cardviewList) {
+        canopy_CardAdapter(Context context,List<home2_plant_img_cardview> cardviewList)
+        {
             this.context = context;
             this.cardviewList = cardviewList;
         }
@@ -247,11 +241,6 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 
                 }
             });
-
-
-
-
-
 
 
             Dialog createPlantInfoDialog = new Dialog(context);

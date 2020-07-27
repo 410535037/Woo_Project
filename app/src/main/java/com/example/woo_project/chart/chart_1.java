@@ -63,12 +63,14 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
 
     /**廠商相關webservice**/
     private List<String> ship_to_vendor_num_kg = new ArrayList<>();
+
     //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
     private android.os.Handler mUI_Handler = new android.os.Handler();
     //宣告特約工人的經紀人
     private Handler mThreadHandler;
     //宣告特約工人
     private HandlerThread mThread;
+
     String[] split_line={}; //將傳回值分割
     float kg_num=0;
 
@@ -154,12 +156,9 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
         linearLayout[0]= (LinearLayout) view.findViewById(R.id.chart_layout_pie);
         linearLayout[1]= (LinearLayout) view.findViewById(R.id.chart_layout_bar);
 
-//        mTfRegular = Typeface.createFromAsset( getActivity().getAssets(), "OpenSans-Regular.ttf");
-//        mTfLight = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans-Light.ttf");
-
         mChart = view.findViewById(R.id.chart_bar_block);
         mChart.setBackgroundColor(getResources().getColor(R.color.barchart_1));
-        //initBarChart();
+
 
         pieChart = (PieChart) view.findViewById(R.id.chart_pie_block);
         pieChart.setRotationEnabled(true);
@@ -191,14 +190,6 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
 
         });
 
-        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
-        mThread = new HandlerThread("");
-
-        //讓Worker待命，等待其工作 (開啟Thread)
-        mThread.start();
-        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
-        mThreadHandler=new Handler(mThread.getLooper());
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
 
@@ -222,28 +213,6 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
             }
         });
 
-
-//        crop_name_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
-//                if (fragmentManager.findFragmentById(R.id.canopy_fg)==null)
-//                {
-//                    selected_canopyarea();
-//                }
-//                else
-//                {
-//                    remove_selected_canopyarea();
-//                    selected_canopyarea();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
 
         //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
         mThread = new HandlerThread("");

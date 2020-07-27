@@ -56,7 +56,7 @@ public class chart_webservice
 
     public static List<String> crop_list()
     {
-        String SOAP_ACTION = "http://tempuri.org/crpo_list";          //命名空間+要用的函數名稱
+        String SOAP_ACTION = "http://tempuri.org/crop_list";          //命名空間+要用的函數名稱
         String METHOD_NAME = "crop_list";   //函數名稱
         List<String> result = new ArrayList<>();
         //必須用try catch包著

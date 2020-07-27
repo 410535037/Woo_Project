@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/chart_layout_bar">
 
@@ -15,10 +15,10 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/crop_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/chart_crop_dropdown_spinner"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shipping_spinner_background"
             android:gravity="center" />
 
 
@@ -26,7 +26,8 @@
             android:id="@+id/chart_bar_block"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_marginTop="70dp"
+            android:layout_alignTop="@+id/crop_spinner"
+            android:layout_marginTop="50dp"
             android:background="@color/transparent"
             android:padding="15dp" />
 

@@ -8,13 +8,11 @@
     app:cardBackgroundColor="@color/record_backgroundcolor"
 
 
-
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
     app:cardElevation="6dp"
     app:cardCornerRadius="10dp"
-    app:contentPaddingBottom="7dp"
-    >
+    app:contentPaddingBottom="7dp">
 
   <RelativeLayout
       android:layout_width="150dp"
