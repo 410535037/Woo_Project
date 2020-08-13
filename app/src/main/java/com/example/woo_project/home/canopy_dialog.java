@@ -29,8 +29,6 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
 
     Context context;
     public List<home2_dialog_cardview> cardviewList;
-
-
     canopy_dialog(Context context,List<home2_dialog_cardview> cardviewList) {
         this.context = context;
         this.cardviewList = cardviewList;
@@ -42,6 +40,7 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         final home2_dialog_cardview cardview = cardviewList.get(i);
@@ -49,7 +48,14 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
         viewHolder.plant_name.setText(cardview.getName());
         viewHolder.plant_num.setText(String.valueOf(cardview.getNum()));
         viewHolder.plant_date.setText(cardview.getDate());
+        final int edit_info_id=i;
+        viewHolder.edit_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                removeItem(edit_info_id);
+            }
+        });
 //            viewHolder.itemView.setOnClickListener(new View.OnClickListener()
 //            {
 //                @Override
@@ -69,6 +75,7 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
 //            });
     }
 
+
     @Override
     public int getItemCount() {
         return cardviewList.size();
@@ -78,6 +85,7 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder
     {
         TextView plant_name,plant_num,plant_date;
+        ImageView edit_info;
 
         ViewHolder(View itemView){
             super(itemView);
@@ -86,9 +94,13 @@ public  class canopy_dialog extends  RecyclerView.Adapter<canopy_dialog.ViewHold
             plant_name = itemView.findViewById(R.id.home_dialog_plant);
             plant_num = itemView.findViewById(R.id.home_dialog_num);
             plant_date = itemView.findViewById(R.id.home_dialog_date);
+            edit_info = itemView.findViewById(R.id.home_dialog_edit);
 
         }
     }
+
+
+
 
     // 刪除數據
     public void removeItem(int position) {

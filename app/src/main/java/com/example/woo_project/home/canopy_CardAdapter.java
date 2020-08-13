@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -93,7 +94,7 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
                         if(400 < ((int) pressTime))
                         {
                             Log.v("test","createinfo presstime: "+ pressTime );
-                            createPlantInfo(context,cardview.getName());
+                            createPlantInfo(cardview.getName());
                             endTime = -1;
                         }
 
@@ -173,13 +174,16 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 //            notifyItemInserted(i);
         }
 
-        private TextView set_plant_name,set_plant_num,set_plant_date;
-
+        private EditText set_plant_name,set_plant_num;
+        private TextView set_plant_date;
 
         private canopy_dialog canopy_dialog;
         private List<home2_dialog_cardview> canopy_plant_cardviewList = new ArrayList<>();
 
-        public  void createPlantInfo(final Context context,String canopy_name)
+
+
+
+        public  void createPlantInfo(String canopy_name)
         {
 
             View view = LayoutInflater.from( context ).inflate( R.layout.home_canopy_dialog, null );
@@ -194,6 +198,7 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
             set_plant_num = view.findViewById(R.id.set_plant_num);
             set_plant_date = view.findViewById(R.id.set_plant_date);
 
+
             ImageButton select_plant_date = view.findViewById(R.id.select_plant_date);
 
             select_plant_date.setOnClickListener(new View.OnClickListener() {
@@ -206,8 +211,6 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
 
             //棚架名稱
             home_canopy_name.setText(canopy_name);
-
-
             //棚架內蔬菜
              final RecyclerView home_canopy_dialog_recyclerview = view.findViewById(R.id.home_canopy_dialog_recyclerview);
 
@@ -261,6 +264,7 @@ public  class canopy_CardAdapter extends  RecyclerView.Adapter<canopy_CardAdapte
             createPlantInfoDialog.show();
 
         }
+
 
         public void set_plant_date(Context date_context)
         {
