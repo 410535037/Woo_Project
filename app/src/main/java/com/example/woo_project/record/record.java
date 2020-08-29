@@ -784,7 +784,7 @@ public class record extends Fragment
 **/
 
 
-    private class CardAdapter extends  RecyclerView.Adapter<CardAdapter.ViewHolder>
+    private class CardAdapter  extends  RecyclerView.Adapter<CardAdapter.ViewHolder>
     {
         private Context context;
         public List<record_Cardview> cardviewList;

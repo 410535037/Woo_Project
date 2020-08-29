@@ -1,5 +1,6 @@
 package com.example.woo_project.chart;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,6 +25,7 @@ import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.woo_project.R;
@@ -48,6 +51,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class chart_1 extends Fragment implements OnChartValueSelectedListener
 {
@@ -89,6 +94,12 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
     private String[] xData = {"青江", "小白" , "青花椰" , "白花椰", "小松", "奶白", "空心","絲瓜"};
     private PieChart pieChart;
 
+    //圖表底下cardview功能
+    private List<chart1_info_cardview> chart1_info_cardviewList;
+    RecyclerView recyclerView;
+
+    //總賣出公斤數
+    private TextView chart_sales_all_num,chart_sales_vege;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -169,20 +180,38 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
 
         addDataSet();
 
+        //總賣出數量
+        chart_sales_all_num = view.findViewById(R.id.chart_sales_all_num);
+        chart_sales_vege = view.findViewById(R.id.chart_sales_vege);
+        //圖表底下的recyclerview
+        recyclerView =  view.findViewById(R.id.chart_recyclerview);
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
-            public void onValueSelected(Entry e, Highlight h) {
+            public void onValueSelected(Entry e, Highlight h)
+            {
+                chart_sales_vege.setText("高麗菜");
+                chart_sales_all_num.setText("50");
+                //cardview 建立
 
-                int pos1 = e.toString().indexOf("(sum): ");
-                String sales = e.toString().substring(pos1 + 7);
-
-                for(int i = 0; i < yData.length; i++){
-                    if(yData[i] == Float.parseFloat(sales)){
-                        pos1 = i;
-                        break;
-                    }
-                }
-//                String employee = xData[pos1 + 1];
+                chart1_info_cardviewList = new ArrayList<>();
+                //chart1_info_cardview(int id,String canopy,String harvest_date,float sales_num,String sales_date,float sales_price,String sales_vendor)
+                chart1_info_cardviewList.add(new chart1_info_cardview(0,"A01","2020-08-22",
+                        30.0,"2020-08-23",20.0,"壽豐農會"));
+                chart1_info_cardviewList.add(new chart1_info_cardview(1,"B10","2020-08-23",
+                        20.0,"2020-08-24",18.0,"吉安農會"));
+                recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                recyclerView.setAdapter(new CardAdapter(getContext(), chart1_info_cardviewList));
+//                int pos1 = e.toString().indexOf("(sum): ");
+//                String sales = e.toString().substring(pos1 + 7);
+//                for(int i = 0; i < yData.length; i++){
+//                    Log.v("test","yDATA: "+i+"  "+yData[i]);
+//                    Log.v("test","sales: "+ sales);
+//                    if(yData[i] == Float.parseFloat(sales)){
+//                        pos1 = i;
+//                        break;
+//                    }
+//                }
+////                String employee = xData[pos1 + 1];
             }
 
             @Override
@@ -515,4 +544,76 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
 
         }
     }
+
+
+    /**
+     *  圖表底下的Cardview
+     **/
+    private class CardAdapter  extends  RecyclerView.Adapter<CardAdapter.ViewHolder>
+    {
+        private Context context;
+        public List<chart1_info_cardview> cardviewList;
+
+        CardAdapter(Context context, List<chart1_info_cardview> cardviewList) {
+            this.context = context;
+            this.cardviewList = cardviewList;
+        }
+
+        @Override
+        public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = LayoutInflater.from(context).inflate(R.layout.chart_view_cardview,viewGroup,false);
+            return new ViewHolder(view);
+        }
+        //String canopy,String harvest_date,float sales_num,String sales_date,float sales_price,String sales_vendor
+        @Override
+        public void onBindViewHolder(CardAdapter.ViewHolder viewHolder, int i) {
+            final chart1_info_cardview cardview = cardviewList.get(i);
+            viewHolder.canopy.setText(cardview.getCanopy());
+            viewHolder.harvest_date.setText(cardview.getHarvest_date());
+            viewHolder.sales_num.setText(String.valueOf(cardview.getSales_num()));
+            viewHolder.sales_date.setText(cardview.getSales_date());
+            viewHolder.sales_price.setText(String.valueOf(cardview.getSales_price()));
+            viewHolder.sales_vendor.setText(cardview.getSales_vendor());
+
+
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return cardviewList.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+            int id;
+            TextView canopy,harvest_date,sales_date,sales_vendor,sales_num,sales_price;
+
+            ViewHolder(View itemView){
+                super(itemView);
+                canopy = itemView.findViewById(R.id.chart_canopy);
+                harvest_date = itemView.findViewById(R.id.chart_harvest_date);
+                sales_date = itemView.findViewById(R.id.chart_sales_date);
+                sales_vendor = itemView.findViewById(R.id.chart_sales_vendor);
+                sales_num = itemView.findViewById(R.id.chart_sales_num);
+                sales_price = itemView.findViewById(R.id.chart_sales_price);
+            }
+        }
+        public  void addItem(int i){
+
+//            num = cardviewList.size()-1;
+//            //add(位置,資料)
+//            cardviewList.add(i, new record_Cardview(id,"小白菜", R.drawable.icon201));
+//            id=id+1;
+//            notifyItemInserted(i);
+        }
+    }
+
+
+
 }
