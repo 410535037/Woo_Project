@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="11">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="#89b094">
@@ -49,7 +43,7 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="#89b094"
@@ -87,38 +81,37 @@
 
             </RelativeLayout>
 
-            <!-- 切換圖表相關 -->
+        <!-- 切換圖表相關 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
-                    android:layout_width="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+
+                <include
+                    layout="@layout/chart_radio_btn" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <include
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom">
-
-                        <include
-                            layout="@layout/chart_radio_btn" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:id="@+id/include_fram"
+                    layout="@layout/chart_framelayoutall"/>
 
-                        <include
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        android:id="@+id/include_fram"
-                        layout="@layout/chart_framelayoutall"/>
+            </LinearLayout>
 
-                    </LinearLayout>
+        </LinearLayout>
 
-                </LinearLayout>
-
-            <LinearLayout
+        <LinearLayout
                 android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -166,14 +159,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-
         </LinearLayout>
 
-    </ScrollView>
 
 
+</ScrollView>
 
-
-
-
-</LinearLayout>

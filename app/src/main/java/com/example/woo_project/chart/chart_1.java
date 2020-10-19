@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -22,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.IdRes;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -45,8 +47,12 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,8 +96,8 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
     private LinearLayout[] linearLayout=new LinearLayout[2];
     private RadioGroup radioGroup;
 
-    private float[] yData = {25.3f, 10.6f, 52.76f, 44.32f, 46.01f, 16.89f, 23.9f,14f};
-    private String[] xData = {"青江", "小白" , "青花椰" , "白花椰", "小松", "奶白", "空心","絲瓜"};
+    private List<Float> yData = new ArrayList<>();
+    private List<String> xData = new ArrayList<>();
     private PieChart pieChart;
 
     //圖表底下cardview功能
@@ -175,10 +181,15 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
         pieChart.setRotationEnabled(true);
         pieChart.setHoleRadius(65f);
         pieChart.setTransparentCircleAlpha(0);
-        pieChart.setCenterText("所有作物收成比例");
         pieChart.setCenterTextSize(14);
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.getLegend().setEnabled(false);
 
-        addDataSet();
+        // 設置以百分比顯示，這裏是指將原來的0.x乘100，並不會加上“%”符號
+        pieChart.setUsePercentValues(true);
+
+        getCropData();
 
         //總賣出數量
         chart_sales_all_num = view.findViewById(R.id.chart_sales_all_num);
@@ -189,7 +200,7 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
             @Override
             public void onValueSelected(Entry e, Highlight h)
             {
-                chart_sales_vege.setText("高麗菜");
+                chart_sales_vege.setText("青花椰");
                 chart_sales_all_num.setText("50");
                 //cardview 建立
 
@@ -199,19 +210,9 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
                         30.0,"2020-08-23",20.0,"壽豐農會"));
                 chart1_info_cardviewList.add(new chart1_info_cardview(1,"B10","2020-08-23",
                         20.0,"2020-08-24",18.0,"吉安農會"));
+
                 recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                 recyclerView.setAdapter(new CardAdapter(getContext(), chart1_info_cardviewList));
-//                int pos1 = e.toString().indexOf("(sum): ");
-//                String sales = e.toString().substring(pos1 + 7);
-//                for(int i = 0; i < yData.length; i++){
-//                    Log.v("test","yDATA: "+i+"  "+yData[i]);
-//                    Log.v("test","sales: "+ sales);
-//                    if(yData[i] == Float.parseFloat(sales)){
-//                        pos1 = i;
-//                        break;
-//                    }
-//                }
-////                String employee = xData[pos1 + 1];
             }
 
             @Override
@@ -230,13 +231,12 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
                 {
                     case R.id.rbLeft:
                         Log.v("msg","R.id.rbLeft: " +R.id.rbLeft);
-                        changeradio(0);
+                        getCropData();
+                        //changeradio(0);
                         break;
                     case R.id.rbRight:
                         Log.v("msg","rbright: "+R.id.rbRight);
-                        mThreadHandler.post(get_ship_to_vendor_num_kg);
-                        Log.v("msg","get_ship_to_vendor_num_kg: "+ship_to_vendor_num_kg);
-                        //changeradio(1);
+                        getVendorData();
                         break;
                 }
             }
@@ -284,52 +284,77 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
         }
     };
 
-
-
-
     /** 廠商相關webservice **/
-    public Runnable get_ship_to_vendor_num_kg = new Runnable() {
-        @Override
-        public void run() {
-            ship_to_vendor_num_kg = chart_webservice.ship_to_vendor_num_kg();
-            mThreadHandler.post(set_ship_to_vendor_num_kg);
-        }
-    };
-
-    String str1;
-    List<String> vendor_x ;
-    List<String> vendor_y ;
-    public Runnable set_ship_to_vendor_num_kg = new Runnable()
+    public void getVendorData()
     {
-        @Override
-        public void run()
+        final Runnable set_ship_to_vendor_num_kg = new Runnable()
         {
-            new Handler(Looper.getMainLooper()).post(new Runnable()
+            @Override
+            public void run ()
             {
-                @Override
-                public void run()
-                {
-                    if(!ship_to_vendor_num_kg.contains("錯誤"))
-                    {
-                        vendor_x = new ArrayList<>();
-                        vendor_y = new ArrayList<>();
-                        for(int i = 0 ; i < ship_to_vendor_num_kg.size() ; i++)
-                        {
-                            //split_line 是Array
-                            str1 = ship_to_vendor_num_kg.get(i);//list用"()" Array才用中括號
-                            split_line = str1.split("%%");
-                            vendor_x.add(split_line[0]);
-                            vendor_y.add(split_line[1]);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if (!ship_to_vendor_num_kg.contains("錯誤")) {
+                            xData.clear();
+                            yData.clear();
+                            String str1="";
+                            for (int i = 0; i < ship_to_vendor_num_kg.size(); i++) {
+                                //split_line 是Array
+                                str1 = ship_to_vendor_num_kg.get(i);//list用"()" Array才用中括號
+                                split_line = str1.split("%%");
+                                xData.add(split_line[0]);
+                                yData.add(Float.parseFloat(split_line[1]));
+                            }
+                            pieChart.setCenterText("廠商收購比例");
+                            addDataSet();
                         }
-                        Log.v("test","vendor_x "+vendor_x);
-                        Log.v("test","vendor_y "+vendor_y);
-                        initBarChart();
-                        changeradio(1);
                     }
-                }
-            });
-        }
-    };
+                });
+            }
+        };
+
+        Runnable get_ship_to_vendor_num_kg = new Runnable() {
+            @Override
+            public void run() {
+                ship_to_vendor_num_kg = chart_webservice.ship_to_vendor_num_kg();
+
+                mThreadHandler.post(set_ship_to_vendor_num_kg);
+            }
+        };
+
+        mThreadHandler.post(get_ship_to_vendor_num_kg);
+    }
+
+
+    /** 作物相關webservice **/
+    public void getCropData(){
+        xData.clear();
+        yData.clear();
+
+
+        xData.add("青江");
+        xData.add("小白");
+        xData.add("青花椰");
+        xData.add("白花椰");
+        xData.add("小松");
+        xData.add("奶白");
+        xData.add("空心");
+        xData.add("絲瓜");
+
+        yData.add(70.0f);
+        yData.add(30.0f);
+        yData.add(52.76f);
+        yData.add(44.32f);
+        yData.add(46.01f);
+        yData.add(16.89f);
+        yData.add(23.9f);
+        yData.add(14f);
+
+        pieChart.setCenterText("所有作物收成比例");
+        addDataSet();
+    }
 
 
 
@@ -351,19 +376,52 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
      * 圓餅圖控制元件屬性
      */
     public void addDataSet() {
+
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
 
-        for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
+        float yData_all = 0f;   //yData加總
+        for(int i = 0; i < yData.size(); i++){
+                yData_all = yData_all + yData.get(i);
         }
 
-        for(int i = 1; i < xData.length; i++){
-            xEntrys.add(xData[i]);
+        DecimalFormat df = new DecimalFormat("0.000"); //格式化小數，.後跟幾個零代表幾位小數
+        float yData_percent = 0f;   //換算成百分比
+        String df2str = "";  //DecimalFormat要轉回string
+
+        List<Float> yData_under5 = new ArrayList<>();    //yData低於5%
+        List<String> xData_under5 = new ArrayList<>();   //xData低於5%
+        float yData_under5All = 0f;     //yData低於5%加總
+        for(int i = 0; i < yData.size(); i++)
+        {
+            yData_percent = yData.get(i)/yData_all;
+            df2str = df.format(yData_percent);//返回的是String型別
+
+            if(Float.parseFloat(df2str)<0.05f)  //如果小於5%
+            {
+                yData_under5All = yData_under5All + Float.parseFloat(df2str);
+                yData_under5.add(Float.parseFloat(df2str));
+                xData_under5.add(xData.get(i));
+            }
+            else
+            {
+                Log.v("test","df2str : "+df2str);
+                Log.v("test","xData :"+xData.get(i));
+                yEntrys.add(new PieEntry(Float.parseFloat(df2str) , xData.get(i)));
+            }
+
         }
+
+        //如果有小於5%的資料則加入其他
+        if(yData_under5All!=0f)
+        {
+            yEntrys.add(new PieEntry(yData_under5All , "其他"));
+        }
+
+
 
         //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "作物");
+        PieDataSet pieDataSet = new PieDataSet(yEntrys,"作物");
         pieDataSet.setSliceSpace(2);
         pieDataSet.setValueTextSize(14);
 
@@ -379,18 +437,36 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
         colors.add(Color.argb(255,255,198,255));
         colors.add(Color.argb(255,255,255,252));
         pieDataSet.setColors(colors);
+        //用百分比顯示
 
+        //圓餅圖圖例
         //add legend to chart
-        Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setFormSize(10f);//標籤圖案大小
-        legend.setFormToTextSpace(5f);
-        legend.setTextSize(12f);
-        //legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
+//        Legend legend = pieChart.getLegend();
+//        legend.setForm(Legend.LegendForm.CIRCLE);
+//        legend.setFormSize(10f);//標籤圖案大小
+//        legend.setFormToTextSpace(5f);
+//        legend.setTextSize(12f);
+//        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);//上边
+//        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+//        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+
 
         //create pie data object
         PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
+        pieData.setValueFormatter(new ValueFormatter()
+        {
+            @Override
+            public String getFormattedValue(float value) {
+                //直接回傳value會多好幾位 所以要修改一下
+                DecimalFormat df = new DecimalFormat("0.0"); //格式化小數，.後跟幾個零代表幾位小數
+                String df2str = "";  //DecimalFormat要轉回string
+                df2str = df.format(value);//返回的是String型別
+
+                return super.getFormattedValue(Float.parseFloat(df2str))+" %";
+            }
+        });
+
+                pieChart.setData(pieData);
         pieChart.invalidate();
     }
 
@@ -429,7 +505,7 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
         xAxis.setTextSize(9);
         xAxis.setAxisLineWidth(mChart.getWidth()); //設置此軸的坐標軸的寬度
 
-        List<String> chartLabels = new ArrayList<>(vendor_x);//把vendor_x的值加入到x軸資料
+        List<String> chartLabels = new ArrayList<>();//把vendor_x的值加入到x軸資料
         Log.v("test","chartLabels:"+ chartLabels);
         xAxis.setLabelCount(chartLabels.size());
         xAxis.setValueFormatter(new  IndexAxisValueFormatter(chartLabels));
@@ -489,8 +565,8 @@ public class chart_1 extends Fragment implements OnChartValueSelectedListener
 
         for(int i = 0 ; i < ship_to_vendor_num_kg.size() ; i++)
         {
-            yVals1.add(new BarEntry(i,Float.parseFloat(vendor_y.get(i))));
-            Log.v("test","柱形圖數值設定ship_to_vendor_num_kg:"+ship_to_vendor_num_kg);
+           // yVals1.add(new BarEntry(i,Float.parseFloat(vendor_y.get(i))));
+           // Log.v("test","柱形圖數值設定ship_to_vendor_num_kg:"+ship_to_vendor_num_kg);
         }
 //        yVals1.add(new BarEntry(0, 23f));
 //        yVals1.add(new BarEntry(1f, 65f));

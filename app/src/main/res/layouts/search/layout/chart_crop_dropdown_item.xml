@@ -7,4 +7,5 @@
     android:textColor="#779880"
     android:textSize="18sp"
     android:padding="5dp"
+    android:gravity="center"
     android:background="@drawable/gender" />

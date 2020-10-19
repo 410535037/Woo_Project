@@ -549,8 +549,10 @@ public class record extends Fragment
 
     Runnable setRecord_select_list = new Runnable() {
         @Override
-        public void run() {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
+        public void run()
+        {
+            new Handler(Looper.getMainLooper()).post(new Runnable()
+            {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void run() {
