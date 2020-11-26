@@ -153,8 +153,8 @@ public class record extends Fragment
         //cardview 建立
 
         cardviewList = new ArrayList<>();
-        cardviewList.add(new record_Cardview(0,"非十字花科 皇宮菜","20/03/11"));
-        cardviewList.add(new record_Cardview(1,"非十字花科 皇宮菜","20/03/11"));
+        cardviewList.add(new record_Cardview(0,"皇宮菜","預收 : 20/03/11"));
+        cardviewList.add(new record_Cardview(1,"皇宮菜","20/03/11"));
         RecyclerView recyclerView =  view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(new record.CardAdapter(getContext(), cardviewList));

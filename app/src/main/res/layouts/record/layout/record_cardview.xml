@@ -17,18 +17,26 @@
   <RelativeLayout
       android:layout_width="150dp"
       android:layout_height="180dp"
-      android:background="@color/record_backgroundcolor"
-      >
+      android:background="@color/record_backgroundcolor">
 
     <ImageView
         android:id="@+id/plantId"
         android:layout_width="100dp"
-
+        android:src="@drawable/spinach"
         android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/plantId"
+        android:layout_alignBottom="@+id/plantId"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/harvest"
+        />
 
     <TextView
         android:id="@+id/tx1"
