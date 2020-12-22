@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/corners">
+
+        <TextView
+            android:id="@+id/tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="▼請輸入定植區"
+            android:textColor="@color/gray2"
+            android:padding="10dp"
+            android:layout_marginTop="30dp"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/record_canopy_area_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/record_canopy_sp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/record_select_shape"
+                android:layout_alignParentBottom="true" />
+
+            <Spinner
+                android:id="@+id/record_canopy_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/record_select_shape"
+                android:layout_marginEnd="10dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="▼請輸入育苗數量和單位"
+            android:textColor="@color/gray2"
+            android:padding="10dp"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/num_ed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="育苗數量"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/remind_amount_unit_sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/record_select_shape"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:textColor="@color/silver"
+                android:text="取消" />
+
+            <TextView
+                android:id="@+id/confirm_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:text="確認" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/clap_iv"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="100dp"
+        app:srcCompat="@drawable/clap" />
+</RelativeLayout>

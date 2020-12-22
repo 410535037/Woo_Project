@@ -24,6 +24,8 @@ public class GlobalVariable extends Application
     private String Select_vege_name="";
     private String Plant_id="";
     private String Choose_calendar_gmail="無",Choose_calendar_vege="無",Choose_calendar_id_string="無";
+    private String Cardview_postion="";
+    private int Cf;
 
     public void setChoose_calendar_info(String choose_calendar_id_string,String choose_calendar_gmail,String choose_calendar_vege)
     {
@@ -88,5 +90,11 @@ public class GlobalVariable extends Application
 
     public void setPlant_id(String plant_id){this.Plant_id = plant_id;}
     public String getPlant_id(){ return Plant_id;}
+
+    public void setCardview_postion(String cardview_postion){this.Cardview_postion = cardview_postion;}
+    public String getCardview_postion(){ return Cardview_postion;}
+
+    public void setCf(int cf){this.Cf = cf;}
+    public int getCf(){ return Cf;}
 
 }

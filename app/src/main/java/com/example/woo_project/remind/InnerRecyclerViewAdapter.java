@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class InnerRecyclerViewAdapter extends RecyclerView.Adapter<InnerRecyclerViewAdapter.ViewHolder> {
     public ArrayList<String> nameList = new ArrayList<String>();
-    int pp=1;
 
     public InnerRecyclerViewAdapter(ArrayList<String> nameList) {
 

@@ -1,11 +1,12 @@
 package com.example.woo_project.remind;
 
+import java.util.ArrayList;
+
 public class remind_cardview {
     private int id;
     private String name,tag1,tag2;
     private int image;
     private boolean isSelected;
-    int pp=1;
 
     public remind_cardview(){
         super();

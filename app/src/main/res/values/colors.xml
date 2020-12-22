@@ -5,10 +5,14 @@
     <color name="colorOrange">#fca530</color>
     <color name="colorPrimary">#FC9D33</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FC9D33</color>
     <color name="black">#000000</color>
     <color name="red">#F62F2F</color>
     <color name="silver">#C0C0C0</color>
+    <color name="Azure">#007FFF</color>
+    <color name="Dimgray">#404040</color>
+    <color name="Gainsboro">#DCDCDC</color>
+    <color name="WhiteSmoke">#F5F5F5</color>
 
     <color name="green">#00AA00</color>
     <color name="colorPrimary1">#61d169</color>
@@ -16,10 +20,13 @@
     <color name="white">#ffffff</color>
     <color name="Green1">#B3D6BD</color>
 
-    <color name="gray">#402C2B</color>
+    <color name="gray">#808080</color>
+    <color name="gray2">#402C2B</color>
     <color name="deepgray">#AAAAAA</color>
     <color name="record_backgroundcolor">#89b094</color>
+    <color name="title">#89b094</color>
     <color name="test">#89b094</color>
+    <color name="darkgray">#a9a9a9</color>
 
     <color name="record_select_sp">#61d169</color>
 

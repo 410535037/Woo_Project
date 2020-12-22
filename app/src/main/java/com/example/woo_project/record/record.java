@@ -52,6 +52,9 @@ import com.example.woo_project.GlobalVariable;
 import com.example.woo_project.QRCode.Constant;
 import com.example.woo_project.R;
 import com.example.woo_project.home.home2;
+import com.example.woo_project.remind.farm_record;
+import com.example.woo_project.remind.fertilizer_record;
+import com.example.woo_project.remind.sickbug_record;
 import com.example.woo_project.webservice;
 import com.google.android.material.chip.ChipGroup;
 import com.itextpdf.text.Document;
@@ -513,6 +516,27 @@ public class record extends Fragment
         two = mView.findViewById(R.id.add2);
         three = mView.findViewById(R.id.add3);
 
+        one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent x=new Intent(view.getContext(), farm_record.class);
+                startActivity(x);
+            }
+        });
+        two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent x=new Intent(view.getContext(), fertilizer_record.class);
+                startActivity(x);
+            }
+        });
+        three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent x=new Intent(view.getContext(), sickbug_record.class);
+                startActivity(x);
+            }
+        });
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
         dialog.show();

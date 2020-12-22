@@ -17,6 +17,30 @@
         <item>其他</item>
     </string-array>
 
+    <string-array name="calendar_action_list">
+        <item>(1)土地改良</item>
+        <item>(2)整地</item>
+        <item>(3)水土保持</item>
+        <item>(4)育苗</item>
+        <item>(5)播種</item>
+        <item>(6)疏苗(間拔)</item>
+        <item>(7)定植(移植)</item>
+        <item>(8)灌溉</item>
+        <item>(9)施肥</item>
+        <item>(10)中耕</item>
+        <item>(11)培土</item>
+        <item>(12)雜草防除</item>
+        <item>(13)整枝(蔓)修剪</item>
+        <item>(14)疏果</item>
+        <item>(15)套袋</item>
+        <item>(16)飼養授粉昆蟲</item>
+        <item>(17)果實引誘</item>
+        <item>(18)人工授粉</item>
+        <item>(19)高接</item>
+        <item>(20)病蟲害防治</item>
+        <item>(21)其他(請註明於備註)</item>
+    </string-array>
+
     <string-array name="農地編號">
         <item>A01</item>
         <item>A02</item>
@@ -160,6 +184,14 @@
         <item>貨到付款</item>
         <item>銀行轉帳</item>
         <item>信用卡/金融卡</item>
+    </string-array>
+
+    <string-array name="time_range_sp_array">
+        <item>目前</item>
+        <item>當日</item>
+        <item>當週</item>
+        <item>下週</item>
+        <item>自訂</item>
     </string-array>
 
 

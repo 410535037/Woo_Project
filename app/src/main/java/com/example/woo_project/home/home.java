@@ -2,53 +2,25 @@ package com.example.woo_project.home;
 
 
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.woo_project.GlobalVariable;
-import com.example.woo_project.QRCode.Constant;
 import com.example.woo_project.R;
 
 import com.example.woo_project.chart.chart_1;
 import com.example.woo_project.record.record;
+import com.example.woo_project.reminder.main_reminder;
 import com.example.woo_project.shipping.shipping_main;
-import com.example.woo_project.remind.main_remind;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.zxing.activity.CaptureActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class home extends AppCompatActivity {
 
@@ -63,7 +35,7 @@ public class home extends AppCompatActivity {
 
 
     private home2  getHome2 = new home2();
-    private main_remind getmain_remind=new main_remind();
+    private main_reminder getReminder=new main_reminder();
     private record  getRecord = new record();
     private chart_1 getChart_1 = new chart_1();
     private shipping_main getShipping_main = new shipping_main();
@@ -75,7 +47,7 @@ public class home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate( savedInstanceState );
-        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView( R.layout.activity_home );
 
 
@@ -140,8 +112,8 @@ public class home extends AppCompatActivity {
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 //Fragment切換
-                getmain_remind = new main_remind();
-                fragmentTransaction.replace(R.id.home_fg, getmain_remind).commit();
+                getReminder = new main_reminder();
+                fragmentTransaction.replace(R.id.home_fg, getReminder).commit();
             }
         });
 

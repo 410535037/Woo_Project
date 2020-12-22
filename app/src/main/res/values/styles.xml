@@ -1,22 +1,38 @@
 <resources>
         <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!--  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
-            <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">#89b094</item>
+    <!--  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">#E6EAE7</item>
 
-        //改變EditText底線顏色
-        <item name="colorControlNormal">#808080</item>
-        <item name="colorControlActivated">#89B094</item>
+        //pickerview的按鈕需要設定另外的樣式，因為java無法改QQ
+        <item name="materialButtonStyle">@style/StandardButtonStyle</item>
+
+
+    //改變EditText底線顏色
+    <item name="colorControlNormal">#808080</item>
+    <item name="colorControlActivated">#89B094</item>
+    </style>
+
+    <style name="StandardButtonStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="backgroundTint">#F5F5F5</item>
+        <item name="android:textColor">#007FFF</item>
+    </style>
+
+    //一般按鈕的樣式
+    <style name="NormalButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">#FC9D33</item>
+        <item name="android:textColor">#ffffff</item>
 
     </style>
 
-
-
-
+    <style name="CheckboxStyle" parent="AppTheme">
+        <item name="colorControlNormal">@color/darkgray</item>
+        <item name="colorControlActivated">#FC9D33</item>
+    </style>
 
     <style name="Theme.SearchView" parent="Base.Widget.AppCompat.SearchView">
         <item name="queryBackground">@drawable/searchbar2</item>
@@ -46,6 +62,23 @@
     <attr name="sc_tint_color" format="color" />
     <attr name="sc_checked_text_color" format="color" />
 
+
+    <style name="BottomSheet" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="behavior_peekHeight">700dp</item>
+    </style>
 
 
 </resources>

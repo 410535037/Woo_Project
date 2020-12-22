@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bbgg"
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:background="@drawable/bottomsheetdialog_corners">
+
+    <TextView
+        android:id="@+id/mm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="作物名稱"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/darkgray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mm" />
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/checkornot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:sc_border_width="0.5dp"
+        app:sc_checked_text_color="@color/white"
+        app:sc_corner_radius="15dp"
+        app:sc_tint_color="@color/colorAccent">
+
+        <RadioButton
+            android:id="@+id/button21"
+            style="@style/RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="未完成"
+            android:textSize="12dp" />
+
+        <RadioButton
+            android:id="@+id/button22"
+            style="@style/RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已完成"
+            android:textSize="12dp" />
+
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/gray2"
+        app:layout_constraintBottom_toBottomOf="@+id/mm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mm"
+        app:srcCompat="@drawable/close" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkornot">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/date_tv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="育苗日期" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/til2"
+        app:layout_constraintTop_toBottomOf="@+id/til2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/date_tv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="育苗數量" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/til3"
+        app:layout_constraintEnd_toEndOf="@+id/til2"
+        app:layout_constraintTop_toTopOf="@+id/til3" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@color/colorAccent"
+        android:text="確認"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/til3" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="364dp"
+        android:layout_height="210dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
