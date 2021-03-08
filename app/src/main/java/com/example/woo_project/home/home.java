@@ -3,9 +3,14 @@ package com.example.woo_project.home;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +26,8 @@ import com.example.woo_project.record.record;
 import com.example.woo_project.reminder.main_reminder;
 import com.example.woo_project.shipping.shipping_main;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class home extends AppCompatActivity {
 
@@ -62,15 +69,20 @@ public class home extends AppCompatActivity {
 
         createBottomButton();
 
+
         getHome2 = new home2();
         switchContent2(getHome2);
 
+
+
     }
+
 
     //建立功能Button
     Button goto_home,goto_inform,goto_record,goto_chart,goto_shipping;
     private void createBottomButton()
     {
+
         goto_home = findViewById(R.id.goto_home);
         goto_inform = findViewById(R.id.goto_inform);
         goto_record = findViewById(R.id.goto_record);
@@ -204,5 +216,6 @@ public class home extends AppCompatActivity {
             mLoadingDialog.dismiss();
         }
     }
+
 
 }

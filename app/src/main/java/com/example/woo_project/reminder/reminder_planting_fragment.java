@@ -1,5 +1,5 @@
 package com.example.woo_project.reminder;
-
+//提醒主頁--定植的fragment
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -61,30 +61,35 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private OptionsPickerView pvOptions;
     private TextView vege_name_tv,planting_confirm_tv;
     List<reminder_cardview> reminderList;
-    List<reminder_second_layer_cardview> remindList2=new ArrayList<>();
     RecyclerView reminder_rv;
-    View view;
-    View root;
     String reminder_vegetable_data,reminder_unit_data,Vege,Tag1,currentDateString,todaydate;
     ArrayList<Integer> counter = new ArrayList<>();
     Spinner record_canopy_area_sp,record_canopy_sp,remind_amount_unit_sp;
     TextInputEditText num_ed,date_tiet,canopy_area_tiet;
     String[] Amount;
     Calendar c,c2;
-    private List<List<String>> reminder_seedling_data = new ArrayList<>();
+    private List<List<String>> reminder_planting_data = new ArrayList<>();
     public reminder_planting_fragment() {
         // Requires empty public constructor
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.reminder_seedling_fragment_layout, container, false);
+    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.reminder_seedling_fragment_layout, container, false);
 
         reminder_rv = view.findViewById(R.id.rv1);
         reminderList=new ArrayList<>();
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        reminderList=new ArrayList<>();
+        mThreadHandler.post(getReminder_planting_data);
+
+
     }
 
     @Override
@@ -97,8 +102,6 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
         mThread.start();
         //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
         mThreadHandler=new Handler(mThread.getLooper());
-
-        mThreadHandler.post(getReminder_seedling_data);
 
         mThreadHandler.post(getRemind_select_canopy);
     }
@@ -115,19 +118,19 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
         date_tiet.setText(currentDateString);
     }
 
-    private Runnable getReminder_seedling_data=new Runnable () {
+    private Runnable getReminder_planting_data=new Runnable () {
 
         public void run() {
-            reminder_seedling_data=reminder_webservice.reminder_seedling_data_list("39");
+//            reminder_planting_data=reminder_webservice.reminder_planting_data_list("39");
             //請經紀人指派工作名稱 r，給工人做
-            Log.v("test","data:"+reminder_seedling_data);
-            mUI_Handler.post(setReminder_seedling_data);
+            Log.v("test","data:"+reminder_planting_data);
+            mUI_Handler.post(setReminder_planting_data);
 
         }
 
     };
 
-    private Runnable setReminder_seedling_data = new Runnable() {
+    private Runnable setReminder_planting_data = new Runnable() {
         @Override
         public void run() {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -143,26 +146,26 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     List<String> seedling_checkornot = new ArrayList<>();
                     List<String> seedling_vege_image = new ArrayList<>();
                     //png_list
-                    Log.v("test","reminder_seedling_data的長度: "+reminder_seedling_data.size());
-                    for(int i=0;i<reminder_seedling_data.size();i++) {
+                    Log.v("test","reminder_planting_data的長度: "+reminder_planting_data.size());
+                    for(int i=0;i<reminder_planting_data.size();i++) {
 
-                        seedling_vege_id.add(reminder_seedling_data.get(i).get(0));
-                        seedling_vege_name.add(reminder_seedling_data.get(i).get(1));
-                        seedling_day.add(reminder_seedling_data.get(i).get(2));
-                        seedling_number.add(reminder_seedling_data.get(i).get(3));
-                        seedling_number_unit.add(reminder_seedling_data.get(i).get(4));
-                        if(reminder_seedling_data.get(i).get(6).equals("True")) {
+                        seedling_vege_id.add(reminder_planting_data.get(i).get(0));
+                        seedling_vege_name.add(reminder_planting_data.get(i).get(1));
+                        seedling_day.add(reminder_planting_data.get(i).get(2));
+                        seedling_number.add(reminder_planting_data.get(i).get(3));
+                        seedling_number_unit.add(reminder_planting_data.get(i).get(4));
+                        if(reminder_planting_data.get(i).get(6).equals("True")) {
                             seedling_checkornot.add("checked");
                         }
                         else {
                             seedling_checkornot.add("unchecked");
                         }
-                        seedling_vege_image.add(reminder_seedling_data.get(i).get(7));
+                        seedling_vege_image.add(reminder_planting_data.get(i).get(7));
 
 
                     }
                     for(int i=0;i<seedling_vege_name.size();i++){
-                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i),"tomato", seedling_vege_name.get(i), "預計育苗日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
+                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i),seedling_vege_image.get(i), seedling_vege_name.get(i), "預計定植日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
                     }
                     for (int i = 0; i < reminderList.size(); i++) {
                         counter.add(0);
@@ -308,27 +311,10 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 //        pvOptions.setPicker(canopy_area, canopy_name);
 //    }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        //移除工人上的工作
-        if (mThreadHandler != null) {
-            mThreadHandler.removeCallbacks(getReminder_seedling_data);
-
-        }
-        //解聘工人 (關閉Thread)
-        if (mThread != null) {
-            mThread.quit();
-        }
-    }
-
-    private class reminder_first_layer_fragment_adapter extends RecyclerView.Adapter<com.example.woo_project.reminder.reminder_planting_fragment.reminder_first_layer_fragment_adapter.viewholder>  {
+    private class reminder_first_layer_fragment_adapter extends RecyclerView.Adapter<reminder_first_layer_fragment_adapter.viewholder>  {
 
         private Context mctx;
         private List<reminder_cardview> reminderList;
-        String s="";
         public reminder_first_layer_fragment_adapter(Context mctx, List<reminder_cardview> reminderList) {
             this.mctx = mctx;
             this.reminderList = reminderList;
@@ -370,7 +356,8 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                 public void onClick(View view) {
 
                     final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
-                    root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog,null);//連結的介面
+                    View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog,null);//連結的介面
+
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
@@ -480,4 +467,21 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
         }
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //移除工人上的工作
+        if (mThreadHandler != null) {
+            mThreadHandler.removeCallbacks(getReminder_planting_data);
+
+        }
+        //解聘工人 (關閉Thread)
+        if (mThread != null) {
+            mThread.quit();
+        }
+    }
 }
+
+

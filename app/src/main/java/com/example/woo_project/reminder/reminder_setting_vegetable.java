@@ -45,6 +45,7 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.woo_project.R;
+import com.example.woo_project.home.home;
 import com.example.woo_project.record.record_webservice;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
@@ -56,6 +57,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class reminder_setting_vegetable extends Fragment implements DatePickerDialog.OnDateSetListener  {
 
@@ -129,7 +132,7 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
         days_of_growing_tiet=view.findViewById(R.id.days_of_growing_tiet);
         days_of_seedling_tiet=view.findViewById(R.id.days_of_raising_seedling_tiet);
         amount_tv=view.findViewById(R.id.amount_tv);
-        weight_tv=view.findViewById(R.id.weight_tv);
+        weight_tv=view.findViewById(R.id.weight_unit_tv);
         choose_vege_tiet=view.findViewById(R.id.choose_vege_ed);
         remark_edit = view.findViewById(R.id.remark_edit);
 
@@ -294,8 +297,16 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
 
 
     public void Confirm(){
-        mThreadHandler.post(setInsert_reminder_vegetable_setting);
-
+        if(choose_vege_tiet.getText().toString().equals("")||harvest_day_tv.getText().toString().equals("")||days_of_seedling_tiet.getText().toString().equals("")||days_of_growing_tiet.getText().toString().equals(""))
+        {
+            Toast.makeText(getContext(),"#作物名稱\n#預計收成日\n成長天數\n育苗天數\n一定要填喔!",Toast.LENGTH_LONG).show();
+        }
+        else {
+            mThreadHandler.post(setInsert_reminder_vegetable_setting);
+            Intent intent = new Intent(getActivity(), home.class);
+            startActivity(intent);
+            getActivity().finish();
+        }
     }
 
     private void Date_Calculate(){
@@ -317,8 +328,34 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
     private Runnable setInsert_reminder_vegetable_setting=new Runnable () {
 
         public void run() {
-            YorN=reminder_webservice.Insert_reminder_vegetable_setting(vege_id,choose_vege_tiet.getText().toString(),vendor_tiet.getText().toString(),remark_edit.getText().toString(),Integer.parseInt(seedling_num.getText().toString()),seedling_unit_sp.getSelectedItem().toString(),20,seedling_day_tv.getText().toString(),planting_day_tv.getText().toString(),harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()),Integer.parseInt(days_of_growing_tiet.getText().toString()), null, 0, false, false,false,"39");
+            if(vendor_tiet.getText().length()==0 || seedling_num.getText().length()==0 || remark_edit.getText().length()==0 || kg_tiet.getText().length()==0)
+            {
+                if(vendor_tiet.getText().length()==0)
+                {
+                    vendor_tiet.setText("無");
+                }
+                if(seedling_num.getText().length()==0)
+                {
+                    seedling_num.setText("0");
 
+                }
+                if(remark_edit.getText().length()==0)
+                {
+                    remark_edit.setText("無");
+
+                }
+                if(kg_tiet.getText().length()==0)
+                {
+                    kg_tiet.setText("0");
+                }
+                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, Integer.parseInt(seedling_num.getText().toString()), false, false, false, "39");
+
+            }
+            else
+            {
+
+                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, Integer.parseInt(seedling_num.getText().toString()), false, false, false, "39");
+            }
             //請經紀人指派工作名稱 r，給工人做
             Log.v("test","YorN:"+YorN);
             mUI_Handler.post(getInsert_reminder_vegetable_setting);

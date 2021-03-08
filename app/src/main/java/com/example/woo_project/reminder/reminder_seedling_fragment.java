@@ -1,5 +1,5 @@
 package com.example.woo_project.reminder;
-
+//提醒主頁--育苗的fragment
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -60,7 +60,6 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
     TextInputEditText day1,day2,date_tiet;
     List<reminder_cardview> reminderList;
     RecyclerView reminder_rv;
-    ArrayList<Integer> counter = new ArrayList<>();
     String reminder_vegetable_data,currentDateString,currentDateString2;
     Calendar c,c2;
     CharSequence todaydate;
@@ -73,7 +72,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
         // Requires empty public constructor
     }
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.reminder_seedling_fragment_layout, container, false);
@@ -95,6 +94,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
         mThread = new HandlerThread("");
         //讓Worker待命，等待其工作 (開啟Thread)
@@ -103,75 +103,51 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
         mThreadHandler=new Handler(mThread.getLooper());
 
 
-
     }
 
-//    public void go(){
-//        mThreadHandler.post(getReminder_seedling_data);
-//    }
-    public void gogo(){
-        reminderList=new ArrayList<>();
-        mThreadHandler.post(getReminder_today_seedling_data);
-    }
-    public void go2(){
 
-        final View dialogView2 = LayoutInflater.from(getContext()).inflate(R.layout.reminder_time_sp_dialog, null);
 
-        day1 = dialogView2.findViewById(R.id.date_tv);
-        day2 =dialogView2.findViewById(R.id.date_tv3);
-        confirm=dialogView2.findViewById(R.id.confirm_tv);
-        //Now we need an AlertDialog.Builder object
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-        //setting the view of the builder to our custom view that we already inflated
-        builder.setView(dialogView2);
-        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
-        final AlertDialog alertDialog = builder.create();
-
-        day2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.setTargetFragment(reminder_seedling_fragment.this,0);
-                datePicker.show(getActivity().getSupportFragmentManager(),"date picker");
-
-                day2.setText(currentDateString);
-            }
-        });
-
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                alertDialog.dismiss();
-            }
-        });
-        //finally creating the alert dialog and displaying it
-        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alertDialog.setContentView(R.layout.reminder_edit_or_delete);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
-
-//        dayweek = c.get(Calendar.DAY_OF_WEEK);
-//        c.set(Calendar.MONTH,mmonth);
-//        c.set(Calendar.DAY_OF_MONTH,day);
-//        c.add(Calendar.DAY_OF_MONTH, 7-dayweek);
-//
-//        currentDateString2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
-
-    }
+    //去資料庫抓資料---預設會顯示全部育苗CardviewList，點擊Spinner可以切換全部、今日、這週、下週、自訂
     Runnable getReminder_seedling_data=new Runnable () {
 
         public void run() {
-            reminder_seedling_data=reminder_webservice.reminder_seedling_data_list("39");
-            //請經紀人指派工作名稱 r，給工人做
-            Log.v("test","data:"+reminder_seedling_data);
-            mUI_Handler.post(setReminder_seedling_data);
+
+            switch (main_reminder.time_range_sp.getSelectedItemPosition())
+            {
+                case 0:
+                    //顯示"全部"未收成的作物CardviewList(包含過期未收成以及未來要收成的)
+                    reminder_seedling_data = reminder_webservice.reminder_seedling_data_list("39");
+                    mUI_Handler.post(setReminder_seedling_data);
+                    break;
+                case 1:
+                    //顯示"今日"要收成的作物CardviewList
+                    reminder_seedling_data = reminder_webservice.reminder_today_seedling_data_list("39");
+                    mUI_Handler.post(setReminder_seedling_data);
+                    break;
+                case 2:
+                    //顯示"這週"要收成的作物CardviewList
+                    reminder_seedling_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    mUI_Handler.post(setReminder_seedling_data);
+                    break;
+                case 3:
+                    //顯示"下週"要收成的作物CardviewList
+                    reminder_seedling_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    mUI_Handler.post(setReminder_seedling_data);
+                    break;
+                case 4:
+                    //顯示"自訂"區間的作物CardviewList
+                    reminder_seedling_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    mUI_Handler.post(setReminder_seedling_data);
+                    break;
+                default:
+                    break;
+            }
 
         }
 
     };
 
+    //從資料庫抓完並顯示育苗的CardviewList資料
     Runnable setReminder_seedling_data = new Runnable() {
         @Override
         public void run() {
@@ -221,66 +197,6 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
         }
     };
 
-    Runnable getReminder_today_seedling_data=new Runnable () {
-
-        public void run() {
-            reminder_today_seedling_data=reminder_webservice.reminder_today_seedling_data_list("39");
-            //請經紀人指派工作名稱 r，給工人做
-            Log.v("test","data:"+reminder_today_seedling_data);
-            mUI_Handler.post(setReminder_today_seedling_data);
-
-        }
-
-    };
-
-    Runnable setReminder_today_seedling_data = new Runnable() {
-        @Override
-        public void run() {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public void run() {
-
-                    List<String> seedling_vege_id = new ArrayList<>();
-                    List<String> seedling_vege_name = new ArrayList<>();
-                    List<String> seedling_day = new ArrayList<>();
-                    List<String> seedling_number = new ArrayList<>();
-                    List<String> seedling_number_unit = new ArrayList<>();
-                    List<String> seedling_checkornot = new ArrayList<>();
-                    List<String> seedling_vege_image = new ArrayList<>();
-
-
-                    Log.v("test","reminder_seedling_data的長度: "+reminder_today_seedling_data.size());
-                    for(int i=0;i<reminder_today_seedling_data.size();i++) {
-
-                        seedling_vege_id.add(reminder_today_seedling_data.get(i).get(0));
-                        seedling_vege_name.add(reminder_today_seedling_data.get(i).get(1));
-                        seedling_day.add(reminder_today_seedling_data.get(i).get(2));
-                        seedling_number.add(reminder_today_seedling_data.get(i).get(3));
-                        seedling_number_unit.add(reminder_today_seedling_data.get(i).get(4));
-                        if(reminder_today_seedling_data.get(i).get(5).equals("True")) {
-                            seedling_checkornot.add("checked");
-                        }
-                        else {
-                            seedling_checkornot.add("unchecked");
-                        }
-                        seedling_vege_image.add(reminder_today_seedling_data.get(i).get(7));
-
-                    }
-                    for(int i=0;i<seedling_vege_name.size();i++){
-                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), "預計育苗日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
-                    }
-
-                    reminder_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                    reminder_rv.setHasFixedSize(true);
-                    reminder_rv.setAdapter(new reminder_seedling_fragment.reminder_first_layer_fragment_adapter(getActivity(), reminderList));
-
-
-                }
-            });
-
-        }
-    };
 
 
     //取得育苗數量所有的單位 EX:盤、株
@@ -338,7 +254,6 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
 
         private Context mctx;
         private List<reminder_cardview> reminderList;
-        String s="";
         public reminder_first_layer_fragment_adapter(Context mctx, List<reminder_cardview> reminderList) {
             this.mctx = mctx;
             this.reminderList = reminderList;
@@ -360,7 +275,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     .load(drawableResourceId)
                     .into(holder.vege_img);
 
-            holder.vege.setText(vege.getName());
+            holder.vegename.setText(vege.getName());
             int drawableResourceId2 = mctx.getResources().getIdentifier(vege.getCheck_img(), "drawable", mctx.getPackageName());
             Glide.with(mctx)
                     .load(drawableResourceId2)
@@ -455,7 +370,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
             holder.check_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    //還沒寫好><
                 }
             });
 
@@ -471,12 +386,12 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
         class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img,check_img;
             ImageButton plus_imb,more_imb;
-            TextView vege,tag1,tag2;
+            TextView vegename,tag1,tag2;
 
             public viewholder(@NonNull View itemView) {
                 super(itemView);
                 vege_img = (ImageView) itemView.findViewById(R.id.vege_img);
-                vege = (TextView) itemView.findViewById(R.id.vegename);
+                vegename = (TextView) itemView.findViewById(R.id.vegename);
                 tag1 = (TextView) itemView.findViewById(R.id.tag1_tv);
                 tag2 = (TextView) itemView.findViewById(R.id.tag2_tv);
                 plus_imb = itemView.findViewById(R.id.plus_imb);

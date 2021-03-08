@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,14 +34,22 @@ import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
+import static com.loopj.android.http.AsyncHttpClient.log;
+
 public class reminder_setting extends AppCompatActivity {
 
     SegmentedGroup segmented;
     RadioButton radio1;
     RadioButton radio2;
     TextView reminder_confirm_tv;
+    ImageButton back;
     private ViewPager viewPager;
     private List<Fragment> fragmentList=new ArrayList<>();
+    reminder_setting_vegetable reminder_setting_vegetable = new reminder_setting_vegetable();
+    reminder_setting_other_things reminder_setting_other_things = new reminder_setting_other_things();
+    main_reminder main_reminder = new main_reminder();
+    home home = new home();
+
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -74,27 +84,39 @@ public class reminder_setting extends AppCompatActivity {
         radio1 = (RadioButton) findViewById(R.id.button21);
         radio2 = (RadioButton) findViewById(R.id.button22);
         reminder_confirm_tv = findViewById(R.id.reminder_confirm_tv);
+        back = findViewById(R.id.vege_setting_back);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         segmented.setTintColor(Color.parseColor("#ffffff"), Color.parseColor("#89b094"));
 
-        final reminder_setting_vegetable reminder_setting_vegetable = new reminder_setting_vegetable();
-        reminder_setting_other_things reminder_setting_other_things = new reminder_setting_other_things();
+
+
 
         fragmentList.add(reminder_setting_vegetable);
         fragmentList.add(reminder_setting_other_things);
+        viewPager.setAdapter(new reminder_setting_fragmentpageradapter(getSupportFragmentManager(), fragmentList));
 
+        //***未解決***
+        // Q:如何從activity跳轉到另一個activity fragment，如果用fragment begintrasaction會有activity UI沒有出現的問題(或是UI其實是被遮到?)
         reminder_confirm_tv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
                 reminder_setting_vegetable.Confirm();
-                Intent intent = new Intent(reminder_setting.this, home.class);
+                log.v("test","順序: "+"2");
+
+
+//                main_reminder = new main_reminder();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.reminder_setting, main_reminder).commit();
+
+                Intent intent = new Intent(reminder_setting.this,home.class);
                 startActivity(intent);
+
+
+
             }
         });
-        viewPager.setAdapter(new reminder_setting_fragmentpageradapter(getSupportFragmentManager(), fragmentList));
 
         // ViewPager页面切换监听
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -140,6 +162,15 @@ public class reminder_setting extends AppCompatActivity {
                     default:
                         break;
                 }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(reminder_setting.this,main_reminder.class);
+                intent.putExtra("reminder_setting_back_main_reminder_flag", 1);
+                startActivity(intent);
             }
         });
 

@@ -15,11 +15,7 @@ public class reminder_webservice {
 
     //以下字串必須完全正確，不能有空白!! (之前為了一個空白卡了兩小時...)
     private static final String NAMESPACE = "http://tempuri.org/" ;       //WebService預設的命名空間
-    private static final String URL = "http://134.208.97.191:8080/Woo_WebService.asmx";     //WebService的網址
-    //private static final String URL = "http://192.168.43.42/ws_test1/webservice.asmx";
-//    private static final String URL = "http://192.168.1.14:80/ws/WebService.asmx";     //WebService的網址
-    private static final String SOAP_ACTION = "http://tempuri.org/VegeInfo_WS";          //命名空間+要用的函數名稱
-    private static final String METHOD_NAME = "VegeInfo_WS";   //函數名稱
+    private static final String URL = "http://134.208.97.191:8080/reminder_WebService.asmx";     //WebService的網址
 
 
     public static String Insert_reminder_vegetable_setting(int variety_of_vege, String vege,String vendor,String reminder_text,int seedling_num,String seedling_unit,int harvest_num, String seedling_day, String planting_day, String harvest_day,int days_of_seedling,int days_of_planting, String real_seedling_day,int real_seedling_num, Boolean do_seedling, Boolean do_planting, Boolean do_harvest, String user) {
@@ -502,6 +498,46 @@ public class reminder_webservice {
         }
     }
 
+    //抓取當週--育苗CardView所需資料
+    public static List<List<String>> reminder_thisweek_seedling_data_list(String user)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_thisweek_seedling_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_thisweek_seedling_data_list";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
 
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
 
 }
