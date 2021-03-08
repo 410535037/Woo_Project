@@ -168,9 +168,7 @@ public class reminder_setting extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(reminder_setting.this,main_reminder.class);
-                intent.putExtra("reminder_setting_back_main_reminder_flag", 1);
-                startActivity(intent);
+                reminder_setting.this.finish();
             }
         });
 

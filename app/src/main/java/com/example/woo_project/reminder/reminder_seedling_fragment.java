@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -367,12 +368,66 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     });
                 }
             });
+
+            // check_img 更換
+            // check_status 為是否成功更新資料庫
+            final boolean[] check_status = new boolean[1];
+
+
+            final Runnable setCheck_result = new Runnable () {
+
+                public void run() {
+                    if(check_status[0])
+                    {
+                        if(vege.getCheck_img().equals("checked"))
+                        {
+                            vege.setCheck_img("unchecked");
+                        }
+                        else
+                        {
+                            vege.setCheck_img("checked");
+                        }
+                        int drawableResourceId3 = mctx.getResources().getIdentifier(vege.getCheck_img(), "drawable", mctx.getPackageName());
+                        Glide.with(mctx)
+                                .load(drawableResourceId3)
+                                .into(holder.check_img);
+                        Toast.makeText(mctx,"變更成功!",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(mctx,"發生錯誤，請再試一次!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            };
+
+            final Runnable getCheck_result = new Runnable () {
+
+                public void run() {
+                    boolean Check_img_change;
+                    // Check_img_change 為改變後的狀態
+                    Check_img_change = !vege.getCheck_img().equals("checked");
+                    Log.v("test","check_img_change: "+ Check_img_change);
+                    //need user id , vege id, check fg
+                    check_status[0] = reminder_webservice.reminder_seedling_data_list_checkornot("39",vege.getId(),Check_img_change);
+                    //請經紀人指派工作名稱 r，給工人做
+                    mUI_Handler.post(setCheck_result);
+                }
+
+            };
+
+
+
             holder.check_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //還沒寫好><
+                    Log.v("test","vege.getId():" +vege.getId());
+                    mThreadHandler.post(getCheck_result);
                 }
             });
+
+
 
         }
 

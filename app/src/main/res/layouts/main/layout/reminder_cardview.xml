@@ -95,6 +95,15 @@
                         android:scaleType="centerInside"
                         android:gravity="center_vertical"
                         app:srcCompat="@drawable/more" />
+                    <!--
+                    <CheckBox
+                        android:id="@+id/check_img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+
+                        android:button="@null"
+                        android:background="@drawable/reminder_seedling_checkbox"
+                        android:layout_gravity="center_vertical"/>-->
 
                     <ImageView
                         android:id="@+id/check_img"

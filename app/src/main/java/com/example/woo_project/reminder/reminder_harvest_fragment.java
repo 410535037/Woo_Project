@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -380,10 +381,9 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                 @Override
                 public void onClick(View view) {
 
+                        }
+                    });
                 }
-            });
-
-        }
 
         @Override
         public int getItemCount() {

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
@@ -369,6 +370,40 @@ public class reminder_webservice {
                 List<String> x = Arrays.asList(getString.split(";"));
                 result.add(x);
             }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
+    //確認育苗CardView
+    public static boolean reminder_seedling_data_list_checkornot(String user, String seedling_id, boolean checkornot)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_seedling_data_list_checkornot";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_seedling_data_list_checkornot";   //函數名稱
+        boolean result = false ;
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("seedling_id",seedling_id);
+            request.addProperty("checkornot",checkornot);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapPrimitive obj1 = (SoapPrimitive) envelope.getResponse();
+            Log.v("test","obj1: "+obj1.getValue());
+            result = Boolean.parseBoolean(String.valueOf(obj1.getValue()));
             Log.v("test","result: "+result);
             return result;
         } catch (Exception e) {

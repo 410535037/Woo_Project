@@ -3,7 +3,8 @@ package com.example.woo_project.reminder;
 import android.widget.ImageView;
 
 public class reminder_cardview {
-    private String id,vege_img,name,tag1,tag2,check_img;
+    private String id,vege_img,name,tag1,tag2;
+    private String check_img;
 
 
     public reminder_cardview(){
@@ -41,6 +42,7 @@ public class reminder_cardview {
         return id;
     }
 
+    public void setCheck_img(String check_img){ this.check_img = check_img;}
     public String getCheck_img(){
         return check_img;
     }
