@@ -93,6 +93,12 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        mThreadHandler.post(getReminder_seedling_data);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -183,6 +189,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                         seedling_vege_image.add(reminder_seedling_data.get(i).get(7));
 
                     }
+                    reminderList = new ArrayList<>();
                     for(int i=0;i<seedling_vege_name.size();i++){
                         reminderList.add(new reminder_cardview(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), "預計育苗日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
                     }
@@ -409,7 +416,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     Check_img_change = !vege.getCheck_img().equals("checked");
                     Log.v("test","check_img_change: "+ Check_img_change);
                     //need user id , vege id, check fg
-                    check_status[0] = reminder_webservice.reminder_seedling_data_list_checkornot("39",vege.getId(),Check_img_change);
+                    check_status[0] = reminder_webservice.reminder_seedling_data_list_checkornot("39",vege.getId(),Check_img_change,Integer.parseInt(vege.getTag2()));
                     //請經紀人指派工作名稱 r，給工人做
                     mUI_Handler.post(setCheck_result);
                 }

@@ -50,7 +50,7 @@ public class reminder_setting extends AppCompatActivity {
     main_reminder main_reminder = new main_reminder();
     home home = new home();
 
-
+    boolean radio_status;
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -102,16 +102,22 @@ public class reminder_setting extends AppCompatActivity {
         reminder_confirm_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reminder_setting_vegetable.Confirm();
-                log.v("test","順序: "+"2");
 
+                boolean yesornot = reminder_setting_vegetable.Confirm();
+                log.v("test","順序: "+"2");
+                if(yesornot)
+                {
+                    reminder_setting.this.finish();
+
+                }
 
 //                main_reminder = new main_reminder();
 //                FragmentManager fragmentManager = getSupportFragmentManager();
 //                fragmentManager.beginTransaction().replace(R.id.reminder_setting, main_reminder).commit();
 
-                Intent intent = new Intent(reminder_setting.this,home.class);
-                startActivity(intent);
+//                Intent intent = new Intent(reminder_setting.this,home.class);
+//                startActivity(intent);
+
 
 
 
@@ -155,9 +161,11 @@ public class reminder_setting extends AppCompatActivity {
                          * true:打开/false:关闭
                          */
                         viewPager.setCurrentItem(0);
+                        radio_status=true;
                         break;
                     case R.id.button22:
                         viewPager.setCurrentItem(1);
+                        radio_status=false;
                         break;
                     default:
                         break;

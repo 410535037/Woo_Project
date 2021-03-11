@@ -380,7 +380,7 @@ public class reminder_webservice {
     }
 
     //確認育苗CardView
-    public static boolean reminder_seedling_data_list_checkornot(String user, String seedling_id, boolean checkornot)
+    public static boolean reminder_seedling_data_list_checkornot(String user, String seedling_id, boolean checkornot,int seedling_num)
     {
         String SOAP_ACTION = "http://tempuri.org/reminder_seedling_data_list_checkornot";          //命名空間+要用的函數名稱
         String METHOD_NAME = "reminder_seedling_data_list_checkornot";   //函數名稱
@@ -391,6 +391,7 @@ public class reminder_webservice {
             request.addProperty("user",user);
             request.addProperty("seedling_id",seedling_id);
             request.addProperty("checkornot",checkornot);
+            request.addProperty("seedling_num",seedling_num);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.bodyOut = request;
@@ -413,6 +414,48 @@ public class reminder_webservice {
         }
     }
 
+    private static final String planting_TAG="planting";
+    //抓取定植CardView所需資料
+    public static List<List<String>> reminder_planting_data_list(String user)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_planting_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_planting_data_list";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v(planting_TAG,"有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v(planting_TAG,"obj1: "+obj1);
+            Log.v(planting_TAG,"obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v(planting_TAG,"getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v(planting_TAG," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v(planting_TAG,"result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v(planting_TAG,"e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
 
     //抓取出貨廠商清單(ex:農會、大王菜舖子...)
     public static List<String> vendor_list()

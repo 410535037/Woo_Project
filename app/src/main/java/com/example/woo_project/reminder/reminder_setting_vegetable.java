@@ -105,6 +105,9 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
     TextView text;
     int vege_id;
 
+    //確認是否有按日期推算
+    boolean estimate_bt_status=false;
+
     private main_reminder  getMain_reminder= new main_reminder();
 
     @Override
@@ -266,6 +269,7 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
                     Toast.makeText(getContext(),"*成長天數\n*育苗天數\n都要輸入喔!",Toast.LENGTH_LONG).show();
                 }
                 else {
+                    estimate_bt_status=true;
                     Date_Calculate();
                 }
             }
@@ -296,17 +300,25 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
     }
 
 
-    public void Confirm(){
+    public boolean Confirm(){
         if(choose_vege_tiet.getText().toString().equals("")||harvest_day_tv.getText().toString().equals("")||days_of_seedling_tiet.getText().toString().equals("")||days_of_growing_tiet.getText().toString().equals(""))
         {
             Toast.makeText(getContext(),"#作物名稱\n#預計收成日\n成長天數\n育苗天數\n一定要填喔!",Toast.LENGTH_LONG).show();
+            return false;
         }
         else {
-            mThreadHandler.post(setInsert_reminder_vegetable_setting);
-            Intent intent = new Intent(getActivity(), home.class);
-            startActivity(intent);
-            getActivity().finish();
+            if(estimate_bt_status)
+            {
+                mThreadHandler.post(setInsert_reminder_vegetable_setting);
+                return true;
+            }
+            else
+            {
+                Toast.makeText(getContext(),"記得推算育苗日與定植日!",Toast.LENGTH_LONG).show();
+                return false;
+            }
         }
+
     }
 
     private void Date_Calculate(){

@@ -121,7 +121,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private Runnable getReminder_planting_data=new Runnable () {
 
         public void run() {
-//            reminder_planting_data=reminder_webservice.reminder_planting_data_list("39");
+            reminder_planting_data=reminder_webservice.reminder_planting_data_list("39");
             //請經紀人指派工作名稱 r，給工人做
             Log.v("test","data:"+reminder_planting_data);
             mUI_Handler.post(setReminder_planting_data);
@@ -146,7 +146,8 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     List<String> seedling_checkornot = new ArrayList<>();
                     List<String> seedling_vege_image = new ArrayList<>();
                     //png_list
-                    Log.v("test","reminder_planting_data的長度: "+reminder_planting_data.size());
+                    Log.v("planting","reminder_planting_data的長度: "+reminder_planting_data.size());
+                    Log.v("planting","reminder_planting_data:" +reminder_planting_data);
                     for(int i=0;i<reminder_planting_data.size();i++) {
 
                         seedling_vege_id.add(reminder_planting_data.get(i).get(0));
