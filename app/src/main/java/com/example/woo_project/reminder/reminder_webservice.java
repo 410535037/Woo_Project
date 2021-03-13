@@ -380,7 +380,7 @@ public class reminder_webservice {
     }
 
     //確認育苗CardView
-    public static boolean reminder_seedling_data_list_checkornot(String user, String seedling_id, boolean checkornot,int seedling_num)
+    public static boolean reminder_seedling_data_list_checkornot(String user, String seedling_id, boolean checkornot)
     {
         String SOAP_ACTION = "http://tempuri.org/reminder_seedling_data_list_checkornot";          //命名空間+要用的函數名稱
         String METHOD_NAME = "reminder_seedling_data_list_checkornot";   //函數名稱
@@ -391,7 +391,7 @@ public class reminder_webservice {
             request.addProperty("user",user);
             request.addProperty("seedling_id",seedling_id);
             request.addProperty("checkornot",checkornot);
-            request.addProperty("seedling_num",seedling_num);
+
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.bodyOut = request;

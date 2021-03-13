@@ -301,9 +301,12 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
 
 
     public boolean Confirm(){
-        if(choose_vege_tiet.getText().toString().equals("")||harvest_day_tv.getText().toString().equals("")||days_of_seedling_tiet.getText().toString().equals("")||days_of_growing_tiet.getText().toString().equals(""))
+
+        if(choose_vege_tiet.getText().toString().equals("")||harvest_day_tv.getText().toString().equals("")
+                ||days_of_seedling_tiet.getText().toString().equals("")||days_of_growing_tiet.getText().toString().equals("")
+                ||seedling_num.getText().toString().equals("") || Integer.parseInt(seedling_num.getText().toString())> 0 )
         {
-            Toast.makeText(getContext(),"#作物名稱\n#預計收成日\n成長天數\n育苗天數\n一定要填喔!",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"#作物名稱\n#預計收成日\n成長天數\n育苗天數\n一定要填 !\n別忘了育苗數量要大於0哦 !",Toast.LENGTH_LONG).show();
             return false;
         }
         else {

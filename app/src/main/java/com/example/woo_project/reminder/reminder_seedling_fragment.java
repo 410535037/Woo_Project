@@ -355,8 +355,22 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     vege_name_tv = root.findViewById(R.id.vege_data_name_tv);
                     edit_tv = root.findViewById(R.id.edit_tv);
                     delete_tv = root.findViewById(R.id.delete_tv);
-
                     vege_name_tv.setText(vege.getName());
+
+                    //dialog詳細資訊
+                    TextView in_vege_name_tv = root.findViewById(R.id.textView10);
+                    TextView in_seedling_num_tv = root.findViewById(R.id.textView11);
+                    TextView in_preharvest_tv = root.findViewById(R.id.textView18);
+                    TextView in_vendor_tv = root.findViewById(R.id.textView20);
+                    TextView in_remark_tv = root.findViewById(R.id.textView12);
+                    TextView in_seedling_days_tv = root.findViewById(R.id.textView13);
+                    TextView in_growing_days_tv = root.findViewById(R.id.textView14);
+
+
+                    in_vege_name_tv.setText(vege.getName());
+                    in_seedling_num_tv.setText(vege.getTag2().substring(1));
+
+
 
                     bottomSheetDialog.show();
 
@@ -416,7 +430,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     Check_img_change = !vege.getCheck_img().equals("checked");
                     Log.v("test","check_img_change: "+ Check_img_change);
                     //need user id , vege id, check fg
-                    check_status[0] = reminder_webservice.reminder_seedling_data_list_checkornot("39",vege.getId(),Check_img_change,Integer.parseInt(vege.getTag2()));
+                    check_status[0] = reminder_webservice.reminder_seedling_data_list_checkornot("39",vege.getId(),Check_img_change);
                     //請經紀人指派工作名稱 r，給工人做
                     mUI_Handler.post(setCheck_result);
                 }
