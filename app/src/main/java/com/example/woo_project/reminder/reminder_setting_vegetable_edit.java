@@ -101,7 +101,8 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
 
     //確認是否有按日期推算
     boolean estimate_bt_status=false;
-
+    String seedling_id, preharvest;
+    boolean day_of_harvest_tiet_status = false;
     private main_reminder  getMain_reminder= new main_reminder();
 
     @Override
@@ -151,12 +152,12 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
         // 獲取意圖物件
         Intent intent = getActivity().getIntent();
         //設定傳遞鍵值
-        String id = intent.getStringExtra("str_id");
+        seedling_id = intent.getStringExtra("str_id");
         String name = intent.getStringExtra("str_vege_til");
         String seedling_number = intent.getStringExtra("str_seedling_num");
         String vendor = intent.getStringExtra("str_vendor_tiet");
         String remark = intent.getStringExtra("str_remark_edit");
-        String preharvest = intent.getStringExtra("str_day_of_harvest_tiet");
+        preharvest = intent.getStringExtra("str_day_of_harvest_tiet");
         String growing_day = intent.getStringExtra("str_days_of_growing_tiet");
         String seedling_day = intent.getStringExtra("str_days_of_raising_seedling_tiet");
         //設定值
@@ -169,6 +170,7 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
         remark_edit.setText(remark);
         day_of_harvest_tiet.setText(preharvest);
         days_of_growing_tiet.setText(growing_day);
+        Log.v("edit","growing_day: "+growing_day);
         days_of_seedling_tiet.setText(seedling_day);
 
 
@@ -209,6 +211,7 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.setTargetFragment(reminder_setting_vegetable_edit.this,0);
                 datePicker.show(getActivity().getSupportFragmentManager(),"date picker");
+
 
             }
         });
@@ -279,9 +282,10 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
 
         day_of_harvest =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
         day_of_harvest_tiet.setText(day_of_harvest);
-        harvest_day_tv.setText(day_of_harvest);
+
 
         if(!days_of_growing_tiet.getText().toString().equals("") && !days_of_seedling_tiet.getText().toString().equals("") && !day_of_harvest_tiet.getText().toString().equals("")){
+            day_of_harvest_tiet_status = true;
             Date_Calculate();
         }
 
@@ -292,7 +296,7 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
 
         if(choose_vege_tiet.getText().toString().equals("")||harvest_day_tv.getText().toString().equals("")
                 ||days_of_seedling_tiet.getText().toString().equals("")||days_of_growing_tiet.getText().toString().equals("")
-                ||seedling_num.getText().toString().equals("") || Integer.parseInt(seedling_num.getText().toString())> 0 )
+                ||seedling_num.getText().toString().equals("") || seedling_num.getText().toString().equals("") )
         {
             Toast.makeText(getContext(),"#作物名稱\n#預計收成日\n成長天數\n育苗天數\n一定要填 !\n別忘了育苗數量要大於0哦 !",Toast.LENGTH_LONG).show();
             return false;
@@ -313,11 +317,23 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
     }
 
     private void Date_Calculate(){
+        if(!day_of_harvest_tiet_status)
+        {
+            c = Calendar.getInstance();
+
+            myear = Integer.parseInt(preharvest.substring(0,4));
+            mmonth = Integer.parseInt(preharvest.substring(5,7))-1;
+            mday = Integer.parseInt(preharvest.substring(8,10));
+            day_of_harvest = preharvest;
+            Log.v("edit","myear+mmonth+mday"+myear+"   "+mmonth+"   "+mday);
+        }
         c.set(Calendar.YEAR,myear);
         c.set(Calendar.MONTH,mmonth);
         c.set(Calendar.DAY_OF_MONTH,mday);
         c.add(Calendar.DAY_OF_MONTH, -(Integer.valueOf(days_of_growing_tiet.getText().toString()))); //定植日=收成日-成長天數
-        Log.v("test", "date:" + mday);
+        Log.v("edit", "ddddddate:" + myear);
+        Log.v("edit", "ddddddate:" + mmonth);
+        Log.v("edit", "ddddddate:" + mday);
         day_of_planting = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
 
         c.add(Calendar.DAY_OF_MONTH, -(Integer.parseInt(days_of_seedling_tiet.getText().toString())));//育苗日=定植日-育苗天數
@@ -325,7 +341,7 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
 
         seedling_day_tv.setText(day_of_seedling);
         planting_day_tv.setText(day_of_planting);
-
+        harvest_day_tv.setText(day_of_harvest);
     }
 
     private Runnable setInsert_reminder_vegetable_setting=new Runnable () {
@@ -351,13 +367,13 @@ public class reminder_setting_vegetable_edit extends Fragment implements DatePic
                 {
                     kg_tiet.setText("0");
                 }
-                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, Integer.parseInt(seedling_num.getText().toString()), false, false, false, "39");
+                YorN = reminder_webservice.Update_reminder_vegetable_setting(choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, false, false, false, "39",seedling_id);
 
             }
             else
             {
 
-                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, Integer.parseInt(seedling_num.getText().toString()), false, false, false, "39");
+                YorN = reminder_webservice.Update_reminder_vegetable_setting( choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null,  false, false, false, "39",seedling_id);
             }
             //請經紀人指派工作名稱 r，給工人做
             Log.v("test","YorN:"+YorN);

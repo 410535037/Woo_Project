@@ -363,13 +363,13 @@ public class reminder_setting_vegetable extends Fragment implements DatePickerDi
                 {
                     kg_tiet.setText("0");
                 }
-                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, Integer.parseInt(seedling_num.getText().toString()), false, false, false, "39");
+                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, false, false, false, "39");
 
             }
             else
             {
 
-                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, Integer.parseInt(seedling_num.getText().toString()), false, false, false, "39");
+                YorN = reminder_webservice.Insert_reminder_vegetable_setting(vege_id, choose_vege_tiet.getText().toString(), vendor_tiet.getText().toString(), remark_edit.getText().toString(), Integer.parseInt(seedling_num.getText().toString()), seedling_unit_sp.getSelectedItem().toString(), Integer.parseInt(kg_tiet.getText().toString()), seedling_day_tv.getText().toString(), planting_day_tv.getText().toString(), harvest_day_tv.getText().toString(), Integer.parseInt(days_of_seedling_tiet.getText().toString()), Integer.parseInt(days_of_growing_tiet.getText().toString()), null, false, false, false, "39");
             }
             //請經紀人指派工作名稱 r，給工人做
             Log.v("test","YorN:"+YorN);

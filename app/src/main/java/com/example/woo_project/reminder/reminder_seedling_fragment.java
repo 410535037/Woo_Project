@@ -458,10 +458,13 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                             intent.putExtra("str_vendor_tiet",vege.getVendor());
                             intent.putExtra("str_remark_edit",vege.getRemark());
                             intent.putExtra("str_day_of_harvest_tiet",vege.getPreharvest());
-                            intent.putExtra("str_days_of_growing_tiet",vege.getPregrowing_num());
-                            intent.putExtra("str_days_of_raising_seedling_tiet",vege.getPreday_num());
+                            intent.putExtra("str_days_of_growing_tiet",String.valueOf(vege.getPregrowing_num()));
+                            intent.putExtra("str_days_of_raising_seedling_tiet",String.valueOf(vege.getPreday_num()));
+                            Log.v("edit","vege.getPregrowing_num():"+vege.getPregrowing_num());
+
                             //啟用意圖
                             startActivity(intent);
+                            bottomSheetDialog.dismiss();
                         }
                     });
                     delete_tv.setOnClickListener(new View.OnClickListener() {

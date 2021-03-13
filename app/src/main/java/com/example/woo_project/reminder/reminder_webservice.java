@@ -19,7 +19,7 @@ public class reminder_webservice {
     private static final String URL = "http://134.208.97.191:8080/reminder_WebService.asmx";     //WebService的網址
 
 
-    public static String Insert_reminder_vegetable_setting(int variety_of_vege, String vege,String vendor,String reminder_text,int seedling_num,String seedling_unit,int harvest_num, String seedling_day, String planting_day, String harvest_day,int days_of_seedling,int days_of_planting, String real_seedling_day,int real_seedling_num, Boolean do_seedling, Boolean do_planting, Boolean do_harvest, String user) {
+    public static String Insert_reminder_vegetable_setting(int variety_of_vege, String vege,String vendor,String reminder_text,int seedling_num,String seedling_unit,int harvest_num, String seedling_day, String planting_day, String harvest_day,int days_of_seedling,int days_of_planting, String real_seedling_day, Boolean do_seedling, Boolean do_planting, Boolean do_harvest, String user) {
         String SOAP_ACTION = "http://tempuri.org/Insert_reminder_vegetable_setting";          //命名空間+要用的函數名稱
         String METHOD_NAME = "Insert_reminder_vegetable_setting";   //函數名稱
 
@@ -39,7 +39,6 @@ public class reminder_webservice {
             request.addProperty("days_of_seedling", days_of_seedling);
             request.addProperty("days_of_planting", days_of_planting);
             request.addProperty("real_seedling_day", real_seedling_day);
-            request.addProperty("real_seedling_num", real_seedling_num);
             request.addProperty("do_seedling", do_seedling);
             request.addProperty("do_planting", do_planting);
             request.addProperty("do_harvest", do_harvest);
@@ -65,6 +64,53 @@ public class reminder_webservice {
             return e.toString();
         }
     }
+
+    public static String Update_reminder_vegetable_setting(String vege,String vendor,String reminder_text,int seedling_num,String seedling_unit,int harvest_num, String seedling_day, String planting_day, String harvest_day,int days_of_seedling,int days_of_planting, String real_seedling_day, Boolean do_seedling, Boolean do_planting, Boolean do_harvest, String user, String seedling_id) {
+        String SOAP_ACTION = "http://tempuri.org/Update_reminder_vegetable_setting";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "Update_reminder_vegetable_setting";   //函數名稱
+
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("vege", vege);
+            request.addProperty("vendor", vendor);
+            request.addProperty("reminder_text", reminder_text);
+            request.addProperty("seedling_num", seedling_num);
+            request.addProperty("seedling_unit", seedling_unit);
+            request.addProperty("harvest_num", harvest_num);
+            request.addProperty("seedling_day", seedling_day);
+            request.addProperty("planting_day", planting_day);
+            request.addProperty("harvest_day", harvest_day);
+            request.addProperty("days_of_seedling", days_of_seedling);
+            request.addProperty("days_of_planting", days_of_planting);
+            request.addProperty("real_seedling_day", real_seedling_day);
+            request.addProperty("do_seedling", do_seedling);
+            request.addProperty("do_planting", do_planting);
+            request.addProperty("do_harvest", do_harvest);
+            request.addProperty("user", user);
+            request.addProperty("seedling_id",seedling_id);
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+
+            // 獲取回傳數據
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 獲取返回的結果
+            String result = object.getProperty(0).toString();
+            Log.v("edit","Update_reminder 的result: "+result);
+            return result;
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
+
 
     public static String Select_reminder_vegetable_growing_seedling_day(String user) {
         String SOAP_ACTION = "http://tempuri.org/Select_reminder_vegetable_growing_seedling_day";          //命名空間+要用的函數名稱
