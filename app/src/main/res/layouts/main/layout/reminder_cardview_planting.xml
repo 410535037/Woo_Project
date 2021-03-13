@@ -63,7 +63,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="2dp"
-                                android:text="預計育苗日 : "
+                                android:text="預計定植日 : "
                                 android:textColor="#89B094"
                                 android:textSize="12sp" />
                             <TextView

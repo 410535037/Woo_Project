@@ -176,6 +176,13 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                     List<String> harvest_number_unit = new ArrayList<>();
                     List<String> harvest_checkornot = new ArrayList<>();
                     List<String> harvest_vege_image = new ArrayList<>();
+
+                    List<String> harvest_vendor = new ArrayList<>();
+                    List<String> harvest_remark = new ArrayList<>();
+                    List<String> harvest_preharvest = new ArrayList<>();
+                    List<String> harvest_pregrowing = new ArrayList<>();
+                    List<Integer> harvest_preday_num = new ArrayList<>();
+                    List<Integer> harvest_pregrowing_num = new ArrayList<>();
                     //png_list
                     Log.v("test","reminder_harvest_data的長度: "+reminder_harvest_data.size());
                     for(int i=0;i<reminder_harvest_data.size();i++) {
@@ -193,10 +200,22 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                         }
                         harvest_vege_image.add(reminder_harvest_data.get(i).get(7));
 
+                        harvest_vendor.add(reminder_harvest_data.get(i).get(8));
+                        harvest_remark.add(reminder_harvest_data.get(i).get(9));
+                        harvest_preharvest.add(reminder_harvest_data.get(i).get(10));
+                        harvest_pregrowing.add(reminder_harvest_data.get(i).get(11));
+                        harvest_preday_num.add(Integer.parseInt(reminder_harvest_data.get(i).get(12)));
+                        harvest_pregrowing_num.add(Integer.parseInt(reminder_harvest_data.get(i).get(13)));
 
                     }
-                    for(int i=0;i<harvest_vege_name.size();i++){
-                        reminderList.add(new reminder_cardview(harvest_vege_id.get(i),harvest_vege_image.get(i), harvest_vege_name.get(i), "預計收成日 :  " + harvest_day.get(i).substring(0,10), "#"+harvest_number.get(i)+harvest_number_unit.get(i), harvest_checkornot.get(i)));
+
+                    reminderList = new ArrayList<>();
+
+                    for(int i=0;i<harvest_vege_name.size();i++) {
+                        reminderList.add(new reminder_cardview(harvest_vege_id.get(i), harvest_vege_image.get(i), harvest_vege_name.get(i), harvest_day.get(i).substring(0, 10),
+                                harvest_number.get(i), harvest_number_unit.get(i), harvest_checkornot.get(i), harvest_vendor.get(i), harvest_remark.get(i), harvest_preharvest.get(i),
+                                harvest_pregrowing.get(i), harvest_preday_num.get(i), harvest_pregrowing_num.get(i)));
+
                     }
 //                    for (int i = 0; i < reminderList.size(); i++) {
 //                        counter.add(0);
@@ -271,7 +290,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
         @Override
         public reminder_harvest_fragment.reminder_first_layer_fragment_adapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             LayoutInflater inflater=LayoutInflater.from(mctx);
-            View view=inflater.inflate(R.layout.reminder_cardview,viewGroup,false);
+            View view=inflater.inflate(R.layout.reminder_cardview_harvest,viewGroup,false);
             return new reminder_harvest_fragment.reminder_first_layer_fragment_adapter.viewholder(view);
         }
 
@@ -293,6 +312,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
             holder.tag1.setText(String.valueOf(vege.getTag1()));
             Tag1=String.valueOf(vege.getTag1());
             holder.tag2.setText(String.valueOf(vege.getTag2()));
+            holder.unit.setText(vege.getUnit());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -395,7 +415,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
         class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img,check_img;
             ImageButton plus_imb,more_imb;
-            TextView vege,tag1,tag2;
+            TextView vege,tag1,tag2,unit;
 
             public viewholder(View itemView) {
                 super(itemView);
@@ -405,6 +425,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                 vege = itemView.findViewById(R.id.vegename);
                 tag1 = itemView.findViewById(R.id.tag1_tv);
                 tag2 = itemView.findViewById(R.id.tag2_tv);
+                unit = itemView.findViewById(R.id.unit);
                 check_img = itemView.findViewById(R.id.check_img);
 
             }

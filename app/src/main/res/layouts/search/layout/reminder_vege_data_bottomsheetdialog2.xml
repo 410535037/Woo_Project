@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="育苗棚架 : "
+                android:text="定植棚架 : "
                 android:textSize="14sp"/>
 
             <TextView
@@ -161,6 +161,28 @@
                 android:padding="8dp"
                 android:textSize="14sp"
                 android:text="350公斤" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="實際收成重量 : "
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:text="400公斤" />
 
         </LinearLayout>
 
@@ -259,7 +281,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="預計育苗日 : "
+                android:text="實際育苗日 : "
                 android:textSize="14sp"/>
 
             <TextView
@@ -280,7 +302,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="預計定植日 : "
+                android:text="實際定植日 : "
                 android:textSize="14sp"/>
 
 
@@ -302,7 +324,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="預計收成日 : "
+                android:text="實際收成日 : "
                 android:textSize="14sp"/>
 
             <TextView

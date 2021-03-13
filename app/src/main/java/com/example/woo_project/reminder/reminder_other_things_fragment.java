@@ -53,7 +53,7 @@ public class reminder_other_things_fragment extends Fragment {
 
         reminder_rv=root.findViewById(R.id.rv1);
         reminderList=new ArrayList<>();
-        reminderList.add(new reminder_cardview("1", "fertilizer","施肥","#施肥日 :  2020/12/29", "#棚架 :  A10", "checked"));
+        reminderList.add(new reminder_cardview("1", "fertilizer","施肥","#施肥日 :  2020/12/29", "#棚架 :  A10", "","checked","","","","",1,1));
 
         reminder_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         reminder_rv.setHasFixedSize(true);

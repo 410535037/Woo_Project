@@ -463,6 +463,41 @@ public class reminder_webservice {
         }
     }
 
+    //確認育苗CardView
+    public static boolean reminder_seedling_delete(int user, int id)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_seedling_delete";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_seedling_delete";   //函數名稱
+        boolean result = false ;
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("id",id);
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapPrimitive obj1 = (SoapPrimitive) envelope.getResponse();
+            Log.v("test","obj1: "+obj1.getValue());
+            result = Boolean.parseBoolean(String.valueOf(obj1.getValue()));
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
+
     private static final String planting_TAG="planting";
     //抓取定植CardView所需資料
     public static List<List<String>> reminder_planting_data_list(String user)

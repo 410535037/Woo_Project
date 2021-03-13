@@ -2,7 +2,10 @@ package com.example.woo_project.reminder;
 //提醒主頁--育苗的fragment
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -20,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -163,6 +167,8 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                 @Override
                 public void run() {
 
+                   // 育苗編號 , 作物名稱 , 預計育苗日 , 育苗數量 , 育苗數量單位 , 育苗是否執行完 , 作物編號 , 圖片 ,
+                    // 廠商名稱 , 備註 ,預計收成日 ,預計定植日, 預計育苗天數, 預計成長天數
                     List<String> seedling_vege_id = new ArrayList<>();
                     List<String> seedling_vege_name = new ArrayList<>();
                     List<String> seedling_day = new ArrayList<>();
@@ -170,6 +176,13 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     List<String> seedling_number_unit = new ArrayList<>();
                     List<String> seedling_checkornot = new ArrayList<>();
                     List<String> seedling_vege_image = new ArrayList<>();
+
+                    List<String> seedling_vendor = new ArrayList<>();
+                    List<String> seedling_remark = new ArrayList<>();
+                    List<String> seedling_preharvest = new ArrayList<>();
+                    List<String> seedling_pregrowing = new ArrayList<>();
+                    List<Integer> seedling_preday_num = new ArrayList<>();
+                    List<Integer> seedling_pregrowing_num = new ArrayList<>();
 
 
                     Log.v("test","reminder_seedling_data的長度: "+reminder_seedling_data.size());
@@ -188,10 +201,23 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                         }
                         seedling_vege_image.add(reminder_seedling_data.get(i).get(7));
 
+                        seedling_vendor.add(reminder_seedling_data.get(i).get(8));
+                        seedling_remark.add(reminder_seedling_data.get(i).get(9));
+                        seedling_preharvest.add(reminder_seedling_data.get(i).get(10));
+                        seedling_pregrowing.add(reminder_seedling_data.get(i).get(11));
+                        seedling_preday_num.add(Integer.parseInt(reminder_seedling_data.get(i).get(12)));
+                        seedling_pregrowing_num.add(Integer.parseInt(reminder_seedling_data.get(i).get(13)));
+
                     }
                     reminderList = new ArrayList<>();
+
+                    //reminder_cardview(String id, String vege_img, String name, String tag1,
+                    // String tag2,unit,String check_img, String vendor, String remark,String preharvest,String preseedling,
+                    // String pregrowing,int preday_num, int pregrowing_num))
                     for(int i=0;i<seedling_vege_name.size();i++){
-                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), "預計育苗日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
+                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), seedling_day.get(i).substring(0,10),
+                                seedling_number.get(i), seedling_number_unit.get(i), seedling_checkornot.get(i), seedling_vendor.get(i), seedling_remark.get(i), seedling_preharvest.get(i),
+                                seedling_pregrowing.get(i),seedling_preday_num.get(i),seedling_pregrowing_num.get(i)));
                     }
 
                     reminder_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
@@ -290,7 +316,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     .into(holder.check_img);
             holder.tag1.setText(vege.getTag1());
             holder.tag2.setText(vege.getTag2());
-
+            holder.unit.setText(vege.getUnit());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -344,6 +370,40 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
 
                 }
             });
+
+
+            final boolean[] Check_delete_vege = new boolean[1];
+            // 刪除育苗提醒
+            final Runnable setSeedling_delete = new Runnable () {
+
+                public void run() {
+                    if(Check_delete_vege[0])
+                    {
+                        Toast.makeText(mctx,"變更成功!",Toast.LENGTH_SHORT).show();
+                        mThreadHandler.post(getReminder_seedling_data);
+                    }
+                    else
+                    {
+                        Toast.makeText(mctx,"發生錯誤，請再試一次!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            };
+
+            final Runnable getSeedling_delete = new Runnable () {
+
+                public void run() {
+
+                    //need user id , vege id
+                    Check_delete_vege[0] = reminder_webservice.reminder_seedling_delete(39,Integer.parseInt(vege.getId()));
+                    //請經紀人指派工作名稱 r，給工人做
+                    mUI_Handler.post(setSeedling_delete);
+                }
+
+            };
+
+
+
             holder.more_imb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -360,15 +420,25 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     //dialog詳細資訊
                     TextView in_vege_name_tv = root.findViewById(R.id.textView10);
                     TextView in_seedling_num_tv = root.findViewById(R.id.textView11);
-                    TextView in_preharvest_tv = root.findViewById(R.id.textView18);
+                    TextView in_preharvest_tv = root.findViewById(R.id.textView17);
                     TextView in_vendor_tv = root.findViewById(R.id.textView20);
                     TextView in_remark_tv = root.findViewById(R.id.textView12);
                     TextView in_seedling_days_tv = root.findViewById(R.id.textView13);
                     TextView in_growing_days_tv = root.findViewById(R.id.textView14);
+                    TextView in_seedling_tv = root.findViewById(R.id.textView15);
+                    TextView in_growing_tv = root.findViewById(R.id.textView16);
 
 
                     in_vege_name_tv.setText(vege.getName());
-                    in_seedling_num_tv.setText(vege.getTag2().substring(1));
+                    in_seedling_num_tv.setText(vege.getTag2());
+                    in_vendor_tv.setText(vege.getVendor());
+                    in_remark_tv.setText(vege.getRemark());
+                    in_seedling_days_tv.setText(String.valueOf(vege.getPreday_num()));
+                    in_growing_days_tv.setText(String.valueOf(vege.getPregrowing_num()));
+                    in_seedling_tv.setText(vege.getTag1());
+                    in_growing_tv.setText(vege.getPregrowing());
+                    in_preharvest_tv.setText(vege.getPreharvest());
+
 
 
 
@@ -378,12 +448,57 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     edit_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            //建立意圖物件
+                            Intent intent = new Intent(getContext(),reminder_setting_edit.class);
+                            //設定傳遞鍵值
+                            intent.putExtra("str_id",vege.getId());
+                            intent.putExtra("str_vege_til",vege.getName());
+                            intent.putExtra("str_seedling_num",vege.getTag2());
+                            Log.v("edit","Integer.parseInt(vege.getTag2()): "+Integer.parseInt(vege.getTag2()));
+                            intent.putExtra("str_vendor_tiet",vege.getVendor());
+                            intent.putExtra("str_remark_edit",vege.getRemark());
+                            intent.putExtra("str_day_of_harvest_tiet",vege.getPreharvest());
+                            intent.putExtra("str_days_of_growing_tiet",vege.getPregrowing_num());
+                            intent.putExtra("str_days_of_raising_seedling_tiet",vege.getPreday_num());
+                            //啟用意圖
+                            startActivity(intent);
                         }
                     });
                     delete_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            AlertDialog delete_reminder = null;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder//.setIcon(R.drawable.icon) //設定標題圖片
+                                   // .setTitle("TITLE") //設定標題文字
+                                    .setMessage("確認要刪除嗎?!") //設定內容文字
+                                    .setPositiveButton("確認", new DialogInterface.OnClickListener()
+                                    { //設定確定按鈕
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            mThreadHandler.post(getSeedling_delete);
+                                            bottomSheetDialog.dismiss();
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                                    { //設定取消按鈕
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            // TODO Auto-generated method stub
+                                        }
+                                    });
+
+                            delete_reminder = builder.create(); //建立對話方塊並存成 dialog
+                            delete_reminder.show();
+                            //把button背景改為白色
+                            Button nbutton = delete_reminder.getButton(DialogInterface.BUTTON_NEGATIVE);
+                            nbutton.setBackgroundColor(Color.WHITE);
+                            Button pbutton = delete_reminder.getButton(DialogInterface.BUTTON_POSITIVE);
+                            pbutton.setBackgroundColor(Color.WHITE);
+
+
 
                         }
                     });
@@ -462,7 +577,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
         class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img,check_img;
             ImageButton plus_imb,more_imb;
-            TextView vegename,tag1,tag2;
+            TextView vegename,tag1,tag2,unit;
 
             public viewholder(@NonNull View itemView) {
                 super(itemView);
@@ -470,6 +585,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                 vegename = (TextView) itemView.findViewById(R.id.vegename);
                 tag1 = (TextView) itemView.findViewById(R.id.tag1_tv);
                 tag2 = (TextView) itemView.findViewById(R.id.tag2_tv);
+                unit = itemView.findViewById(R.id.unit);
                 plus_imb = itemView.findViewById(R.id.plus_imb);
                 more_imb = itemView.findViewById(R.id.more_imb);
                 check_img = (ImageView) itemView.findViewById(R.id.check_img);

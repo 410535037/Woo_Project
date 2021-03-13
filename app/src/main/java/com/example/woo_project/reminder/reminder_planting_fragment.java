@@ -146,6 +146,13 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     List<String> seedling_number_unit = new ArrayList<>();
                     List<String> seedling_checkornot = new ArrayList<>();
                     List<String> seedling_vege_image = new ArrayList<>();
+
+                    List<String> seedling_vendor = new ArrayList<>();
+                    List<String> seedling_remark = new ArrayList<>();
+                    List<String> seedling_preharvest = new ArrayList<>();
+                    List<String> seedling_pregrowing = new ArrayList<>();
+                    List<Integer> seedling_preday_num = new ArrayList<>();
+                    List<Integer> seedling_pregrowing_num = new ArrayList<>();
                     //png_list
                     Log.v("planting","reminder_planting_data的長度: "+reminder_planting_data.size());
                     Log.v("planting","reminder_planting_data:" +reminder_planting_data);
@@ -164,10 +171,20 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                         }
                         seedling_vege_image.add(reminder_planting_data.get(i).get(7));
 
+                        seedling_vendor.add(reminder_planting_data.get(i).get(8));
+                        seedling_remark.add(reminder_planting_data.get(i).get(9));
+                        seedling_preharvest.add(reminder_planting_data.get(i).get(10));
+                        seedling_pregrowing.add(reminder_planting_data.get(i).get(11));
+                        seedling_preday_num.add(Integer.parseInt(reminder_planting_data.get(i).get(12)));
+                        seedling_pregrowing_num.add(Integer.parseInt(reminder_planting_data.get(i).get(13)));
+
 
                     }
+                    reminderList = new ArrayList<>();
                     for(int i=0;i<seedling_vege_name.size();i++){
-                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i),seedling_vege_image.get(i), seedling_vege_name.get(i), "預計定植日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
+                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), seedling_day.get(i).substring(0,10),
+                                seedling_number.get(i), seedling_number_unit.get(i), seedling_checkornot.get(i), seedling_vendor.get(i), seedling_remark.get(i), seedling_preharvest.get(i),
+                                seedling_pregrowing.get(i),seedling_preday_num.get(i),seedling_pregrowing_num.get(i)));
                     }
 
                     reminder_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
@@ -326,7 +343,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
         @Override
         public reminder_first_layer_fragment_adapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             LayoutInflater inflater=LayoutInflater.from(mctx);
-            View view=inflater.inflate(R.layout.reminder_cardview,viewGroup,false);
+            View view=inflater.inflate(R.layout.reminder_cardview_planting,viewGroup,false);
             return new reminder_first_layer_fragment_adapter.viewholder(view);
         }
 
@@ -348,6 +365,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
             holder.tag1.setText(String.valueOf(vege.getTag1()));
             Tag1=String.valueOf(vege.getTag1());
             holder.tag2.setText(String.valueOf(vege.getTag2()));
+            holder.unit.setText(vege.getUnit());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -473,7 +491,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
         class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img,check_img;
             ImageButton plus_imb,more_imb;
-            TextView vege,tag1,tag2;
+            TextView vege,tag1,tag2,unit;
 
             public viewholder(@NonNull View itemView) {
                 super(itemView);
@@ -483,6 +501,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                 vege = itemView.findViewById(R.id.vegename);
                 tag1 = itemView.findViewById(R.id.tag1_tv);
                 tag2 = itemView.findViewById(R.id.tag2_tv);
+                unit = itemView.findViewById(R.id.unit);
                 check_img = itemView.findViewById(R.id.check_img);
 
             }

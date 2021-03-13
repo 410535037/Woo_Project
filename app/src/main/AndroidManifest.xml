@@ -29,6 +29,7 @@
         <activity android:name=".user_setting.personal_info" />
         <activity android:name=".login.login2" />
         <activity android:name=".reminder.main_reminder"  />
+        <activity android:name=".reminder.reminder_setting_edit"  />
         <activity android:name=".reminder.reminder_setting"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".remind.farm_record"  />
