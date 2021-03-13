@@ -89,7 +89,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/canopy_area_tiet"
+                android:id="@+id/greenhouse_tiet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="棚架位置"
@@ -106,7 +106,7 @@
             android:layout_weight="1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/date_tv4"
+                android:id="@+id/planting_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="定植數量"

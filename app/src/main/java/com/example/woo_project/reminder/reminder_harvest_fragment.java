@@ -311,7 +311,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                     vege_name_tv = root.findViewById(R.id.vege_name_tv);
                     planting_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
                     date_tiet = root.findViewById(R.id.date_tiet);
-                    canopy_area_tiet = root.findViewById(R.id.canopy_area_tiet);
+                    canopy_area_tiet = root.findViewById(R.id.greenhouse_tiet);
 
                     vege_name_tv.setText(vege.getName());
 

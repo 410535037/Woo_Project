@@ -95,20 +95,7 @@ public class reminder_other_things_fragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (counter.get(position) % 2 == 0) {
-                        remindList2.clear();
-                        remindList2.add(new reminder_second_layer_cardview(1,"#A01","25盤"));
-                        remindList2.add(new reminder_second_layer_cardview(2,"#B01","30盤"));
-                        holder.secondrecyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                        holder.secondrecyclerview.setHasFixedSize(true);
-                        holder.secondrecyclerview.setAdapter(new com.example.woo_project.reminder.reminder_other_things_fragment.reminder_second_layer_fragment_adapter(getActivity(), remindList2));
-                        holder.secondrecyclerview.setVisibility(View.VISIBLE);
-                    } else {
-                        holder.secondrecyclerview.setVisibility(View.GONE);
-                    }
 
-                    counter.set(position, counter.get(position) + 1);
-                    holder.secondrecyclerview.smoothScrollToPosition(position);
 
                 }
             });

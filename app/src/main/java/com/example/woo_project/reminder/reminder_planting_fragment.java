@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,7 +66,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     String reminder_vegetable_data,reminder_unit_data,Vege,Tag1,currentDateString,todaydate;
     ArrayList<Integer> counter = new ArrayList<>();
     Spinner record_canopy_area_sp,record_canopy_sp,remind_amount_unit_sp;
-    TextInputEditText num_ed,date_tiet,canopy_area_tiet;
+    TextInputEditText num_ed,date_tiet,greenhouse_tiet,planting_num;
     String[] Amount;
     Calendar c,c2;
     private List<List<String>> reminder_planting_data = new ArrayList<>();
@@ -168,9 +169,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     for(int i=0;i<seedling_vege_name.size();i++){
                         reminderList.add(new reminder_cardview(seedling_vege_id.get(i),seedling_vege_image.get(i), seedling_vege_name.get(i), "預計定植日 :  " + seedling_day.get(i).substring(0,10), "#"+seedling_number.get(i)+seedling_number_unit.get(i), seedling_checkornot.get(i)));
                     }
-                    for (int i = 0; i < reminderList.size(); i++) {
-                        counter.add(0);
-                    }
+
                     reminder_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                     reminder_rv.setHasFixedSize(true);
                     reminder_rv.setAdapter(new reminder_planting_fragment.reminder_first_layer_fragment_adapter(getActivity(), reminderList));
@@ -181,6 +180,9 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
         }
     };
+
+
+
 
 
 //    private Runnable getRemind_select_unit=new Runnable () {
@@ -358,20 +360,20 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
                     final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
                     View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog,null);//連結的介面
-
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
                     vege_name_tv = root.findViewById(R.id.vege_name_tv);
                     planting_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
                     date_tiet = root.findViewById(R.id.date_tiet);
-                    canopy_area_tiet = root.findViewById(R.id.canopy_area_tiet);
+                    greenhouse_tiet = root.findViewById(R.id.greenhouse_tiet);
+                    planting_num = root.findViewById(R.id.planting_num);
+                    //顯示今天的日期
+                    c2 = Calendar.getInstance();
+                    todaydate =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c2.getTime());
+                    date_tiet.setText(todaydate);
 
                     vege_name_tv.setText(vege.getName());
-
-                    c2 = Calendar.getInstance();
-                    todaydate =  new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(c2.getTime());
-                    date_tiet.setText(todaydate);
 
                     bottomSheetDialog.show();
 
@@ -387,7 +389,9 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                         }
 
                     });
-                    canopy_area_tiet.setOnClickListener(new View.OnClickListener() {
+
+                    //選取棚架位置
+                    greenhouse_tiet.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
@@ -396,7 +400,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                                 @Override
                                 public void onOptionsSelect(int options1, int options2, int options3, View v) {
                                     String vege = canopy_name.get(options1).get(options2);
-                                    canopy_area_tiet.setText(vege);
+                                    greenhouse_tiet.setText(vege);
                                     bottomSheetDialog.show(); //當pickerview按下確認會再開啟btmdialog，讓使用者繼續輸入資料
                                 }
                             }).setTitleText("請選擇") // 選擇器標題
@@ -422,12 +426,31 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                         }
                     });
 
-                    planting_confirm_tv.setOnClickListener(new View.OnClickListener() {
+                    //按下確認
+                   planting_confirm_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
+                            Runnable Reminder_insert_greenhouse_and_planting_num_data=new Runnable () {
+
+                                public void run() {
+                                    String YorN="";  //確認有無傳到資料庫
+
+                                    if(date_tiet.getText().toString().equals("") || greenhouse_tiet.getText().toString().equals("") || planting_num.getText().toString().equals("")){
+                                        Toast.makeText(getContext(),"#定植日期\n#棚架位置\n定植數量\n一定要填 !",Toast.LENGTH_LONG).show();
+                                    }
+                                    else {
+                                        //YorN=reminder_webservice.Insert_greenhouse_and_planting_num(vege.getName(), variety_of_vege, seedling_num, seedling_unit, vendor, reminder_text, harvest_num, seedling_day, planting_day, harvest_day, days_of_seedling, days_of_planting, real_seedling_day, greenhouse, do_seedling, do_planting, do_harvest, "39");
+                                        //請經紀人指派工作名稱 r，給工人做
+                                        Log.v("test", "data:" + YorN);
+                                    }
+
+                                }
+
+                            };
                         }
                     });
+
                 }
             });
 

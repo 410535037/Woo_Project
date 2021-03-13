@@ -269,6 +269,55 @@ public class reminder_webservice {
         }
     }
 
+    public static String Insert_greenhouse_and_planting_num(String vege, int variety_of_vege, int seedling_num, String seedling_unit, String vendor, String reminder_text, int harvest_num, String seedling_day, String planting_day, String harvest_day,int days_of_seedling,int days_of_planting, String real_seedling_day,String greenhouse, Boolean do_seedling, Boolean do_planting, Boolean do_harvest, String user) {
+        //String
+        String SOAP_ACTION = "http://tempuri.org/Insert_greenhouse_and_planting_num";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "Insert_greenhouse_and_planting_num";   //函數名稱
+
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("vege", vege); //作物名稱
+            request.addProperty("variety_of_vege", variety_of_vege); //作物品種
+            request.addProperty("seedling_num", seedling_num);  //育苗數量
+            request.addProperty("seedling_unit", seedling_unit);  //育苗數量單位
+            request.addProperty("vendor", vendor);  //出貨廠商
+            request.addProperty("reminder_text", reminder_text); //備註
+            request.addProperty("harvest_num", harvest_num); //預計收成數量
+            request.addProperty("seedling_day", seedling_day); //預計育苗日
+            request.addProperty("planting_day", planting_day); //預計定植日
+            request.addProperty("harvest_day", harvest_day);  //預計收成日
+            request.addProperty("days_of_seedling", days_of_seedling); //育苗天數
+            request.addProperty("days_of_planting", days_of_planting); //定植天數
+            request.addProperty("real_seedling_day", real_seedling_day); //實際育苗日
+
+            request.addProperty("greenhouse", greenhouse); //定植棚架********在資料庫的育苗要多新增一個棚架位置
+
+            request.addProperty("do_seedling", do_seedling); //是否完成育苗
+            request.addProperty("do_planting", do_planting); //是否完成定植
+            request.addProperty("do_harvest", do_harvest);  //是否完成收成
+            request.addProperty("user", user);
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+
+            // 獲取回傳數據
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 獲取返回的結果
+            String result = object.getProperty(0).toString();
+            Log.v("test","ws的result: "+result);
+            return result;
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
     public static String Select_reminder_day(String user,String day1,String day2) {
         String SOAP_ACTION = "http://tempuri.org/Select_reminder_day";          //命名空間+要用的函數名稱
         String METHOD_NAME = "Select_reminder_day";   //函數名稱
@@ -534,7 +583,7 @@ public class reminder_webservice {
         }
     }
 
-    //抓取今日--育苗CardView所需資料
+    //今日--育苗CardView所需資料
     public static List<List<String>> reminder_today_seedling_data_list(String user)
     {
         String SOAP_ACTION = "http://tempuri.org/reminder_today_seedling_data_list";          //命名空間+要用的函數名稱
@@ -576,8 +625,50 @@ public class reminder_webservice {
         }
     }
 
-    //抓取當週--育苗CardView所需資料
+    //當週--育苗CardView所需資料
     public static List<List<String>> reminder_thisweek_seedling_data_list(String user)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_thisweek_seedling_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_thisweek_seedling_data_list";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
+    //下週--育苗CardView所需資料
+    public static List<List<String>> reminder_nextweek_seedling_data_list(String user)
     {
         String SOAP_ACTION = "http://tempuri.org/reminder_thisweek_seedling_data_list";          //命名空間+要用的函數名稱
         String METHOD_NAME = "reminder_thisweek_seedling_data_list";   //函數名稱
