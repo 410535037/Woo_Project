@@ -246,19 +246,24 @@ public class main_reminder extends Fragment {
                     switch (position) {
                         case 0:
                             reminder_seedling_fragment.onStart();
+                            reminder_planting_fragment.onStart();
                             reminder_harvest_fragment.onStart();
 
                             break;
                         case 1:
                             reminder_seedling_fragment.onStart();
-
+                            reminder_planting_fragment.onStart();
+                            reminder_harvest_fragment.onStart();
                             break;
                         case 2:
                             reminder_seedling_fragment.onStart();
+                            reminder_planting_fragment.onStart();
                             reminder_harvest_fragment.onStart();
                             break;
                         case 3:
                             reminder_seedling_fragment.onStart();
+                            reminder_planting_fragment.onStart();
+                            reminder_harvest_fragment.onStart();
                             break;
                         case 4:
 

@@ -128,27 +128,27 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
             {
                 case 0:
                     //顯示"全部"未收成的作物CardviewList(包含過期未收成以及未來要收成的)
-                    reminder_harvest_data = reminder_webservice.reminder_seedling_data_list("39");
+                    reminder_harvest_data = reminder_webservice.reminder_harvest_data_list("39");
                     mUI_Handler.post(setReminder_harvest_data);
                     break;
                 case 1:
                     //顯示"今日"要收成的作物CardviewList
-                    reminder_harvest_data = reminder_webservice.reminder_today_seedling_data_list("39");
+                    reminder_harvest_data = reminder_webservice.reminder_today_harvest_data_list("39");
                     mUI_Handler.post(setReminder_harvest_data);
                     break;
                 case 2:
                     //顯示"這週"要收成的作物CardviewList
-                    reminder_harvest_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    reminder_harvest_data = reminder_webservice.reminder_thisweek_harvest_data_list("39");
                     mUI_Handler.post(setReminder_harvest_data);
                     break;
                 case 3:
                     //顯示"下週"要收成的作物CardviewList
-                    reminder_harvest_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    reminder_harvest_data = reminder_webservice.reminder_nextweek_harvest_data_list("39");
                     mUI_Handler.post(setReminder_harvest_data);
                     break;
                 case 4:
                     //顯示"自訂"區間的作物CardviewList
-                    reminder_harvest_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    reminder_harvest_data = reminder_webservice.reminder_thisweek_harvest_data_list("39");
                     mUI_Handler.post(setReminder_harvest_data);
                     break;
                 default:
@@ -188,6 +188,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                     for(int i=0;i<reminder_harvest_data.size();i++) {
 
                         harvest_vege_id.add(reminder_harvest_data.get(i).get(0));
+                        Log.v("test","tese::::"+reminder_harvest_data.get(i).get(0));
                         harvest_vege_name.add(reminder_harvest_data.get(i).get(1));
                         harvest_day.add(reminder_harvest_data.get(i).get(2));
                         harvest_number.add(reminder_harvest_data.get(i).get(3));
@@ -201,6 +202,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                         harvest_vege_image.add(reminder_harvest_data.get(i).get(7));
 
                         harvest_vendor.add(reminder_harvest_data.get(i).get(8));
+
                         harvest_remark.add(reminder_harvest_data.get(i).get(9));
                         harvest_preharvest.add(reminder_harvest_data.get(i).get(10));
                         harvest_pregrowing.add(reminder_harvest_data.get(i).get(11));

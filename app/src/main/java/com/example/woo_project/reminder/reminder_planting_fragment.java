@@ -122,10 +122,37 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private Runnable getReminder_planting_data=new Runnable () {
 
         public void run() {
-            reminder_planting_data=reminder_webservice.reminder_planting_data_list("39");
-            //請經紀人指派工作名稱 r，給工人做
-            Log.v("test","data:"+reminder_planting_data);
-            mUI_Handler.post(setReminder_planting_data);
+            switch (main_reminder.time_range_sp.getSelectedItemPosition())
+            {
+                case 0:
+                    //顯示"全部"未收成的作物CardviewList(包含過期未收成以及未來要收成的)
+                    reminder_planting_data = reminder_webservice.reminder_planting_data_list("39");
+                    mUI_Handler.post(setReminder_planting_data);
+                    break;
+                case 1:
+                    //顯示"今日"要收成的作物CardviewList
+                    reminder_planting_data = reminder_webservice.reminder_today_planting_data_list("39");
+                    mUI_Handler.post(setReminder_planting_data);
+                    Log.v("test","reminder_seedling_data的長度: "+reminder_planting_data);
+                    break;
+                case 2:
+                    //顯示"這週"要收成的作物CardviewList
+                    reminder_planting_data = reminder_webservice.reminder_thisweek_planting_data_list("39");
+                    mUI_Handler.post(setReminder_planting_data);
+                    break;
+                case 3:
+                    //顯示"下週"要收成的作物CardviewList
+                    reminder_planting_data = reminder_webservice.reminder_nextweek_planting_data_list("39");
+                    mUI_Handler.post(setReminder_planting_data);
+                    break;
+                case 4:
+                    //顯示"自訂"區間的作物CardviewList
+                    reminder_planting_data = reminder_webservice.reminder_thisweek_planting_data_list("39");
+                    mUI_Handler.post(setReminder_planting_data);
+                    break;
+                default:
+                    break;
+            }
 
         }
 
