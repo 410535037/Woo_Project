@@ -751,8 +751,8 @@ public class reminder_webservice {
     //下週--育苗CardView所需資料
     public static List<List<String>> reminder_nextweek_seedling_data_list(String user)
     {
-        String SOAP_ACTION = "http://tempuri.org/reminder_thisweek_seedling_data_list";          //命名空間+要用的函數名稱
-        String METHOD_NAME = "reminder_thisweek_seedling_data_list";   //函數名稱
+        String SOAP_ACTION = "http://tempuri.org/reminder_nextweek_seedling_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_nextweek_seedling_data_list";   //函數名稱
         List<List<String>> result = new ArrayList<>();
         //必須用try catch包著
         try {

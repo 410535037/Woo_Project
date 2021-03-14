@@ -258,7 +258,7 @@ public class main_reminder extends Fragment {
                             reminder_harvest_fragment.onStart();
                             break;
                         case 3:
-
+                            reminder_seedling_fragment.onStart();
                             break;
                         case 4:
 

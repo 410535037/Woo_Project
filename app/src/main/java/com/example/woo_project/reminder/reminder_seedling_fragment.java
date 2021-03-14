@@ -134,6 +134,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     //顯示"今日"要收成的作物CardviewList
                     reminder_seedling_data = reminder_webservice.reminder_today_seedling_data_list("39");
                     mUI_Handler.post(setReminder_seedling_data);
+                    Log.v("test","reminder_seedling_data的長度: "+reminder_seedling_data);
                     break;
                 case 2:
                     //顯示"這週"要收成的作物CardviewList
@@ -142,7 +143,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     break;
                 case 3:
                     //顯示"下週"要收成的作物CardviewList
-                    reminder_seedling_data = reminder_webservice.reminder_thisweek_seedling_data_list("39");
+                    reminder_seedling_data = reminder_webservice.reminder_nextweek_seedling_data_list("39");
                     mUI_Handler.post(setReminder_seedling_data);
                     break;
                 case 4:
