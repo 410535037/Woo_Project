@@ -75,7 +75,7 @@ public class reminder_other_things_fragment extends Fragment {
         @Override
         public com.example.woo_project.reminder.reminder_other_things_fragment.reminder_first_layer_fragment_adapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             LayoutInflater inflater=LayoutInflater.from(mctx);
-            View view=inflater.inflate(R.layout.reminder_cardview,viewGroup,false);
+            View view=inflater.inflate(R.layout.reminder_cardview_other,viewGroup,false);
             return new com.example.woo_project.reminder.reminder_other_things_fragment.reminder_first_layer_fragment_adapter.viewholder(view);
         }
 
