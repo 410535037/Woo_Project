@@ -1,5 +1,7 @@
 package com.example.woo_project.reminder;
 //提醒主頁:時間篩選、設定提醒按鈕、(育苗|定植|收成|其他)radio按鈕
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,14 +14,20 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,20 +40,30 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.woo_project.R;
 import com.example.woo_project.home.home2;
 import com.example.woo_project.record.record;
+import com.example.woo_project.remind.farm_record;
 
+import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
+import static com.loopj.android.http.AsyncHttpClient.LOG_TAG;
 import static com.loopj.android.http.AsyncHttpClient.log;
 
-public class main_reminder extends Fragment {
+public class main_reminder extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     View view;
+    ViewGroup viewGroup;
     SegmentedGroup segmented4;
     ImageButton plus_imb;
     String[] Time_Range_Sp_Items;
+    public static EditText StartDateTiet,EndDateTiet;
     public static Spinner time_range_sp;
     private ViewPager2 viewPager2;
     private ViewPager vp;
@@ -55,7 +73,10 @@ public class main_reminder extends Fragment {
     private reminder_planting_fragment reminder_planting_fragment = new reminder_planting_fragment();
     private reminder_harvest_fragment reminder_harvest_fragment = new reminder_harvest_fragment();
     private reminder_other_things_fragment reminder_other_things_fragment = new reminder_other_things_fragment();
-    private boolean fg=true;
+    private boolean fg=false,date_fg;
+    private Calendar c;
+    private String SelectDate,SelectDate2;
+    private TextView confirm_tv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,10 +105,60 @@ public class main_reminder extends Fragment {
         return view;
 
     }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayofmonth) {
+        c = Calendar.getInstance();
+
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.MONTH,month);
+        c.set(Calendar.DAY_OF_MONTH,dayofmonth);
+
+
+
+
+        if (date_fg) {
+            SelectDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
+            StartDateTiet.setText(SelectDate);
+            date_fg=false;
+//            Toast.makeText(getContext(),"WTG",Toast.LENGTH_LONG).show();
+        }
+        else{
+            SelectDate2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
+            EndDateTiet.setText(SelectDate2);
+            date_fg=true;
+        }
+
+
+//        if(SelectDate2==null) {
+//
+//            StartDateTiet.setText(SelectDate);
+//            SelectDate2="";
+//        }
+//        else{
+//            SelectDate2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c2.getTime());
+//            EndDateTiet.setText(SelectDate2);
+//            SelectDate2=null;
+//        }
+
+
+
+
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
+
+//        //選擇開始日期和結束日期的Dialog相關設定
+//        final AlertDialog.Builder objdbr = new AlertDialog.Builder(view.getContext());  //取得自訂的版面。
+//        final View v = getLayoutInflater().inflate(R.layout.select_start_end_date,null);  //設定AlertDialog的View。
+//        StartDateTiet = v.findViewById(R.id.StartDateTiet);
+//        EndDateTiet = v.findViewById(R.id.EndDateTiet);
+//        objdbr.setView(v);  //設定AlertDialog的View
+
+
 
         plus_imb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,36 +307,99 @@ public class main_reminder extends Fragment {
         });
 
 
+
         //上方時間篩選設定
         Time_Range_Sp_Items=getResources().getStringArray(R.array.time_range_sp_array);
-        final ArrayAdapter<String> TimeRangeList = new ArrayAdapter<>(getContext(),R.layout.spinner_dropdown_item,Time_Range_Sp_Items);
+        final ArrayAdapter<String> TimeRangeList = new ArrayAdapter<>(getActivity(),R.layout.spinner_dropdown_item,Time_Range_Sp_Items);
         time_range_sp.setAdapter(TimeRangeList);
         time_range_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                     switch (position) {
                         case 0:
+                        case 1:
+                        case 2:
+                        case 3:
                             reminder_seedling_fragment.onStart();
                             reminder_planting_fragment.onStart();
                             reminder_harvest_fragment.onStart();
 
                             break;
-                        case 1:
-                            reminder_seedling_fragment.onStart();
-                            reminder_planting_fragment.onStart();
-                            reminder_harvest_fragment.onStart();
-                            break;
-                        case 2:
-                            reminder_seedling_fragment.onStart();
-                            reminder_planting_fragment.onStart();
-                            reminder_harvest_fragment.onStart();
-                            break;
-                        case 3:
-                            reminder_seedling_fragment.onStart();
-                            reminder_planting_fragment.onStart();
-                            reminder_harvest_fragment.onStart();
-                            break;
                         case 4:
+
+                            //spinner的選項重複點第二次會沒反應QQ，這幾行是解決不能重複響應點擊的問題
+                            try {
+                                //以下三行代码是解决问题所在
+                                Field field = AdapterView.class.getDeclaredField("mOldSelectedPosition");
+                                field.setAccessible(true);	//设置mOldSelectedPosition可访问
+                                field.setInt(time_range_sp, AdapterView.INVALID_POSITION); //设置mOldSelectedPosition的值
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                            androidx.appcompat.app.AlertDialog.Builder mBuilder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
+                            View v = getLayoutInflater().inflate(R.layout.select_start_end_date, null);
+
+                            StartDateTiet = v.findViewById(R.id.StartDateTiet);
+                            EndDateTiet = v.findViewById(R.id.EndDateTiet);
+                            confirm_tv = v.findViewById(R.id.confirm_tv);
+
+                            mBuilder.setView(v);
+                            final androidx.appcompat.app.AlertDialog dialog = mBuilder.create();
+
+                            dialog.show();
+
+                            StartDateTiet.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+
+                                    DialogFragment datePicker = new DatePickerFragment();
+                                    datePicker.setTargetFragment(main_reminder.this,0);
+                                    datePicker.show(getActivity().getSupportFragmentManager(),"date picker");
+                                    date_fg=true;
+                                }
+                            });
+
+                            EndDateTiet.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+
+                                    DialogFragment datePicker = new DatePickerFragment();
+                                    datePicker.setTargetFragment(main_reminder.this,0);
+                                    datePicker.show(getActivity().getSupportFragmentManager(),"date picker");
+                                    date_fg=false;
+
+                                }
+                            });
+                            confirm_tv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date StartDate = null;
+                                    Date EndDate = null;
+                                    try {
+                                        StartDate = sdf.parse(StartDateTiet.getText().toString());
+                                        EndDate = sdf.parse(EndDateTiet.getText().toString());
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    if(StartDate.getTime() > EndDate.getTime())
+                                    {
+                                        Toast.makeText(getContext(),"開始日期不能比結束日期晚喔",Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        reminder_seedling_fragment.onStart();
+                                        reminder_planting_fragment.onStart();
+                                        reminder_harvest_fragment.onStart();
+                                        dialog.dismiss();
+
+                                    }
+                                }
+                            });
 
                             break;
                         default:
@@ -281,5 +415,6 @@ public class main_reminder extends Fragment {
 
 
     }
+
 
 }

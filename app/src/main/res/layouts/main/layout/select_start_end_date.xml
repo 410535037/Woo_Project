@@ -16,69 +16,55 @@
         android:background="@drawable/corners">
 
         <TextView
-            android:id="@+id/tv2"
+            android:id="@+id/textView22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="6dp"
+            android:textSize="16sp"
             android:gravity="center"
-            android:text="▼請輸入定植區"
-            android:textColor="@color/gray2"
-            android:padding="10dp"
-            android:layout_marginTop="30dp"
-            android:textSize="16sp" />
+            android:text="請選擇開始和結束日期" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/record_canopy_area_sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/record_canopy_sp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/record_select_shape"
-                android:layout_alignParentBottom="true" />
-
-            <Spinner
-                android:id="@+id/record_canopy_sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/record_select_shape"
-                android:layout_marginEnd="10dp"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="▼請輸入育苗數量和單位"
-            android:textColor="@color/gray2"
-            android:padding="10dp"
-            android:layout_marginTop="12dp"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til3"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="74dp"
+                android:layout_width="120dp"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/num_ed"
+                    android:id="@+id/StartDateTiet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="育苗數量"/>
+                    android:hint="開始日期"
+                    android:focusableInTouchMode="false"
+                    android:textSize="14dp"
+                    android:layout_weight="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/EndDateTiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="結束日期"
+                    android:focusableInTouchMode="false"
+                    android:textSize="14dp"
+                    android:layout_weight="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +92,7 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:textSize="16dp"
-                android:textColor="@color/silver"
+                android:textColor="@color/red"
                 android:text="取消" />
 
             <TextView
@@ -123,10 +109,4 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/clap_iv"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="100dp"
-        app:srcCompat="@drawable/clap" />
 </RelativeLayout>

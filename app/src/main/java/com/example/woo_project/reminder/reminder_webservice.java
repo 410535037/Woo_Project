@@ -831,6 +831,49 @@ public class reminder_webservice {
             return result;
         }
     }
+    //自訂--育苗CardView所需資料
+    public static List<List<String>> reminder_custom_seedling_data_list(String user,String StartDate,String EndDate)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_custom_seedling_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_custom_seedling_data_list";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("startdate",StartDate);
+            request.addProperty("enddate",EndDate);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
 
 
 
@@ -960,6 +1003,51 @@ public class reminder_webservice {
         }
     }
 
+    //自訂--定植CardView所需資料
+    public static List<List<String>> reminder_custom_planting_data_list(String user, String StartDate, String EndDate)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_custom_planting_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_custom_planting_data_list";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("startdate",StartDate);
+            request.addProperty("enddate",EndDate);
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
 
     //今日--收成CardView所需資料
     public static List<List<String>> reminder_today_harvest_data_list(String user)
@@ -1055,6 +1143,51 @@ public class reminder_webservice {
         try {
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
             request.addProperty("user",user);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
+    //定植--CardView所需資料
+    public static List<List<String>> reminder_custom_harvest_data_list(String user, String StartDate, String EndDate)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_custom_harvest_data_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_custom_harvest_data_list";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("startdate",StartDate);
+            request.addProperty("enddate",EndDate);
+
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.bodyOut = request;

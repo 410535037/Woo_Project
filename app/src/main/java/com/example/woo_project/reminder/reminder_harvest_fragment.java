@@ -148,7 +148,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                     break;
                 case 4:
                     //顯示"自訂"區間的作物CardviewList
-                    reminder_harvest_data = reminder_webservice.reminder_thisweek_harvest_data_list("39");
+                    reminder_harvest_data = reminder_webservice.reminder_custom_harvest_data_list("39",main_reminder.StartDateTiet.getText().toString(),main_reminder.EndDateTiet.getText().toString());
                     mUI_Handler.post(setReminder_harvest_data);
                     break;
                 default:
