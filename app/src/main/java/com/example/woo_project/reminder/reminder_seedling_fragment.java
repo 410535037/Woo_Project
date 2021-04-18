@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -48,6 +49,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -273,6 +275,33 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
     };
 
 
+
+    public void update_seedling(final int user, final int seedling_id, final int seedling_num, final String unit, final String seedling_date)
+    {
+
+
+        //更改盤數
+        Runnable setSeedling_num=new Runnable ()
+        {
+            public void run()
+            {
+                boolean update_seedling_num_fg = reminder_webservice.update_seedling_num(user,seedling_id,seedling_num,unit,seedling_date);
+                if(update_seedling_num_fg)
+                {
+                    Toast.makeText(getContext(),"盤數變更成功!",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"盤數變更失敗，請再試一次!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        mThreadHandler.post(setSeedling_num);
+
+    }
+
+
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayofmonth) {
         c = Calendar.getInstance();
@@ -280,7 +309,7 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayofmonth);
 
-        currentDateString =  new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(c.getTime());
+        currentDateString =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
 
         date_tiet.setText(currentDateString);
     }
@@ -325,6 +354,9 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
 
                 }
             });
+
+
+
             holder.plus_imb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -338,23 +370,44 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     seedling_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
                     date_tiet = root.findViewById(R.id.date_tiet);
                     unit_number_sp = root.findViewById(R.id.unit_number_sp);
+                    final EditText seedling_num = root.findViewById(R.id.seedling_num);
 
                     mThreadHandler.post(getUnit_number_list);
 
                     vege_name_tv.setText(vege.getName());
 
                     c2 = Calendar.getInstance();
-                    todaydate = DateFormat.format("yyyy/MM/dd", c2.getTime());
+                    //把育苗日給c2
+                    List<String> time_list = Arrays.asList(vege.getTag1().split("-"));
+                    Log.v("date",time_list.get(0)+"  "+time_list.get(1)+"  "+time_list.get(2));
+                    c2.set(Integer.parseInt(time_list.get(0)),Integer.parseInt(time_list.get(1))-1,Integer.parseInt(time_list.get(2)));
+
+                    todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
+
+
                     date_tiet.setText(todaydate);
 
                     bottomSheetDialog.show();
 
 
+                    //看日曆
                     date_tiet.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
-                            DialogFragment datePicker = new DatePickerFragment();
+
+//                            DatePickerDialog datePicker = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
+//                                @Override
+//                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                                    c2.set(Calendar.YEAR, year);
+//                                    c2.set(Calendar.MONTH, month);
+//                                    c2.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                                    // 將日期寫入日期欄位
+//                                    todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
+//                                    date_tiet.setText(todaydate);
+//                                }
+//                            }, c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
+                            DialogFragment datePicker = new DatePickerFragment(c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
                             datePicker.setTargetFragment(reminder_seedling_fragment.this,0);
                             datePicker.show(getFragmentManager(),"date picker");
 
@@ -365,6 +418,11 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                     seedling_confirm_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            update_seedling(39, Integer.parseInt(vege.getId()) ,Integer.parseInt(seedling_num.getText().toString()),
+                                    unit_number_sp.getSelectedItem().toString(),date_tiet.getText().toString());
+
+                            mThreadHandler.post(getReminder_seedling_data);
+
                             bottomSheetDialog.dismiss();
                         }
                     });
