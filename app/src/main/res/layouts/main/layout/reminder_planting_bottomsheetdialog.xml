@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bbgg"
     android:layout_width="match_parent"
     android:layout_height="600dp"
+    android:background="@drawable/bottomsheetdialog_corners">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:id="@+id/bbgg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/bottomsheetdialog_corners">
 
     <TextView
@@ -50,80 +57,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintEnd_toEndOf="@+id/reminder_tv"
-        app:layout_constraintStart_toStartOf="@+id/reminder_tv"
-        app:layout_constraintTop_toBottomOf="@+id/reminder_tv">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/date_tiet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:focusable="false"
-            android:hint="定植日期"
-            android:textSize="14dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/til2"
-        app:layout_constraintStart_toStartOf="@+id/til2"
-        app:layout_constraintTop_toBottomOf="@+id/til2">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til3"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/greenhouse_tiet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="棚架位置"
-                android:focusableInTouchMode="false"
-                android:textSize="14dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til4"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/planting_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="定植數量"
-                android:inputType="number"
-                android:singleLine="true"
-                android:textSize="14dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="364dp"
-        android:layout_height="180dp"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
     <TextView
         android:id="@+id/reminder_tv"
         android:layout_width="0dp"
@@ -138,4 +71,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/planting_RV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/reminder_tv"
+        app:layout_constraintStart_toStartOf="@+id/reminder_tv"
+        app:layout_constraintTop_toBottomOf="@+id/reminder_tv" >
+
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/planting_RV"
+        app:layout_constraintStart_toStartOf="@+id/planting_RV"
+        app:layout_constraintTop_toBottomOf="@+id/planting_RV">
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <ImageView
+                android:id="@+id/cardview_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cardview_plus2"
+                android:padding="13dp"/>
+
+        </LinearLayout>
+
+
+
+        <!-- canopy location        -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/greenhouse_tiet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="棚架"
+                android:focusableInTouchMode="false"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"/>
+
+        <!-- planting num        -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til4"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/planting_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="數量"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"/>
+        <!-- calendar       -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/date_tiet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:focusable="false"
+                android:hint="定植日期"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

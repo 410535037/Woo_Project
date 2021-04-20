@@ -376,10 +376,11 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
 
                     vege_name_tv.setText(vege.getName());
 
-                    c2 = Calendar.getInstance();
+
                     //把育苗日給c2
                     List<String> time_list = Arrays.asList(vege.getTag1().split("-"));
                     Log.v("date",time_list.get(0)+"  "+time_list.get(1)+"  "+time_list.get(2));
+                    c2 = Calendar.getInstance();
                     c2.set(Integer.parseInt(time_list.get(0)),Integer.parseInt(time_list.get(1))-1,Integer.parseInt(time_list.get(2)));
 
                     todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
@@ -395,18 +396,6 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
                         @Override
                         public void onClick(View view) {
 
-
-//                            DatePickerDialog datePicker = new DatePickerDialog(getActivity(),new DatePickerDialog.OnDateSetListener() {
-//                                @Override
-//                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                                    c2.set(Calendar.YEAR, year);
-//                                    c2.set(Calendar.MONTH, month);
-//                                    c2.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                                    // 將日期寫入日期欄位
-//                                    todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
-//                                    date_tiet.setText(todaydate);
-//                                }
-//                            }, c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
                             DialogFragment datePicker = new DatePickerFragment(c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
                             datePicker.setTargetFragment(reminder_seedling_fragment.this,0);
                             datePicker.show(getFragmentManager(),"date picker");

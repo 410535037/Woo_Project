@@ -1,5 +1,6 @@
 package com.example.woo_project.reminder;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class DatePickerFragment extends DialogFragment {
         this.day = get_day;
 
     }
+
 
     public DatePickerFragment(){
         super();

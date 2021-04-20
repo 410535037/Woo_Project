@@ -46,6 +46,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +64,8 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private TextView vege_name_tv,planting_confirm_tv;
     List<reminder_cardview> reminderList;
     RecyclerView reminder_rv;
-    String reminder_vegetable_data,reminder_unit_data,Vege,Tag1,currentDateString,todaydate;
+    String reminder_vegetable_data,reminder_unit_data,Vege,Tag1,currentDateString;
+    CharSequence todaydate;
     ArrayList<Integer> counter = new ArrayList<>();
     Spinner record_canopy_area_sp,record_canopy_sp,remind_amount_unit_sp;
     TextInputEditText num_ed,date_tiet,greenhouse_tiet,planting_num;
@@ -362,6 +364,8 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
         private Context mctx;
         private List<reminder_cardview> reminderList;
+
+
         public reminder_first_layer_fragment_adapter(Context mctx, List<reminder_cardview> reminderList) {
             this.mctx = mctx;
             this.reminderList = reminderList;
@@ -377,6 +381,9 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
         @Override
         public void onBindViewHolder(final reminder_first_layer_fragment_adapter.viewholder holder, final int position) {
             final reminder_cardview vege=reminderList.get(position);
+
+
+
 
             holder.vege.setText(String.valueOf(vege.getName()));
             Vege=String.valueOf(vege.getName());
@@ -403,34 +410,81 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                 @Override
                 public void onClick(View view) {
 
-                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
+                    final BottomSheetDialog  bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
                     View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog,null);//連結的介面
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
+                    //bottomsheet cardview
+                    //bottomsheet cardview
+                    final RecyclerView planting_RV;
+                    final List<reminder_planting_bottomsheetdialog_cardview> bottomsheetList;
+                    planting_RV = root.findViewById(R.id.planting_RV);
+                    bottomsheetList = new ArrayList<>();
+
+
+
                     vege_name_tv = root.findViewById(R.id.vege_name_tv);
                     planting_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
                     date_tiet = root.findViewById(R.id.date_tiet);
-                    greenhouse_tiet = root.findViewById(R.id.greenhouse_tiet);
-                    planting_num = root.findViewById(R.id.planting_num);
-                    //顯示今天的日期
+                    greenhouse_tiet = root.findViewById(R.id.greenhouse_tiet);  //棚架位置
+                    planting_num = root.findViewById(R.id.planting_num);        //定植數量
+                    ImageView plus = root.findViewById(R.id.cardview_plus);     //加資料
+
+
+                    plus.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //表示有輸入棚架 數量 日期 會自動新增cardview
+                            if(!greenhouse_tiet.getText().toString().trim().equals("")          //判斷棚架是否有資料
+                                    && !planting_num.getText().toString().trim().equals("")     //判斷數量是否有資料
+                                    && !date_tiet.getText().toString().trim().equals(""))       //判斷日期是否有資料
+                            {
+                                bottomsheetList.add(new reminder_planting_bottomsheetdialog_cardview(bottomsheetList.size(),greenhouse_tiet.getText().toString(),
+                                        Integer.parseInt(planting_num.getText().toString()),date_tiet.getText().toString()));
+
+                                //bottomsheetList.add(new reminder_planting_bottomsheetdialog_cardview(1,"A1",2,"2021-04-19"));
+
+                                planting_RV.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                                planting_RV.setHasFixedSize(true);
+                                planting_RV.setAdapter(new reminder_planting_bottomsheetdialog_Adapter(reminder_planting_fragment.this,canopy_area,canopy_name,bottomsheetList));
+
+                                greenhouse_tiet.setText("");
+                                planting_num.setText("");
+                            }
+                            else
+                            {
+                                Toast.makeText(getContext(),"棚架&數量&日期不得為空 !",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+
+
+
+                    //把育苗日給c2
+                    List<String> time_list = Arrays.asList(vege.getTag1().split("-"));
+                    Log.v("date",time_list.get(0)+"  "+time_list.get(1)+"  "+time_list.get(2));
                     c2 = Calendar.getInstance();
-                    todaydate =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c2.getTime());
+                    c2.set(Integer.parseInt(time_list.get(0)),Integer.parseInt(time_list.get(1))-1,Integer.parseInt(time_list.get(2)));
+
+                    todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
+
+
                     date_tiet.setText(todaydate);
-
-                    vege_name_tv.setText(vege.getName());
-
+                    // 顯示dialog
                     bottomSheetDialog.show();
 
 
+                    //看日曆
                     date_tiet.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
-                            DialogFragment datePicker = new DatePickerFragment();
+                            DialogFragment datePicker = new DatePickerFragment(c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
                             datePicker.setTargetFragment(reminder_planting_fragment.this,0);
                             datePicker.show(getFragmentManager(),"date picker");
-
                         }
 
                     });
@@ -439,8 +493,6 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     greenhouse_tiet.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-
                             pvOptions = new OptionsPickerBuilder(getActivity(), new OnOptionsSelectListener() {
                                 @Override
                                 public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -467,7 +519,6 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                             pvOptions.setPicker(canopy_area, canopy_name);
                             bottomSheetDialog.dismiss();//因為會擋到pickerview所以先關閉，當按下pickerview的確認就會再展開
                             pvOptions.show();
-
                         }
                     });
 
@@ -519,6 +570,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
             ImageView vege_img,check_img;
             ImageButton plus_imb,more_imb;
             TextView vege,tag1,tag2,unit;
+
 
             public viewholder(@NonNull View itemView) {
                 super(itemView);
