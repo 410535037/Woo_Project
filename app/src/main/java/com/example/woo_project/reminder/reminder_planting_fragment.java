@@ -41,8 +41,13 @@ import com.bumptech.glide.Glide;
 import com.example.woo_project.R;
 import com.example.woo_project.record.record;
 import com.example.woo_project.record.record_webservice;
+import com.example.woo_project.reminder.json.split_planting_setting;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +66,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private HandlerThread mThread;
 
     private OptionsPickerView pvOptions;
-    private TextView vege_name_tv,planting_confirm_tv;
+    private TextView vege_name_tv,planting_confirm_tv,last_num_unit,last_num;
     List<reminder_cardview> reminderList;
     RecyclerView reminder_rv;
     String reminder_vegetable_data,reminder_unit_data,Vege,Tag1,currentDateString;
@@ -72,6 +77,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     String[] Amount;
     Calendar c,c2;
     private List<List<String>> reminder_planting_data = new ArrayList<>();
+    boolean split_planting_status=false;
     public reminder_planting_fragment() {
         // Requires empty public constructor
     }
@@ -333,34 +339,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     };
 
 
-//    private void initOptionPicker_canopy_list() {
-//
-//        pvOptions = new OptionsPickerBuilder(view.getContext(), new OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//                String vege = canopy_name.get(options1).get(options2);
-//                canopy_area_tiet.setText(vege);
-//            }
-//        }).setTitleText("請選擇") // 選擇器標題
-//                .setContentTextSize(18)//設定滾輪文字大小
-//                .setTitleSize(18)
-//                .setDividerColor(getResources().getColor(R.color.Gainsboro))//設定分割線顏色
-//                .setSelectOptions(0, 1)//默認選中值
-//                .setBgColor(Color.WHITE)
-//                .setTitleBgColor(getResources().getColor(R.color.WhiteSmoke))
-//                .setTitleColor(Color.BLACK)
-//                .setCancelColor(getResources().getColor(R.color.Azure))
-//                .setSubmitColor(getResources().getColor(R.color.Azure))
-//                .setCancelText("取消")
-//                .setSubmitText("確定")
-//                .setTextColorCenter(getResources().getColor(R.color.Dimgray))
-//                .setBackgroundId(0x66000000) //設定外部遮罩顏色
-//                .build();
-//
-//        pvOptions.setPicker(canopy_area, canopy_name);
-//    }
-
-    private class reminder_first_layer_fragment_adapter extends RecyclerView.Adapter<reminder_first_layer_fragment_adapter.viewholder>  {
+    private class reminder_first_layer_fragment_adapter extends RecyclerView.Adapter<reminder_first_layer_fragment_adapter.viewholder> {
 
         private Context mctx;
         private List<reminder_cardview> reminderList;
@@ -373,20 +352,18 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
         @Override
         public reminder_first_layer_fragment_adapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            LayoutInflater inflater=LayoutInflater.from(mctx);
-            View view=inflater.inflate(R.layout.reminder_cardview_planting,viewGroup,false);
+            LayoutInflater inflater = LayoutInflater.from(mctx);
+            View view = inflater.inflate(R.layout.reminder_cardview_planting, viewGroup, false);
             return new reminder_first_layer_fragment_adapter.viewholder(view);
         }
 
         @Override
         public void onBindViewHolder(final reminder_first_layer_fragment_adapter.viewholder holder, final int position) {
-            final reminder_cardview vege=reminderList.get(position);
-
-
+            final reminder_cardview vege = reminderList.get(position);
 
 
             holder.vege.setText(String.valueOf(vege.getName()));
-            Vege=String.valueOf(vege.getName());
+            Vege = String.valueOf(vege.getName());
             int drawableResourceId = mctx.getResources().getIdentifier(vege.getVege_img(), "drawable", mctx.getPackageName());
             Glide.with(mctx)
                     .load(drawableResourceId)
@@ -396,22 +373,23 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
             Glide.with(mctx)
                     .load(drawableResourceId2)
                     .into(holder.check_img);
-            holder.tag1.setText(String.valueOf(vege.getTag1()));
-            Tag1=String.valueOf(vege.getTag1());
-            holder.tag2.setText(String.valueOf(vege.getTag2()));
-            holder.unit.setText(vege.getUnit());
+            holder.tag1.setText(String.valueOf(vege.getTag1()));        //tag1是日期
+            Tag1 = String.valueOf(vege.getTag1());
+            holder.tag2.setText(String.valueOf(vege.getTag2()));        //tag2是有幾盤
+            holder.unit.setText(vege.getUnit());                        //單位
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                 }
             });
+            //定植cardview點選+產生dialog
             holder.plus_imb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    final BottomSheetDialog  bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
-                    View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog,null);//連結的介面
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
+                    View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog, null);//連結的介面
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
@@ -420,11 +398,14 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     final RecyclerView planting_RV;
                     final List<reminder_planting_bottomsheetdialog_cardview> bottomsheetList;
                     planting_RV = root.findViewById(R.id.planting_RV);
-                    bottomsheetList = new ArrayList<>();
+                    bottomsheetList = new ArrayList<>();        //定植詳細棚架&數量 cardview
+
 
 
 
                     vege_name_tv = root.findViewById(R.id.vege_name_tv);
+                    last_num = root.findViewById(R.id.last_num);
+                    last_num_unit = root.findViewById(R.id.last_num_unit);
                     planting_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
                     date_tiet = root.findViewById(R.id.date_tiet);
                     greenhouse_tiet = root.findViewById(R.id.greenhouse_tiet);  //棚架位置
@@ -432,42 +413,55 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     ImageView plus = root.findViewById(R.id.cardview_plus);     //加資料
 
 
+                    vege_name_tv.setText(vege.getName());       //作物名
+                    last_num.setText(vege.getTag2());           //剩下有幾盤未分配
+                    last_num_unit.setText(vege.getUnit());      //單位
+
+                    //輸入data那格
                     plus.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //表示有輸入棚架 數量 日期 會自動新增cardview
-                            if(!greenhouse_tiet.getText().toString().trim().equals("")          //判斷棚架是否有資料
+                            if (!greenhouse_tiet.getText().toString().trim().equals("")          //判斷棚架是否有資料
                                     && !planting_num.getText().toString().trim().equals("")     //判斷數量是否有資料
                                     && !date_tiet.getText().toString().trim().equals(""))       //判斷日期是否有資料
                             {
-                                bottomsheetList.add(new reminder_planting_bottomsheetdialog_cardview(bottomsheetList.size(),greenhouse_tiet.getText().toString(),
-                                        Integer.parseInt(planting_num.getText().toString()),date_tiet.getText().toString()));
+                                if((Integer.parseInt(last_num.getText().toString())-Integer.parseInt(planting_num.getText().toString())) >= 0)
+                                {
+                                    //按下+直接進資料庫
+                                    setReminder_planting(39,Integer.parseInt(vege.getId()), Integer.parseInt(planting_num.getText().toString()),
+                                            date_tiet.getText().toString(),greenhouse_tiet.getText().toString());
 
-                                //bottomsheetList.add(new reminder_planting_bottomsheetdialog_cardview(1,"A1",2,"2021-04-19"));
 
-                                planting_RV.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                                planting_RV.setHasFixedSize(true);
-                                planting_RV.setAdapter(new reminder_planting_bottomsheetdialog_Adapter(reminder_planting_fragment.this,canopy_area,canopy_name,bottomsheetList));
+                                    //加入cardview
+                                    bottomsheetList.add(new reminder_planting_bottomsheetdialog_cardview(bottomsheetList.size(), greenhouse_tiet.getText().toString(),
+                                                Integer.parseInt(planting_num.getText().toString()), date_tiet.getText().toString()));
 
-                                greenhouse_tiet.setText("");
-                                planting_num.setText("");
-                            }
-                            else
-                            {
-                                Toast.makeText(getContext(),"棚架&數量&日期不得為空 !",Toast.LENGTH_SHORT).show();
+                                    planting_RV.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                                    planting_RV.setHasFixedSize(true);
+                                    planting_RV.setAdapter(new reminder_planting_bottomsheetdialog_Adapter(reminder_planting_fragment.this, canopy_area, canopy_name, bottomsheetList));
+                                    //清空
+                                    greenhouse_tiet.setText("");
+                                    planting_num.setText("");
+
+                                    int last_num_new = Integer.parseInt(last_num.getText().toString())-Integer.parseInt(planting_num.getText().toString());
+                                    last_num.setText(String.valueOf(last_num_new));
+
+                                }
+
+
+                            } else {
+                                Toast.makeText(getContext(), "棚架&數量&日期不得為空 !", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
 
 
-
-
-
                     //把育苗日給c2
                     List<String> time_list = Arrays.asList(vege.getTag1().split("-"));
-                    Log.v("date",time_list.get(0)+"  "+time_list.get(1)+"  "+time_list.get(2));
+                    Log.v("date", time_list.get(0) + "  " + time_list.get(1) + "  " + time_list.get(2));
                     c2 = Calendar.getInstance();
-                    c2.set(Integer.parseInt(time_list.get(0)),Integer.parseInt(time_list.get(1))-1,Integer.parseInt(time_list.get(2)));
+                    c2.set(Integer.parseInt(time_list.get(0)), Integer.parseInt(time_list.get(1)) - 1, Integer.parseInt(time_list.get(2)));
 
                     todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
 
@@ -482,9 +476,9 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                         @Override
                         public void onClick(View view) {
 
-                            DialogFragment datePicker = new DatePickerFragment(c2.get(Calendar.YEAR),c2.get(Calendar.MONTH),c2.get(Calendar.DAY_OF_MONTH));
-                            datePicker.setTargetFragment(reminder_planting_fragment.this,0);
-                            datePicker.show(getFragmentManager(),"date picker");
+                            DialogFragment datePicker = new DatePickerFragment(c2.get(Calendar.YEAR), c2.get(Calendar.MONTH), c2.get(Calendar.DAY_OF_MONTH));
+                            datePicker.setTargetFragment(reminder_planting_fragment.this, 0);
+                            datePicker.show(getFragmentManager(), "date picker");
                         }
 
                     });
@@ -523,27 +517,12 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     });
 
                     //按下確認
-                   planting_confirm_tv.setOnClickListener(new View.OnClickListener() {
+                    planting_confirm_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            Runnable Reminder_insert_greenhouse_and_planting_num_data=new Runnable () {
-
-                                public void run() {
-                                    String YorN="";  //確認有無傳到資料庫
-
-                                    if(date_tiet.getText().toString().equals("") || greenhouse_tiet.getText().toString().equals("") || planting_num.getText().toString().equals("")){
-                                        Toast.makeText(getContext(),"#定植日期\n#棚架位置\n定植數量\n一定要填 !",Toast.LENGTH_LONG).show();
-                                    }
-                                    else {
-                                        //YorN=reminder_webservice.Insert_greenhouse_and_planting_num(vege.getName(), variety_of_vege, seedling_num, seedling_unit, vendor, reminder_text, harvest_num, seedling_day, planting_day, harvest_day, days_of_seedling, days_of_planting, real_seedling_day, greenhouse, do_seedling, do_planting, do_harvest, "39");
-                                        //請經紀人指派工作名稱 r，給工人做
-                                        Log.v("test", "data:" + YorN);
-                                    }
-
-                                }
-
-                            };
+                            bottomSheetDialog.dismiss();
+                            //刷新
+                            mThreadHandler.post(getReminder_planting_data);
                         }
                     });
 
@@ -564,6 +543,36 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
             return reminderList.size();
         }
 
+
+
+        //把各棚架&數量丟到資料庫
+        public void setReminder_planting(final int user, final int seedling_id, final int seedling_num, final String seedling_date, final String canopy)
+        {
+            Runnable getData= new Runnable() {
+                @Override
+                public void run() {
+                    split_planting_status = reminder_webservice.split_planting_setting(user,seedling_id,seedling_num,seedling_date,canopy);
+                    if(split_planting_status)
+                    {
+                        Toast.makeText(mctx,"輸入成功!",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(mctx,"輸入失敗!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+
+            mThreadHandler.post(getData);
+
+
+        }
+
+
+        //把各棚架&數量從資料庫抓出來
+        public void getReminder_planting_List()
+        {
+
+        }
 
 
         class viewholder extends RecyclerView.ViewHolder {

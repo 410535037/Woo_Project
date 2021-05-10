@@ -7,7 +7,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-
+import org.ksoap2.serialization.KvmSerializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -474,7 +474,7 @@ public class reminder_webservice {
         }
     }
 
-    //確認育苗CardView
+    //判斷育苗是否有like
     public static boolean reminder_seedling_data_list_checkornot(String user, String seedling_id, boolean checkornot)
     {
         String SOAP_ACTION = "http://tempuri.org/reminder_seedling_data_list_checkornot";          //命名空間+要用的函數名稱
@@ -509,7 +509,7 @@ public class reminder_webservice {
         }
     }
 
-    //確認育苗CardView
+    //刪除育苗資料
     public static boolean reminder_seedling_delete(int user, int id)
     {
         String SOAP_ACTION = "http://tempuri.org/reminder_seedling_delete";          //命名空間+要用的函數名稱
@@ -542,6 +542,60 @@ public class reminder_webservice {
             return result;
         }
     }
+
+
+    //確認育苗CardView
+    public static boolean split_planting_setting(int user, int seedling_id, int seedling_num, String seedling_date, String canopy)
+    {
+        String SOAP_ACTION = "http://tempuri.org/split_planting_setting";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "split_planting_setting";   //函數名稱
+        boolean result = false ;
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+            request.addProperty("user",user);
+            request.addProperty("seedling_id",seedling_id);
+            request.addProperty("seedling_num",seedling_num);
+            request.addProperty("seedling_date",seedling_date);
+            request.addProperty("canopy",canopy);
+
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+
+//            SoapObject obj1 = (SoapObject) envelope.getResponse();
+//            Log.v(planting_TAG,"obj1: "+obj1);
+//            Log.v(planting_TAG,"obj1: "+obj1.getProperty(0));
+//            Log.v(planting_TAG,"result: "+result);
+//            return true;
+//        } catch (Exception e) {
+//
+//            Log.v(planting_TAG,"e的錯誤訊息 : "+e.toString());
+//            return false;
+//        }
+
+            // 獲取回傳數據
+            SoapPrimitive obj1 = (SoapPrimitive) envelope.getResponse();
+            Log.v("test","obj1: "+obj1.getValue());
+            result = Boolean.parseBoolean(String.valueOf(obj1.getValue()));
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
+
 
     //更改盤數
     //確認育苗CardView
