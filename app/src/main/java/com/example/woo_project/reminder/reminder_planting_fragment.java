@@ -67,7 +67,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
     private OptionsPickerView pvOptions;
     private TextView vege_name_tv,planting_confirm_tv,last_num_unit,last_num;
-    List<reminder_cardview> reminderList;
+    List<reminder_cardview_planting> reminderList;
     RecyclerView reminder_rv;
     String reminder_vegetable_data,reminder_unit_data,Vege,Tag1,currentDateString;
     CharSequence todaydate;
@@ -188,6 +188,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     List<String> seedling_pregrowing = new ArrayList<>();
                     List<Integer> seedling_preday_num = new ArrayList<>();
                     List<Integer> seedling_pregrowing_num = new ArrayList<>();
+                    List<String> canopy_name = new ArrayList<>();
                     //png_list
                     Log.v("planting","reminder_planting_data的長度: "+reminder_planting_data.size());
                     Log.v("planting","reminder_planting_data:" +reminder_planting_data);
@@ -212,14 +213,15 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                         seedling_pregrowing.add(reminder_planting_data.get(i).get(11));
                         seedling_preday_num.add(Integer.parseInt(reminder_planting_data.get(i).get(12)));
                         seedling_pregrowing_num.add(Integer.parseInt(reminder_planting_data.get(i).get(13)));
+                        canopy_name.add(reminder_planting_data.get(i).get(14));
 
 
                     }
                     reminderList = new ArrayList<>();
                     for(int i=0;i<seedling_vege_name.size();i++){
-                        reminderList.add(new reminder_cardview(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), seedling_day.get(i).substring(0,10),
+                        reminderList.add(new reminder_cardview_planting(seedling_vege_id.get(i), seedling_vege_image.get(i),seedling_vege_name.get(i), seedling_day.get(i).substring(0,10),
                                 seedling_number.get(i), seedling_number_unit.get(i), seedling_checkornot.get(i), seedling_vendor.get(i), seedling_remark.get(i), seedling_preharvest.get(i),
-                                seedling_pregrowing.get(i),seedling_preday_num.get(i),seedling_pregrowing_num.get(i)));
+                                seedling_pregrowing.get(i),seedling_preday_num.get(i),seedling_pregrowing_num.get(i), canopy_name.get(i)));
                     }
 
                     reminder_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
@@ -342,10 +344,10 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private class reminder_first_layer_fragment_adapter extends RecyclerView.Adapter<reminder_first_layer_fragment_adapter.viewholder> {
 
         private Context mctx;
-        private List<reminder_cardview> reminderList;
+        private List<reminder_cardview_planting> reminderList;
 
 
-        public reminder_first_layer_fragment_adapter(Context mctx, List<reminder_cardview> reminderList) {
+        public reminder_first_layer_fragment_adapter(Context mctx, List<reminder_cardview_planting> reminderList) {
             this.mctx = mctx;
             this.reminderList = reminderList;
         }
@@ -359,11 +361,12 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
         @Override
         public void onBindViewHolder(final reminder_first_layer_fragment_adapter.viewholder holder, final int position) {
-            final reminder_cardview vege = reminderList.get(position);
+            final reminder_cardview_planting vege = reminderList.get(position);
 
 
             holder.vege.setText(String.valueOf(vege.getName()));
             Vege = String.valueOf(vege.getName());
+            holder.canopy_name.setText(vege.getCanopy_name());
             int drawableResourceId = mctx.getResources().getIdentifier(vege.getVege_img(), "drawable", mctx.getPackageName());
             Glide.with(mctx)
                     .load(drawableResourceId)
@@ -412,7 +415,6 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     planting_num = root.findViewById(R.id.planting_num);        //定植數量
                     ImageView plus = root.findViewById(R.id.cardview_plus);     //加資料
 
-
                     vege_name_tv.setText(vege.getName());       //作物名
                     last_num.setText(vege.getTag2());           //剩下有幾盤未分配
                     last_num_unit.setText(vege.getUnit());      //單位
@@ -440,13 +442,14 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                                     planting_RV.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                                     planting_RV.setHasFixedSize(true);
                                     planting_RV.setAdapter(new reminder_planting_bottomsheetdialog_Adapter(reminder_planting_fragment.this, canopy_area, canopy_name, bottomsheetList));
-                                    //清空
-                                    greenhouse_tiet.setText("");
-                                    planting_num.setText("");
+
 
                                     int last_num_new = Integer.parseInt(last_num.getText().toString())-Integer.parseInt(planting_num.getText().toString());
                                     last_num.setText(String.valueOf(last_num_new));
 
+                                    //清空
+                                    greenhouse_tiet.setText("");
+                                    planting_num.setText("");
                                 }
 
 
@@ -536,6 +539,63 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                 }
             });
 
+            // check_img 更換
+            // check_status 為是否成功更新資料庫
+            final boolean[] check_status = new boolean[1];
+
+
+            final Runnable setCheck_result = new Runnable () {
+
+                public void run() {
+                    if(check_status[0])
+                    {
+                        if(vege.getCheck_img().equals("checked"))
+                        {
+                            vege.setCheck_img("unchecked");
+                        }
+                        else
+                        {
+                            vege.setCheck_img("checked");
+                        }
+                        int drawableResourceId3 = mctx.getResources().getIdentifier(vege.getCheck_img(), "drawable", mctx.getPackageName());
+                        Glide.with(mctx)
+                                .load(drawableResourceId3)
+                                .into(holder.check_img);
+                        Toast.makeText(mctx,"變更成功!",Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(mctx,"發生錯誤，請再試一次!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            };
+
+
+            final Runnable getCheck_result = new Runnable () {
+
+                public void run() {
+                    boolean Check_img_change;
+                    // Check_img_change 為改變後的狀態
+                    Check_img_change = !vege.getCheck_img().equals("checked");
+                    Log.v("test","check_img_change: "+ Check_img_change);
+                    //need user id , vege id, check fg
+                    check_status[0] = reminder_webservice.reminder_planting_data_list_checkornot("39",vege.getId(),Check_img_change);
+                    //請經紀人指派工作名稱 r，給工人做
+                    mUI_Handler.post(setCheck_result);
+                }
+
+            };
+
+            //打勾
+            holder.check_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.v("test","vege.getId():" +vege.getId());
+                    mThreadHandler.post(getCheck_result);
+                }
+            });
+
         }
 
         @Override
@@ -579,6 +639,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
             ImageView vege_img,check_img;
             ImageButton plus_imb,more_imb;
             TextView vege,tag1,tag2,unit;
+            TextView canopy_name;
 
 
             public viewholder(@NonNull View itemView) {
@@ -591,7 +652,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                 tag2 = itemView.findViewById(R.id.tag2_tv);
                 unit = itemView.findViewById(R.id.unit);
                 check_img = itemView.findViewById(R.id.check_img);
-
+                canopy_name = itemView.findViewById(R.id.canopy);
             }
 
 

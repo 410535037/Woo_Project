@@ -604,11 +604,10 @@ public class reminder_seedling_fragment extends Fragment implements DatePickerDi
             };
 
 
-
+            //打勾
             holder.check_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //還沒寫好><
                     Log.v("test","vege.getId():" +vege.getId());
                     mThreadHandler.post(getCheck_result);
                 }

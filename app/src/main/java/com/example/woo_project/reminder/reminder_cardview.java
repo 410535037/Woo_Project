@@ -7,7 +7,7 @@ public class reminder_cardview {
     private String check_img,vendor,remark,preharvest,pregrowing,unit;
 
     private int preday_num,pregrowing_num;
-
+    private String canopy_name;
     public reminder_cardview(){
         super();
     }
@@ -30,6 +30,7 @@ public class reminder_cardview {
         this.pregrowing = pregrowing;
         this.preday_num = preday_num;
         this.pregrowing_num = pregrowing_num;
+        this.canopy_name = canopy_name;
 
     }
 
@@ -93,11 +94,5 @@ public class reminder_cardview {
     public int getPreday_num(){
         return preday_num;
     }
-
-
-
-
-
-
 
 }
