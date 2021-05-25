@@ -3,6 +3,8 @@ package com.example.woo_project.reminder;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -64,7 +67,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
     private Handler mThreadHandler;
     //宣告特約工人
     private HandlerThread mThread;
-
+    TextView bottom_vege_name_tv,edit_tv,delete_tv;
     private OptionsPickerView pvOptions;
     private TextView vege_name_tv,planting_confirm_tv,last_num_unit,last_num;
     List<reminder_cardview_planting> reminderList;
@@ -535,7 +538,104 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
             holder.more_imb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
+                    View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_vege_data_bottomsheetdialog2,null);//連結的介面
+                    bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
+                    ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
+                    bottom_vege_name_tv = root.findViewById(R.id.vege_data_name_tv);
+                    edit_tv = root.findViewById(R.id.edit_tv);
+                    delete_tv = root.findViewById(R.id.delete_tv);
+                    bottom_vege_name_tv.setText(vege.getName());
+
+                    //dialog詳細資訊
+                    TextView in_vege_name_tv = root.findViewById(R.id.textView10);
+                    TextView in_seedling_num_tv = root.findViewById(R.id.textView11);
+                    TextView in_preharvest_tv = root.findViewById(R.id.textView17);
+                    TextView in_vendor_tv = root.findViewById(R.id.textView20);
+                    TextView in_remark_tv = root.findViewById(R.id.textView12);
+                    TextView in_seedling_days_tv = root.findViewById(R.id.textView13);
+                    TextView in_growing_days_tv = root.findViewById(R.id.textView14);
+                    TextView in_seedling_tv = root.findViewById(R.id.textView16);
+                    TextView in_growing_tv = root.findViewById(R.id.textView15);
+
+
+                    in_vege_name_tv.setText(vege.getName());
+                    in_seedling_num_tv.setText(vege.getTag2());
+                    in_vendor_tv.setText(vege.getVendor());
+                    in_remark_tv.setText(vege.getRemark());
+                    in_seedling_days_tv.setText(String.valueOf(vege.getPreday_num()));
+                    in_growing_days_tv.setText(String.valueOf(vege.getPregrowing_num()));
+                    in_seedling_tv.setText(vege.getTag1());
+                    in_growing_tv.setText(vege.getPregrowing());
+                    in_preharvest_tv.setText(vege.getPreharvest());
+
+
+
+
+                    bottomSheetDialog.show();
+
+
+                    edit_tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //建立意圖物件
+                            Intent intent = new Intent(getContext(),reminder_setting_edit.class);
+                            //設定傳遞鍵值
+                            intent.putExtra("str_id",vege.getId());
+                            intent.putExtra("str_vege_til",vege.getName());
+                            intent.putExtra("str_seedling_num",vege.getTag2());
+                            Log.v("edit","Integer.parseInt(vege.getTag2()): "+Integer.parseInt(vege.getTag2()));
+                            intent.putExtra("str_vendor_tiet",vege.getVendor());
+                            intent.putExtra("str_remark_edit",vege.getRemark());
+                            intent.putExtra("str_day_of_harvest_tiet",vege.getPreharvest());
+                            intent.putExtra("str_days_of_growing_tiet",String.valueOf(vege.getPregrowing_num()));
+                            intent.putExtra("str_days_of_raising_seedling_tiet",String.valueOf(vege.getPreday_num()));
+                            Log.v("edit","vege.getPregrowing_num():"+vege.getPregrowing_num());
+
+                            //啟用意圖
+                            startActivity(intent);
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+                    delete_tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog delete_reminder = null;
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder//.setIcon(R.drawable.icon) //設定標題圖片
+                                    // .setTitle("TITLE") //設定標題文字
+                                    .setMessage("確認要刪除嗎?!") //設定內容文字
+                                    .setPositiveButton("確認", new DialogInterface.OnClickListener()
+                                    { //設定確定按鈕
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                           // mThreadHandler.post(getSeedling_delete);
+                                            bottomSheetDialog.dismiss();
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener()
+                                    { //設定取消按鈕
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which)
+                                        {
+                                            // TODO Auto-generated method stub
+                                        }
+                                    });
+
+                            delete_reminder = builder.create(); //建立對話方塊並存成 dialog
+                            delete_reminder.show();
+                            //把button背景改為白色
+                            Button nbutton = delete_reminder.getButton(DialogInterface.BUTTON_NEGATIVE);
+                            nbutton.setBackgroundColor(Color.WHITE);
+                            Button pbutton = delete_reminder.getButton(DialogInterface.BUTTON_POSITIVE);
+                            pbutton.setBackgroundColor(Color.WHITE);
+
+
+
+                        }
+                    });
                 }
             });
 
@@ -627,12 +727,6 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
 
         }
 
-
-        //把各棚架&數量從資料庫抓出來
-        public void getReminder_planting_List()
-        {
-
-        }
 
 
         class viewholder extends RecyclerView.ViewHolder {

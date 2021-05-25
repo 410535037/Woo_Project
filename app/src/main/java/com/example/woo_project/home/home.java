@@ -25,6 +25,7 @@ import com.example.woo_project.chart.chart_1;
 import com.example.woo_project.record.record;
 import com.example.woo_project.reminder.main_reminder;
 import com.example.woo_project.shipping.shipping_main;
+import com.example.woo_project.web.webmain;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import static com.loopj.android.http.AsyncHttpClient.log;
@@ -46,6 +47,7 @@ public class home extends AppCompatActivity {
     private record  getRecord = new record();
     private chart_1 getChart_1 = new chart_1();
     private shipping_main getShipping_main = new shipping_main();
+    private com.example.woo_project.web.webmain getWebmain = new webmain();
     FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -142,8 +144,11 @@ public class home extends AppCompatActivity {
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 //Fragment切換
-                getRecord = new record();
-                fragmentTransaction.replace(R.id.home_fg, getRecord).commit();
+                //getRecord = new record();
+                //fragmentTransaction.replace(R.id.home_fg, getRecord).commit();
+                getWebmain = new webmain();
+                fragmentTransaction.replace(R.id.home_fg, getWebmain).commit();
+
             }
         });
 
