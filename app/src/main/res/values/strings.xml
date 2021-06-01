@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">務農族</string>
+    <string name="app_name" translatable="false">務農族</string>
 
 
 
@@ -125,8 +125,8 @@
         <item>男</item>
     </string-array>
 
-    <string name="spn_sex_list_prompt">請選擇性別</string>
-    <string name="title_activity_home2">home2</string>
+    <string name="spn_sex_list_prompt" translatable="false">請選擇性別</string>
+    <string name="title_activity_home2" translatable="false">home2</string>
 
     <string-array name="action_item">
         <item>育苗</item>
@@ -187,8 +187,8 @@
     </string-array>
 
     <string-array name="time_range_sp_array">
-        <item>目前</item>
-        <item>當日</item>
+        <item>所有</item>
+        <item>今日</item>
         <item>當週</item>
         <item>下週</item>
         <item>自訂</item>
@@ -196,6 +196,6 @@
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>
 

@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:padding="8dp"
-            android:text="確認"
+            android:text="取消"
             android:textColor="@color/Azure"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/vege_name_tv"
@@ -76,28 +76,12 @@
                 android:id="@+id/reminder_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="▼ 請輸入定植日期、棚架位置及數量"
+                android:text="▼ 請輸入收成日期及收成數量"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-            <TextView
-                android:id="@+id/last_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_gravity="end"
-                android:text="12"/>
-            <TextView
-                android:id="@+id/last_num_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:gravity="end"
-                android:text="盤"/>
-
 
         </LinearLayout>
 
@@ -124,30 +108,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="@+id/planting_RV"
             app:layout_constraintStart_toStartOf="@+id/planting_RV"
             app:layout_constraintTop_toBottomOf="@+id/planting_RV">
 
 
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
 
-                <ImageView
-                    android:id="@+id/cardview_plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/cardview_plus2"
-                    android:padding="13dp"/>
 
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/harvest_btm_plus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/cardview_plus2"
+                android:padding="13dp"/>
 
 
 
-            <!-- canopy location        -->
+
+
+            <!-- harvest num        -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til3"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -156,11 +137,10 @@
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/greenhouse_tiet"
+                    android:id="@+id/harvest_btm_num_tiet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="棚架"
-                    android:focusableInTouchMode="false"
+                    android:hint="收成重量(公斤)"
                     android:textSize="14dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,57 +149,65 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.1"/>
 
-            <!-- planting num        -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til4"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/planting_num"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="數量"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:textSize="14dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
             <!-- calendar       -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/date_tiet"
+                    android:id="@+id/harvest_btm_date_tiet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:focusable="false"
-                    android:hint="定植日期"
+                    android:hint="收成日期"
                     android:textSize="14dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <Button
+                android:id="@+id/go_wait_ship_bt"
+                style="@style/NormalButton2"
+                android:background="#89b094"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="尚未收成完" />
+
+            <Button
+                android:id="@+id/go_ship_bt"
+                style="@style/NormalButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:text="全部已收成完" />
+
+        </LinearLayout>
 
         <View
             android:id="@+id/view4"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            android:layout_width="395dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
 
 

@@ -7,12 +7,13 @@
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- 震动权限 -->
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 摄像头权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
 
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 自动聚焦权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".GlobalVariable"
         android:allowBackup="true"
@@ -28,72 +29,68 @@
         <activity android:name=".user_setting.personal_help" />
         <activity android:name=".user_setting.personal_info" />
         <activity android:name=".login.login2" />
-        <activity android:name=".reminder.main_reminder"  />
-        <activity android:name=".reminder.reminder_setting_edit"  />
-        <activity android:name=".reminder.reminder_setting"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".remind.farm_record"  />
-        <activity android:name=".remind.sickbug_record"  />
-        <activity android:name=".remind.fertilizer_record"  />
+
+        <activity android:name=".reminder.reminder_setting_edit" />
+        <activity
+            android:name=".reminder.reminder_setting"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".remind.farm_record" />
+        <activity android:name=".remind.sickbug_record" />
+        <activity android:name=".remind.fertilizer_record" />
         <activity android:name=".calendar.calendar" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
 
+<!--        <activity android:name=".record.record">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEND" />-->
 
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-        <activity android:name=".record.record" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/*" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/*" />
-            </intent-filter>
-        </activity>
+<!--                <data android:mimeType="image/*" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEND" />-->
 
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+
+<!--                <data android:mimeType="text/plain" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEND_MULTIPLE" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+
+<!--                <data android:mimeType="image/*" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity android:name="com.google.zxing.activity.CaptureActivity" />
-        <activity android:name=".home.home"/>
+        <activity android:name=".home.home" />
         <activity android:name=".edit_pot" />
         <activity android:name=".calendar.calendar_memo" />
         <activity android:name=".calendar.calendar_memo2" />
-        <activity android:name=".chart.chart_1"/>
 
         <activity android:name=".user_setting.user_setting" />
         <activity android:name=".record.record_Information" />
-
         <activity android:name=".record.record_Information2" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".login.login" />
-        <activity android:name=".home.home2" />
 
-        <activity android:name=".shipping.shipping_main"/>
-        <activity android:name=".shipping.shipping_add_data"/>
-
-
-
+        <activity android:name=".shipping.shipping_add_data" />
     </application>
-
-
-
 
 </manifest>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -51,12 +53,14 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
     //宣告特約工人
     private HandlerThread mThread;
 
-    private TextView vege_name_tv,edit_tv,delete_tv,planting_confirm_tv;
-    private TextInputEditText date_tiet,canopy_area_tiet;
-    private Calendar c,today_cal;
+    private TextView vege_name_tv,edit_tv,delete_tv,harvest_confirm_tv;
+    private TextInputEditText harvest_btm_date_tiet,harvest_btm_num_tiet;
+    private Calendar c,today_cal,c2;
     private OptionsPickerView pvOptions;
+    private ImageView harvest_btm_plus;
+    CharSequence todaydate;
     View view;
-    String Vege,Tag1,currentDateString,todaydate;
+    String Vege,Tag1,currentDateString;
     List<reminder_cardview> reminderList;
     RecyclerView reminder_rv;
     String reminder_vegetable_data;
@@ -115,7 +119,7 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
 
         currentDateString =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
 
-        date_tiet.setText(currentDateString);
+        harvest_btm_date_tiet.setText(currentDateString);
     }
 
     //去資料庫抓資料---預設會顯示全部收成CardviewList，點擊Spinner可以切換全部、今日、這週、下週、自訂
@@ -325,26 +329,32 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                 @Override
                 public void onClick(View view) {
 
+
                     final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
-                    View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_planting_bottomsheetdialog,null);//連結的介面
+                    View root = LayoutInflater.from(getContext()).inflate(R.layout.reminder_harvest_bottomsheetdialog,null);//連結的介面
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
-                    vege_name_tv = root.findViewById(R.id.vege_name_tv);
-                    planting_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
-                    date_tiet = root.findViewById(R.id.date_tiet);
-                    canopy_area_tiet = root.findViewById(R.id.greenhouse_tiet);
+                    final RecyclerView planting_RV;
+                    final List<reminder_harvest_bottomsheetdialog_cardview> bottomsheetList = new ArrayList<>();
+                    planting_RV = root.findViewById(R.id.planting_RV);
 
+
+
+                    vege_name_tv = root.findViewById(R.id.vege_name_tv);
+                    harvest_confirm_tv = root.findViewById(R.id.btmsheet_confirm_tv);
+                    harvest_btm_date_tiet = root.findViewById(R.id.harvest_btm_date_tiet);
+                    harvest_btm_num_tiet = root.findViewById(R.id.harvest_btm_num_tiet);
+                    harvest_btm_plus = root.findViewById(R.id.harvest_btm_plus);
                     vege_name_tv.setText(vege.getName());
 
-                    today_cal = Calendar.getInstance();
-                    todaydate =  new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(today_cal.getTime());
-                    date_tiet.setText(todaydate);
+
+
 
                     bottomSheetDialog.show();
 
 
-                    date_tiet.setOnClickListener(new View.OnClickListener() {
+                    harvest_btm_date_tiet.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
@@ -355,42 +365,29 @@ public class reminder_harvest_fragment extends Fragment implements DatePickerDia
                         }
 
                     });
-                    canopy_area_tiet.setOnClickListener(new View.OnClickListener() {
+                    harvest_btm_plus.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View v) {
+                            bottomsheetList.add(new reminder_harvest_bottomsheetdialog_cardview(bottomsheetList.size(), Integer.parseInt(harvest_btm_num_tiet.getText().toString()), harvest_btm_date_tiet.getText().toString()));
 
-
-                            pvOptions = new OptionsPickerBuilder(getActivity(), new OnOptionsSelectListener() {
-                                @Override
-                                public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                                    String vege = canopy_name.get(options1).get(options2);
-                                    canopy_area_tiet.setText(vege);
-                                    bottomSheetDialog.show(); //當pickerview按下確認會再開啟btmdialog，讓使用者繼續輸入資料
-                                }
-                            }).setTitleText("請選擇") // 選擇器標題
-                                    .setContentTextSize(18)//設定滾輪文字大小
-                                    .setTitleSize(18)
-                                    .setDividerColor(getResources().getColor(R.color.Gainsboro))//設定分割線顏色
-                                    .setSelectOptions(0, 1)//默認選中值
-                                    .setBgColor(Color.WHITE)
-                                    .setTitleBgColor(getResources().getColor(R.color.WhiteSmoke))
-                                    .setTitleColor(Color.BLACK)
-                                    .setCancelColor(getResources().getColor(R.color.Azure))
-                                    .setSubmitColor(getResources().getColor(R.color.Azure))
-                                    .setCancelText("取消")
-                                    .setSubmitText("確定")
-                                    .setTextColorCenter(getResources().getColor(R.color.Dimgray))
-                                    .setBackgroundId(0x66000000) //設定外部遮罩顏色
-                                    .build();
-
-                            pvOptions.setPicker(canopy_area, canopy_name);
-                            bottomSheetDialog.dismiss();//因為會擋到pickerview所以先關閉，當按下pickerview的確認就會再展開
-                            pvOptions.show();
+                            planting_RV.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                            planting_RV.setHasFixedSize(true);
+                            planting_RV.setAdapter(new reminder_harvest_bottomsheetdialog_Adapter(reminder_harvest_fragment.this, bottomsheetList));
 
                         }
                     });
+                    //把育苗日給c2
+                    List<String> time_list = Arrays.asList(vege.getTag1().split("-"));
+                    Log.v("date", time_list.get(0) + "  " + time_list.get(1) + "  " + time_list.get(2));
+                    c2 = Calendar.getInstance();
+                    c2.set(Integer.parseInt(time_list.get(0)), Integer.parseInt(time_list.get(1)) - 1, Integer.parseInt(time_list.get(2)));
 
-                    planting_confirm_tv.setOnClickListener(new View.OnClickListener() {
+                    todaydate = DateFormat.format("yyyy-MM-dd", c2.getTime());
+                    harvest_btm_date_tiet.setText(todaydate);
+
+
+
+                    harvest_confirm_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 

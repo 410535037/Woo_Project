@@ -29,6 +29,19 @@
 
     </style>
 
+    <style name="NormalButton2" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">#007FFF</item>
+        <item name="android:textColor">#ffffff</item>
+
+    </style>
+
+    <style name="NormalButton3" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">#F62F2F</item>
+        <item name="android:textColor">#ffffff</item>
+
+    </style>
+
+
     <style name="CheckboxStyle" parent="AppTheme">
         <item name="colorControlNormal">@color/darkgray</item>
         <item name="colorControlActivated">#FC9D33</item>

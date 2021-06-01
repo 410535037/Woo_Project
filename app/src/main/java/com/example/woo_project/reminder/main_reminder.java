@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -76,7 +77,7 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
     private boolean fg=false,date_fg;
     private Calendar c;
     private String SelectDate,SelectDate2;
-    private TextView confirm_tv;
+    private TextView confirm_tv,cancel_tv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
         rb3=view.findViewById(R.id.rb3);
         rb4=view.findViewById(R.id.rb4);
         segmented4=view.findViewById(R.id.segmented4);
-        vp = (ViewPager) view.findViewById(R.id.vp);
+        vp = view.findViewById(R.id.vp);
 
 
 
@@ -108,19 +109,16 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayofmonth) {
         c = Calendar.getInstance();
-
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,month);
         c.set(Calendar.DAY_OF_MONTH,dayofmonth);
-
-
 
 
         if (date_fg) {
             SelectDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
             StartDateTiet.setText(SelectDate);
             date_fg=false;
-//            Toast.makeText(getContext(),"WTG",Toast.LENGTH_LONG).show();
+
         }
         else{
             SelectDate2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c.getTime());
@@ -129,34 +127,11 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
         }
 
 
-//        if(SelectDate2==null) {
-//
-//            StartDateTiet.setText(SelectDate);
-//            SelectDate2="";
-//        }
-//        else{
-//            SelectDate2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(c2.getTime());
-//            EndDateTiet.setText(SelectDate2);
-//            SelectDate2=null;
-//        }
-
-
-
-
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
-
-//        //選擇開始日期和結束日期的Dialog相關設定
-//        final AlertDialog.Builder objdbr = new AlertDialog.Builder(view.getContext());  //取得自訂的版面。
-//        final View v = getLayoutInflater().inflate(R.layout.select_start_end_date,null);  //設定AlertDialog的View。
-//        StartDateTiet = v.findViewById(R.id.StartDateTiet);
-//        EndDateTiet = v.findViewById(R.id.EndDateTiet);
-//        objdbr.setView(v);  //設定AlertDialog的View
 
 
 
@@ -170,13 +145,13 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
             }
         });
 
-        //新增Fragment
+        //將育苗、定植、收成、其他的Fragment加入List<Fragment> list裡
         list.add(reminder_seedling_fragment);
         list.add(reminder_planting_fragment);
         list.add(reminder_harvest_fragment);
         list.add(reminder_other_things_fragment);
         pagerAdapter adapter = new pagerAdapter(getChildFragmentManager(),list);
-        //除了育苗這頁外，也加載定植、收成和其他的fragment，現在給參數為3，就是4個頁面全部會在第一次加載的時候被加載完成
+        //除了育苗這頁外，也加載定植、收成和其他的fragment，setOffscreenPageLimit(數字)數字填3代表除了當前頁，其他3頁也會被加載，就是4個頁面全部會在第一次加載的時候被加載完成
         //這行一定要打:如果不加這個會出錯 EX:假如當前頁是育苗的fragment，點Spinner切換時間，因為想要其他三個頁面的時間也一起被換，但是其他fragment還沒初始化，在time_range_sp.setOnItemSelectedListener裡直接用reminder_harvest_fragment.onStart();就會出錯
         vp.setOffscreenPageLimit(3);
         vp.setAdapter(adapter);
@@ -308,7 +283,7 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
 
 
 
-        //上方時間篩選設定
+        //上方時間篩選設定(所有、今日、當週、下週、自訂)
         Time_Range_Sp_Items=getResources().getStringArray(R.array.time_range_sp_array);
         final ArrayAdapter<String> TimeRangeList = new ArrayAdapter<>(getActivity(),R.layout.spinner_dropdown_item,Time_Range_Sp_Items);
         time_range_sp.setAdapter(TimeRangeList);
@@ -344,6 +319,7 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
                             StartDateTiet = v.findViewById(R.id.StartDateTiet);
                             EndDateTiet = v.findViewById(R.id.EndDateTiet);
                             confirm_tv = v.findViewById(R.id.confirm_tv);
+                            cancel_tv = v.findViewById(R.id.cancel_tv);
 
                             mBuilder.setView(v);
                             final androidx.appcompat.app.AlertDialog dialog = mBuilder.create();
@@ -400,6 +376,13 @@ public class main_reminder extends Fragment implements DatePickerDialog.OnDateSe
                                     }
                                 }
                             });
+                            cancel_tv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+
 
                             break;
                         default:

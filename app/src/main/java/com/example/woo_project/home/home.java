@@ -24,6 +24,7 @@ import com.example.woo_project.R;
 import com.example.woo_project.chart.chart_1;
 import com.example.woo_project.record.record;
 import com.example.woo_project.reminder.main_reminder;
+import com.example.woo_project.shipping.shipping;
 import com.example.woo_project.shipping.shipping_main;
 import com.example.woo_project.web.webmain;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -46,7 +47,7 @@ public class home extends AppCompatActivity {
     private main_reminder getReminder=new main_reminder();
     private record  getRecord = new record();
     private chart_1 getChart_1 = new chart_1();
-    private shipping_main getShipping_main = new shipping_main();
+    private shipping getShipping = new shipping();
     private com.example.woo_project.web.webmain getWebmain = new webmain();
     FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -184,8 +185,8 @@ public class home extends AppCompatActivity {
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 //Fragment切換
-                getShipping_main = new shipping_main();
-                fragmentTransaction.replace(R.id.home_fg, getShipping_main).commit();
+                getShipping = new shipping();
+                fragmentTransaction.replace(R.id.home_fg, getShipping).commit();
             }
         });
 
