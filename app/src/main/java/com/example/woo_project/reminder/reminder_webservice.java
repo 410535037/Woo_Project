@@ -546,6 +546,52 @@ public class reminder_webservice {
 
 
 
+    public static boolean reminder_harvest_data_list_checkornot(String user, int planting_id, String real_date, int real_growing_days, int goods_kg, Boolean harvest_status)
+    {
+        String SOAP_ACTION = "http://tempuri.org/reminder_harvest_data_list_checkornot";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "reminder_harvest_data_list_checkornot";   //函數名稱
+        boolean result = false ;
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("planting_id",planting_id);
+            request.addProperty("real_date",real_date);
+            request.addProperty("real_growing_days",real_growing_days);
+            request.addProperty("goods_kg",goods_kg);
+            request.addProperty("harvest_status",harvest_status);
+
+
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapPrimitive obj1 = (SoapPrimitive) envelope.getResponse();
+            Log.v("test","obj1: "+obj1.getValue());
+            if(obj1.getValue().toString().equals("Yes"))
+
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            Log.v("test","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
 
 
     //刪除育苗資料
@@ -673,8 +719,6 @@ public class reminder_webservice {
             return result;
         }
     }
-
-
 
 
 
