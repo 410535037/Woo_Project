@@ -1,5 +1,5 @@
 package com.example.woo_project.shipping;
-
+//庫存量Fragment:庫存量cardview(cardview顯示的資料、出貨btsdialog、詳細資料btsdialog)
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;

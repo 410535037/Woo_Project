@@ -1,12 +1,12 @@
 package com.example.woo_project.shipping;
 
 public class shipping_stock_cardview {
-    //庫存量cardview需要的資料
+    //庫存量cardview需要的資料:作物名稱、作物圖片、收成日期、收成重量(公斤)、收成棚架、出貨廠商、剩餘庫存重量(公斤)
     private String id,vege_name,vege_img,vendor,harvest_day,tag1_planting_greenhouse;
     private int harvest_num,tag2_stock_num;
 
 
-    //庫存量cardview點擊箱子圖案需要的資料
+    //庫存量cardview點擊箱子圖案需要的資料:作物名稱、
     private String seedling_day,unit,planting_day;
     private int seedling_num,seedling_takesday,planting_num,planting_takesday;
 

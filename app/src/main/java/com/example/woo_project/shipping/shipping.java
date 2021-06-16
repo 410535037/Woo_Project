@@ -1,5 +1,5 @@
 package com.example.woo_project.shipping;
-
+//出貨主頁:時間篩選、(庫存量|待出貨|已出貨)的radio按鈕、上下方Viewpager
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -71,16 +71,16 @@ public class shipping extends Fragment {
         //換segmentedgroup顏色
         segmentedgroup.setTintColor(Color.parseColor("#ffffff"), Color.parseColor("#fca530"));
 
-        //--start--viewPager&Fragment相關設定(未分配廠商、待出貨、已出貨)
+        //--start--viewPager&Fragment相關設定(庫存量、待出貨、已出貨)
         //將未分配廠商、待出貨、已出貨的Fragment加入List<Fragment> list裡
         Fragmentlist.add(shipping_stock_fragment);
         Fragmentlist.add(shipping_unshipped_fragment);
         Fragmentlist.add(shipping_shipped_fragment);
         pagerAdapter adapter = new pagerAdapter(getChildFragmentManager(),Fragmentlist);
-        //除了未分配廠商這頁外，也加載待出貨、已出貨的fragment，setOffscreenPageLimit(數字)數字填2代表除了當前頁，其他2頁也會被加載，就是3個頁面全部會在第一次加載的時候被加載完成
+        //除了庫存量這頁外，也加載待出貨、已出貨的fragment，setOffscreenPageLimit(數字)數字填2代表除了當前頁，其他2頁也會被加載，就是3個頁面全部會在第一次加載的時候被加載完成
         //這行一定要打:如果不加這個會出錯
         shipping_vp.setOffscreenPageLimit(2);
-        //EX:假如當前頁是未分配廠商的fragment，點Spinner切換時間，因為想要其他兩個個頁面的時間也一起被換，但是其他fragment還沒初始化，在time_range_sp.setOnItemSelectedListener裡直接用reminder_harvest_fragment.onStart();就會出錯
+        //EX:假如當前頁是庫存量的fragment，點Spinner切換時間，因為想要其他兩個個頁面的時間也一起被換，但是其他fragment還沒初始化，在time_range_sp.setOnItemSelectedListener裡直接用reminder_harvest_fragment.onStart();就會出錯
         shipping_vp.setAdapter(adapter);
         //--end--viewPager&Fragment相關設定(未分配廠商、待出貨、已出貨)
 
@@ -135,7 +135,8 @@ public class shipping extends Fragment {
             }
         });
 
-        //提醒主頁上方shipping_img_viewPager的作物狀態圖片，左右滑動能切換radiobutton和viewPager的圖片
+        //提醒主頁上方shipping_img_viewPager的作物狀態圖片，左右滑動能切換radiobutton和viewPager
+        //EX:用中間的radiobutton來控制，如果rb1.setChecked(true)會進去segmentedgroup.setOnCheckedChangeListener裡來切換上下方的viewpager
         shipping_img_viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -167,8 +168,8 @@ public class shipping extends Fragment {
             }
         });
 
-        //提醒主頁下方cardview的viewpager，左右滑動能切換radiobutton和shipping_img_viewPager的圖片
-        //EX:用中間的radiobutton來控制，如果rb1.setChecked(true)會進去segmented4.setOnCheckedChangeListener裡來切換上下方的viewpager
+        //提醒主頁下方cardview的viewpager，左右滑動能切換radiobutton和shipping_img_viewPager
+        //EX:用中間的radiobutton來控制，如果rb1.setChecked(true)會進去segmentedgroup.setOnCheckedChangeListener裡來切換上下方的viewpager
         shipping_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
