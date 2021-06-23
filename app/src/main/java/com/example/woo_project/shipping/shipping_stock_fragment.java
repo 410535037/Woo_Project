@@ -1,9 +1,13 @@
 package com.example.woo_project.shipping;
 //庫存量Fragment:庫存量cardview(cardview顯示的資料、出貨btsdialog、詳細資料btsdialog)
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +17,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bumptech.glide.Glide;
 import com.example.woo_project.R;
+import com.example.woo_project.reminder.main_reminder;
+import com.example.woo_project.reminder.reminder_cardview_harvest;
+import com.example.woo_project.reminder.reminder_harvest_fragment;
+import com.example.woo_project.reminder.reminder_webservice;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -36,8 +49,13 @@ public class shipping_stock_fragment extends Fragment {
 
     private RecyclerView shipping_rv;
     private List<shipping_stock_cardview> shipping_stock_List;
+    private List<shipping_stock_sum_cardview> shipping_stock_sum;
     RecyclerView RvCv;
     List<shipping_stock_bottomsheetdialog_cardview> items;
+    List<List<String>> inventory_all,inventory_sum;
+
+    //廠商列表
+    private List<String> vendor_list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -60,140 +78,153 @@ public class shipping_stock_fragment extends Fragment {
         //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
         mThreadHandler=new Handler(mThread.getLooper());
 
-        shipping_stock_List = new ArrayList<>();
 
+        mThreadHandler.post(getInventory_sum);
+        mThreadHandler.post(getVendor_list);
         //shipping_stock_cardview(String id, String vege_img, String name, String tag1,
         // String tag2,unit,String check_img, String vendor, String remark,String preharvest,String preseedling,
         // String pregrowing,int preday_num, int pregrowing_num))
-        for(int i=0;i<1;i++){
-            shipping_stock_List.add(new shipping_stock_cardview("11","玉米","sophone", "壽豐農會",
-                    "2021-05-15", 150, "A01", 30, "2021-05-05","盤","2021-05-10", 12,5,10,5));
-        }
-        shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        shipping_rv.setHasFixedSize(true);
-        shipping_rv.setAdapter(new shipping_first_layer_fragment_adapter(getActivity(),shipping_stock_List));
 
 
     }
 
-    private class shipping_first_layer_fragment_adapter extends RecyclerView.Adapter<com.example.woo_project.shipping.shipping_stock_fragment.shipping_first_layer_fragment_adapter.viewholder>  {
-
-        private Context mctx;
-        private List<shipping_stock_cardview> shipping_stock_List;
-        String s="";
-        public shipping_first_layer_fragment_adapter(Context mctx, List<shipping_stock_cardview> shipping_stock_List) {
-            this.mctx = mctx;
-            this.shipping_stock_List = shipping_stock_List;
+    //剩餘庫存量
+    Runnable getInventory_sum=new Runnable () {
+        public void run() {
+            //顯示"自訂"區間的作物CardviewList
+            inventory_sum = shipping_webservice.inventory_sum(39);
+            mUI_Handler.post(setInventory_sum);
         }
 
+    };
+
+    //從資料庫抓完並顯示收成的CardviewList資料
+    private Runnable setInventory_sum = new Runnable() {
         @Override
-        public com.example.woo_project.shipping.shipping_stock_fragment.shipping_first_layer_fragment_adapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            LayoutInflater inflater=LayoutInflater.from(mctx);
-            View view=inflater.inflate(R.layout.shipping_stock_cardview,viewGroup,false);
-            return new com.example.woo_project.shipping.shipping_stock_fragment.shipping_first_layer_fragment_adapter.viewholder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final com.example.woo_project.shipping.shipping_stock_fragment.shipping_first_layer_fragment_adapter.viewholder holder, final int position) {
-            final shipping_stock_cardview vege=shipping_stock_List.get(position);
-
-            holder.vege_name.setText(String.valueOf(vege.getVege_name()));
-            int drawableResourceId = mctx.getResources().getIdentifier(vege.getVege_img(), "drawable", mctx.getPackageName());
-            Glide.with(mctx)
-                    .load(drawableResourceId)
-                    .into(holder.vege_img);
-            holder.vendor.setText(String.valueOf(vege.getVendor()));
-            holder.harvest_day.setText(String.valueOf(vege.getHarvest_day()));
-            holder.harvest_num.setText(String.valueOf(vege.getHarvest_num()));
-            holder.tag1_greenhouse.setText(String.valueOf(vege.getTag1_planting_greenhouse()));
-            holder.tag2_stock_num.setText(String.valueOf("剩餘"+vege.getTag2_stock_num())+"公斤");
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+        public void run() {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
-                public void onClick(View v) {
+                public void run() {
+
+                    List<String> inventory_name = new ArrayList<>();
+                    List<String> inventory_weight = new ArrayList<>();
+                    List<String> inventory_img = new ArrayList<>();
+                    List<String> inventory_vendor = new ArrayList<>();
+
+                    //png_list
+                    Log.v("test","inventory_sum的長度: "+inventory_sum.size());
+                    for(int i=0;i<inventory_sum.size();i++) {
+                        inventory_name.add(inventory_sum.get(i).get(0));
+                        inventory_weight.add(inventory_sum.get(i).get(1));
+                        inventory_img.add(inventory_sum.get(i).get(2));
+                        inventory_vendor.add(inventory_sum.get(i).get(3));
+                    }
+
+                    shipping_stock_sum = new ArrayList<>();
+
+                    for(int i=0;i<inventory_name.size();i++){
+                        shipping_stock_sum.add(new shipping_stock_sum_cardview(String.valueOf(i),inventory_name.get(i),inventory_img.get(i), Integer.parseInt(inventory_weight.get(i)),inventory_vendor.get(i)));
+                    }
 
 
-                }
-            });
-            holder.more_imb.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                    shipping_rv.setHasFixedSize(true);
+                    shipping_rv.setAdapter(new shipping_stock_sum_Adapter(getTargetFragment(),getActivity(),shipping_stock_sum,vendor_list));
 
-
-                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
-                    View root = LayoutInflater.from(getContext()).inflate(R.layout.shipping_vege_data_bottomsheetdialog, null);//連結的介面
-                    bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
-                    ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
-
-                    RvCv = root.findViewById(R.id.recyclerview_cv);
-
-                    items = new ArrayList<>();
-                    items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-05",5,"育苗盤數 : 25盤"));
-                    items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-10",20,"定植棚架 : A01\n定植盤數 : 15盤"));
-                    items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-05-30",0,"收穫重量 : 200公斤\n出貨廠商 : 壽豐農會"));
-
-
-
-                    RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                    RvCv.setHasFixedSize(true);
-                    RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(shipping_stock_fragment.this,items));
-
-                    // 顯示dialog
-                    bottomSheetDialog.show();
 
 
                 }
             });
 
-            holder.go_shipping_imb.setOnClickListener(new View.OnClickListener() {
+        }
+    };
+
+
+    //call 所有廠商
+    private Runnable getVendor_list=new Runnable () {
+
+        public void run() {
+
+            vendor_list=reminder_webservice.vendor_list();
+            //請經紀人指派工作名稱 r，給工人做
+            Log.v("test","data:"+vendor_list);
+            //mUI_Handler.post(setVendor_list);
+
+        }
+
+    };
+
+
+
+
+
+    //詳細庫存
+    Runnable getInventory_all=new Runnable () {
+
+        public void run() {
+
+
+            //顯示"自訂"區間的作物CardviewList
+            inventory_all = shipping_webservice.inventory(39);
+            mUI_Handler.post(setInventory_all);
+        }
+
+    };
+
+    //從資料庫抓完並顯示收成的CardviewList資料
+    private Runnable setInventory_all = new Runnable() {
+        @Override
+        public void run() {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
-                public void onClick(View view) {
+                public void run() {
+
+                    List<String> inventory_name = new ArrayList<>();
+                    List<String> inventory_pic = new ArrayList<>();
+                    List<String> inventory_vendor = new ArrayList<>();
+                    List<String> inventory_canopy = new ArrayList<>();
+                    List<String> inventory_weight = new ArrayList<>();
+                    List<String> inventory_date = new ArrayList<>();
+                    //統計作物和對應數量
+                    List<List<String>> name_weight = new ArrayList<>();
+
+                    //png_list
+                    Log.v("test","inventory_all的長度: "+inventory_all.size());
+                    for(int i=0;i<inventory_all.size();i++) {
+
+                        inventory_name.add(inventory_all.get(i).get(0));
+                        inventory_pic.add(inventory_all.get(i).get(1));
+                        inventory_vendor.add(inventory_all.get(i).get(2));
+                        inventory_canopy.add(inventory_all.get(i).get(3));
+                        inventory_weight.add(inventory_all.get(i).get(4));
+                        inventory_date.add(inventory_all.get(i).get(5));
+                    }
 
 
-                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);//初始化BottomSheet
-                    View root = LayoutInflater.from(getContext()).inflate(R.layout.shipping_stock_bottomsheetdialog, null);//連結的介面
-                    bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
-                    ((View) root.getParent()).setBackgroundColor(getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
-                    // 顯示dialog
-                    bottomSheetDialog.show();
+
+                    shipping_stock_List = new ArrayList<>();
+
+                    for(int i=0;i<inventory_name.size();i++){
+                        shipping_stock_List.add(new shipping_stock_cardview(String.valueOf(i),inventory_name.get(i),inventory_pic.get(i), "壽豐農會",
+                                "2021-05-15", Integer.parseInt(inventory_weight.get(i)), "A01", 30, "2021-05-05","盤","2021-05-10", 12,5,10,5));
+                    }
+
+
+//                    for (int i = 0; i < reminderList.size(); i++) {
+//                        counter.add(0);
+//                    }
+                    shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                    shipping_rv.setHasFixedSize(true);
+ //                   shipping_rv.setAdapter(new shipping_first_layer_fragment_adapter(getActivity(),shipping_stock_List));
+
+
 
                 }
             });
 
         }
-
-        @Override
-        public int getItemCount() {
-            return shipping_stock_List.size();
-        }
-
-
-
-        class viewholder extends RecyclerView.ViewHolder {
-            ImageView vege_img;
-            TextView vege_name,vendor,harvest_day,harvest_num,tag1_greenhouse,tag2_stock_num;
-            ImageButton go_shipping_imb,more_imb;
-            RecyclerView secondrecyclerview;
-
-            public viewholder(@NonNull View itemView) {
-                super(itemView);
-                vege_img = (ImageView) itemView.findViewById(R.id.vege_img);
-                vege_name = (TextView) itemView.findViewById(R.id.vege_name);
-                vendor = (TextView) itemView.findViewById(R.id.vendor_tv);
-                harvest_day = (TextView) itemView.findViewById(R.id.harvest_day_tv);
-                harvest_num = (TextView) itemView.findViewById(R.id.harvest_num_tv);
-                tag1_greenhouse = (TextView) itemView.findViewById(R.id.tag1_tv);
-                tag2_stock_num = (TextView) itemView.findViewById(R.id.tag2_stock_num_tv);
-                go_shipping_imb = itemView.findViewById(R.id.go_shipped_or_unshipped_imb);
-                more_imb = itemView.findViewById(R.id.more_imb);
-                secondrecyclerview=itemView.findViewById(R.id.innerRecyclerview);
-
-            }
-
-
-        }
-
-    }
-
+    };
 }

@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="@+id/til6"
         app:layout_constraintTop_toBottomOf="@+id/til6">
 
-
+        <!--
         <TextView
             android:id="@+id/last_stock_num"
             android:layout_width="wrap_content"
@@ -75,11 +75,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
+        -->
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/linearLayout9"
+        android:id="@+id/linearLayout10"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -92,88 +93,12 @@
         app:layout_constraintTop_toBottomOf="@+id/view3">
 
         <TextView
-            android:id="@+id/harvest_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="收成日期"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/harvest_date_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|right"
-            android:text="2021-05-15"
-            android:textColor="@color/gray"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout11"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout9"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout9"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
-
-        <TextView
-            android:id="@+id/harvest_greenhouse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="收成棚架"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/harvest_greenhouse_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal|right"
-            android:text="A01"
-            android:textColor="@color/gray"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout10"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout9"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout9"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
-
-        <TextView
             android:id="@+id/harvest_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="收成重量"
+            android:text="剩餘庫存量"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -190,8 +115,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
     </LinearLayout>
 
 
@@ -226,27 +149,45 @@
             android:textSize="14dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til5"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <RelativeLayout
+        android:id="@+id/vendor_RL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="@+id/til4"
         app:layout_constraintStart_toStartOf="@+id/til4"
-        app:layout_constraintTop_toBottomOf="@+id/til4">
+        app:layout_constraintTop_toBottomOf="@+id/til4" >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/shipping_vendor"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til5"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="出貨廠商"
-            android:inputType="number"
-            android:singleLine="true"
-            android:text="壽豐農會"
-            android:textSize="14dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/shipping_vendor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="出貨廠商"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text="壽豐農會"
+                android:textSize="14dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/select_vendor"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/_transportation2"
+            />
+
+    </RelativeLayout>
+
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -256,9 +197,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="@+id/til5"
-        app:layout_constraintStart_toStartOf="@+id/til5"
-        app:layout_constraintTop_toBottomOf="@+id/til5">
+        app:layout_constraintEnd_toEndOf="@+id/vendor_RL"
+        app:layout_constraintStart_toStartOf="@+id/vendor_RL"
+        app:layout_constraintTop_toBottomOf="@+id/vendor_RL">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/shipping_num"

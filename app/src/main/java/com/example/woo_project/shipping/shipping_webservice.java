@@ -15,10 +15,94 @@ public class shipping_webservice
 {
     //以下字串必須完全正確，不能有空白!! (之前為了一個空白卡了兩小時...)
     private static final String NAMESPACE = "http://tempuri.org/" ;       //WebService預設的命名空間
-    private static final String URL = "http://134.208.97.191:8080/Woo_WebService.asmx";     //WebService的網址
+    private static final String URL = "http://134.208.97.191:8080/goods_WebService.asmx";     //WebService的網址
     //private static final String URL = "http://192.168.43.42/ws_test1/webservice.asmx";
     private static final String SOAP_ACTION = "http://tempuri.org/VegeInfo_WS";          //命名空間+要用的函數名稱
     private static final String METHOD_NAME = "VegeInfo_WS";   //函數名稱
+
+    //庫存統計
+    public static List<List<String>> inventory_sum(int user)
+    {
+        String SOAP_ACTION = "http://tempuri.org/Inventory_sum";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "Inventory_sum";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test2","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test2","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+
+    //庫存詳細資訊
+    public static List<List<String>> inventory(int user)
+    {
+        String SOAP_ACTION = "http://tempuri.org/Inventory";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "Inventory";   //函數名稱
+        List<List<String>> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject obj1 = (SoapObject) envelope.getResponse();
+            Log.v("test","obj1: "+obj1);
+            Log.v("test","obj1: "+obj1.getProperty(0));
+            for(int i=0; i<obj1.getPropertyCount(); i++)
+            {
+                String getString= obj1.getProperty(i).toString();
+                Log.v("test","getString: "+getString);
+                getString = getString.replace(" ","").replace("string=","");
+                getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+                Log.v("test"," getString2: "+ getString);
+                List<String> x = Arrays.asList(getString.split(";"));
+                result.add(x);
+            }
+            Log.v("test2","result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test2","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
 
 
     public static String add_shipping_data(String vege_name_tx,String vendor_name_tx,String sale_num_str,String set_date_str,boolean ship_status,String total_earnings_str)

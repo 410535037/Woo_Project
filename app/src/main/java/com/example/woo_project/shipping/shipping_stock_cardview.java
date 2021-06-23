@@ -10,6 +10,7 @@ public class shipping_stock_cardview {
     private String seedling_day,unit,planting_day;
     private int seedling_num,seedling_takesday,planting_num,planting_takesday;
 
+
     public shipping_stock_cardview(String id, String vege_name, String vege_img, String vendor, String harvest_day, int harvest_num, String tag1_planting_greenhouse, int tag2_stock_num, String seedling_day, String unit, String planting_day, int seedling_num, int seedling_takesday, int planting_num, int planting_takesday) {
         this.id = id;
         this.vege_name = vege_name;
