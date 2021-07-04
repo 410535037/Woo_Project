@@ -104,6 +104,60 @@ public class shipping_webservice
         }
     }
 
+    //存貨到出貨
+    public static String Go_Ship(int user,String ship_date,String ship_vendor,String old_ship_vendor,String ship_price, Boolean ship_status, String plant_name, String plant_img)
+    {
+        String SOAP_ACTION = "http://tempuri.org/Go_Ship";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "Go_Ship";   //函數名稱
+
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("ship_date",ship_date);
+            request.addProperty("ship_vendor",ship_vendor);
+            request.addProperty("old_ship_vendor",old_ship_vendor);
+
+            Log.v("test2","vendor: "+ship_vendor);
+            Log.v("test2","old vendor: "+old_ship_vendor);
+
+            request.addProperty("ship_price",ship_price);
+            request.addProperty("ship_status",ship_status);
+            request.addProperty("plant_name",plant_name);
+            request.addProperty("plant_img",plant_img);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+
+            // 獲取回傳數據
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 獲取返回的結果
+            String result = object.getProperty(0).toString();
+            Log.v("test2","Go_Ship的result: "+result);
+
+            return result;
+        } catch (Exception e) {
+            Log.v("test2","e的錯誤訊息 : "+e.toString());
+            return "NO";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static String add_shipping_data(String vege_name_tx,String vendor_name_tx,String sale_num_str,String set_date_str,boolean ship_status,String total_earnings_str)
     {

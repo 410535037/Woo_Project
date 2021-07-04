@@ -39,16 +39,10 @@
                     android:layout_height="50dp"
                     android:src="@drawable/carrot" />
 
-                <TextView
-                    android:id="@+id/vendor_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="壽豐農會"
-                    android:textColor="#402C2B"
-                    android:textSize="10sp" />
+
 
             </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -59,17 +53,27 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
+
+                        <TextView
+                            android:id="@+id/vendor_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="壽豐農會"
+                            android:textColor="#402C2B"
+                            android:textSize="15sp" />
+
+
                         <TextView
                             android:id="@+id/vege_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="5dp"
                             android:text="胡蘿蔔"
                             android:textColor="#402C2B"
-                            android:textSize="15sp" />
-
-
+                            android:textSize="12sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -102,6 +106,8 @@
                                 android:textColor="#C0C0C0"
                                 android:textSize="12sp" />
                         </LinearLayout>
+
+
 
                     </LinearLayout>
 

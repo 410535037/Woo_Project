@@ -78,9 +78,8 @@ public class shipping_stock_fragment extends Fragment {
         //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
         mThreadHandler=new Handler(mThread.getLooper());
 
-
-        mThreadHandler.post(getInventory_sum);
         mThreadHandler.post(getVendor_list);
+        mThreadHandler.post(getInventory_sum);
         //shipping_stock_cardview(String id, String vege_img, String name, String tag1,
         // String tag2,unit,String check_img, String vendor, String remark,String preharvest,String preseedling,
         // String pregrowing,int preday_num, int pregrowing_num))
@@ -150,7 +149,6 @@ public class shipping_stock_fragment extends Fragment {
             //請經紀人指派工作名稱 r，給工人做
             Log.v("test","data:"+vendor_list);
             //mUI_Handler.post(setVendor_list);
-
         }
 
     };
@@ -200,6 +198,7 @@ public class shipping_stock_fragment extends Fragment {
                         inventory_canopy.add(inventory_all.get(i).get(3));
                         inventory_weight.add(inventory_all.get(i).get(4));
                         inventory_date.add(inventory_all.get(i).get(5));
+                        Log.v("inventory vendor:",inventory_vendor.get(i));
                     }
 
 

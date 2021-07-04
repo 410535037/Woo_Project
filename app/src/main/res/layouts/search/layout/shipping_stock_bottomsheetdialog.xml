@@ -170,7 +170,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="出貨廠商"
-                android:inputType="number"
                 android:singleLine="true"
                 android:text="壽豐農會"
                 android:textSize="14dp" />
@@ -229,7 +228,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="單位價格(元/公斤)"
-            android:inputType="number"
+            android:inputType="number|numberDecimal"
             android:singleLine="true"
             android:text="15.8"
             android:textSize="14dp" />

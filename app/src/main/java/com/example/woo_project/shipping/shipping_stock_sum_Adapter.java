@@ -2,6 +2,8 @@ package com.example.woo_project.shipping;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,14 @@ import java.util.List;
 
 public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_stock_sum_Adapter.viewholder>  {
 
-        private Context mctx;
+    //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
+    private Handler mUI_Handler = new Handler();
+    //宣告特約工人的經紀人
+    private Handler mThreadHandler;
+    //宣告特約工人
+    private HandlerThread mThread;
+
+    private Context mctx;
         private List<shipping_stock_sum_cardview> shipping_stock_List;
         private Fragment fragment;
         private List<String> vendor_list;
@@ -50,6 +59,14 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
         public shipping_stock_sum_Adapter.viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             LayoutInflater inflater=LayoutInflater.from(mctx);
             View view=inflater.inflate(R.layout.shipping_stock_cardview,viewGroup,false);
+
+            //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
+            mThread = new HandlerThread("");
+            //讓Worker待命，等待其工作 (開啟Thread)
+            mThread.start();
+            //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)
+            mThreadHandler=new Handler(mThread.getLooper());
+
             return new shipping_stock_sum_Adapter.viewholder(view);
         }
 
@@ -115,7 +132,8 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                     ((View) root.getParent()).setBackgroundColor(mctx.getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
 
-                    TextInputEditText out_date,out_weight,out_price;
+                    final TextInputEditText out_date,out_weight,out_price;
+                    final boolean[] ship_status = new boolean[1];
                     TextView vege_name,stock_num;
 
                     vege_name = root.findViewById(R.id.vege_name_tv);
@@ -133,6 +151,7 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                     out_weight.setText(String.valueOf(vege.getHarvest_num()));
                     out_price.setText("");
 
+                    //選擇廠商
                     ImageView select_vendor = root.findViewById(R.id.select_vendor);
                     select_vendor.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -163,17 +182,74 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                                     .build();
 
                             pvOptions.setPicker(vendor_list);
-
-
                             pvOptions.show();
-
 
                            // Toast.makeText(mctx,"成功",Toast.LENGTH_SHORT).show();
                         }
                     });
 
+                    //賣出結果
+                    final String[] go_ship_result = new String[1];
+
+                    //針對輸入賣出成功於否做應對
+                    final Runnable getGo_ship=new Runnable () {
+
+                        public void run() {
+
+                            if(go_ship_result[0].equals("Yes"))
+                            {
+                                Toast.makeText(mctx,"輸入成功 !", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(mctx,"輸入失敗，請再試一次 !", Toast.LENGTH_SHORT).show();
+                            }
+                            bottomSheetDialog.dismiss();
+
+                        }
+
+                    };
+
+                    //輸入賣出
+                    final Runnable setGo_ship=new Runnable () {
+
+                        public void run() {
+                       //     vendor_list=reminder_webservice.vendor_list();
+                            //請經紀人指派工作名稱 r，給工人做
+                            go_ship_result[0] = shipping_webservice.Go_Ship(39, out_date.getText().toString(),vendor_input.getText().toString(),vege.getVendor(), out_price.getText().toString(),
+                                    ship_status[0], vege.getVege_name(), vege.getVege_img());
+                            Log.v("test","setGo_ship YES!");
+                            mUI_Handler.post(getGo_ship);
 
 
+                        }
+
+                    };
+
+
+
+
+
+                    Button go_wait_ship_bt = root.findViewById(R.id.go_wait_ship_bt);
+                    Button go_ship_bt = root.findViewById(R.id.go_ship_bt);
+
+                    //待出貨
+                    go_wait_ship_bt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ship_status[0] =false;
+                            mThreadHandler.post(setGo_ship);
+                        }
+                    });
+
+                    //直接出貨
+                    go_ship_bt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ship_status[0] =true;
+                            mThreadHandler.post(setGo_ship);
+                        }
+                    });
 
                     //取消
                     TextView cancel_bt = root.findViewById(R.id.btmsheet_confirm_tv);
@@ -191,7 +267,6 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
             });
 
         }
-
 
 
 
