@@ -194,7 +194,12 @@
         <item>自訂</item>
     </string-array>
 
-
+    <string-array name="shipping_stock_info">
+        <item>2021-06-23</item>
+        <item>2021-06-24</item>
+        <item>2021-06-28</item>
+        <item>2021-07-01</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

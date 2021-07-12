@@ -212,12 +212,9 @@ public class shipping_stock_fragment extends Fragment {
                     }
 
 
-//                    for (int i = 0; i < reminderList.size(); i++) {
-//                        counter.add(0);
-//                    }
                     shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                     shipping_rv.setHasFixedSize(true);
- //                   shipping_rv.setAdapter(new shipping_first_layer_fragment_adapter(getActivity(),shipping_stock_List));
+
 
 
 

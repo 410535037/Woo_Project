@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,14 +104,81 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(mctx.getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
-                    RecyclerView RvCv = root.findViewById(R.id.recyclerview_cv);
+                    final RecyclerView RvCv = root.findViewById(R.id.recyclerview_cv);
+                    Spinner shipping_stock_spinner = root.findViewById(R.id.shipping_stock_spinner);
 
-                    List<shipping_stock_bottomsheetdialog_cardview> items = new ArrayList<>();
-                    items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-05",5,"育苗盤數 : 25盤"));
-                    items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-10",20,"定植棚架 : A01\n定植盤數 : 15盤"));
-                    items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-05-30",0,"收穫重量 : 200公斤\n出貨廠商 : 壽豐農會"));
+                    ArrayAdapter<CharSequence> adapter =
+                            ArrayAdapter.createFromResource(mctx,            //對應的Context
+                                    R.array.shipping_stock_info,             //資料選項內容
+                                    android.R.layout.simple_spinner_item);  //預設Spinner未展開時的View(預設及選取後樣式)
+
+                    final List<shipping_stock_bottomsheetdialog_cardview> items = new ArrayList<>();
+
+                    shipping_stock_spinner.setAdapter(adapter);
+                    shipping_stock_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                    {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            // 選項有選取時的動作            定植盤數 : 15盤"
+                            String spnStr = String.valueOf(parent.getSelectedItem());
+                            if(spnStr.equals("2021-06-23"))
+                            {
+                                items.clear();
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-05",15,"育苗盤數 : 25盤"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-20",34,"定植棚架 : A01"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-23",0,"收穫重量 : 20公斤\n出貨廠商 : 永豐餘"));
+
+                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                                RvCv.setHasFixedSize(true);
+                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
+
+                            }
+                            else if (spnStr.equals("2021-06-24"))
+                            {
+                                items.clear();
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-06",18,"育苗盤數 : 45盤"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-24",30,"定植棚架 : B03"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-24",0,"收穫重量 : 50公斤\n出貨廠商 : 永豐餘"));
+
+                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                                RvCv.setHasFixedSize(true);
+                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
+                            }
+                            else if (spnStr.equals("2021-06-28"))
+                            {
+                                items.clear();
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-11",17,"育苗盤數 : 20盤"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-28",30,"定植棚架 : B18"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-28",0,"收穫重量 : 23公斤\n出貨廠商 : 永豐餘"));
+
+                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                                RvCv.setHasFixedSize(true);
+                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
+                            }
+                            else if (spnStr.equals("2021-07-01"))
+                            {
+                                items.clear();
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-18",15,"育苗盤數 : 25盤"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-06-02",29,"定植棚架 : A11"));
+                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-07-01",0,"收穫重量 : 20公斤\n出貨廠商 : 永豐餘"));
+
+                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                                RvCv.setHasFixedSize(true);
+                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                            // 沒有選取時的動作
+                        }
+                    });
 
 
+                    items.clear();
+                    items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-05",15,"育苗盤數 : 25盤"));
+                    items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-20",34,"定植棚架 : A01"));
+                    items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-23",0,"收穫重量 : 20公斤\n出貨廠商 : 永豐餘"));
 
                     RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                     RvCv.setHasFixedSize(true);
@@ -199,6 +269,7 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                             if(go_ship_result[0].equals("Yes"))
                             {
                                 Toast.makeText(mctx,"輸入成功 !", Toast.LENGTH_SHORT).show();
+
                             }
                             else
                             {
@@ -237,6 +308,7 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                     go_wait_ship_bt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             ship_status[0] =false;
                             mThreadHandler.post(setGo_ship);
                         }
