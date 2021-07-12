@@ -10,13 +10,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.woo_project.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // 庫存詳細資訊
@@ -65,7 +63,7 @@ public class shipping_stock_info_Adapter extends RecyclerView.Adapter<shipping_s
 
 
                     final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mctx, R.style.BottomSheetDialogTheme);//初始化BottomSheet
-                    View root = LayoutInflater.from(mctx).inflate(R.layout.shipping_vege_data_bottomsheetdialog, null);//連結的介面
+                    View root = LayoutInflater.from(mctx).inflate(R.layout.shipping_vege_timeline_bottomsheetdialog, null);//連結的介面
                     bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(mctx.getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 //

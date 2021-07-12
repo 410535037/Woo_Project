@@ -160,6 +160,7 @@ public class reminder_planting_fragment extends Fragment implements DatePickerDi
                     //顯示"自訂"區間的作物CardviewList
                     reminder_planting_data = reminder_webservice.reminder_custom_planting_data_list("39",main_reminder.StartDateTiet.getText().toString(),main_reminder.EndDateTiet.getText().toString());
                     mUI_Handler.post(setReminder_planting_data);
+
                     break;
                 default:
                     break;

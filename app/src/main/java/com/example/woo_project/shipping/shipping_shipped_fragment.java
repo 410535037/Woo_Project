@@ -64,8 +64,8 @@ public class shipping_shipped_fragment extends Fragment {
         // String tag2,unit,String check_img, String vendor, String remark,String preharvest,String preseedling,
         // String pregrowing,int preday_num, int pregrowing_num))
         for(int i=0;i<1;i++){
-            shipping_unshipped_List.add(new shipping_unshipped_cardview("11","玉米","qrcode", "壽豐農會",
-                    "2021-05-16", "20.3元/斤", 120, "2021.05.05", "盤","2021-05-10","2021-05-30", 12,5,10,20,120));
+//            shipping_unshipped_List.add(new shipping_unshipped_cardview("11","玉米","qrcode", "壽豐農會",
+//                    "2021-05-16", "20.3元/斤", 120, "2021.05.05", "盤","2021-05-10","2021-05-30", 12,5,10,20,120));
         }
         shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         shipping_rv.setHasFixedSize(true);
@@ -101,9 +101,7 @@ public class shipping_shipped_fragment extends Fragment {
                     .load(drawableResourceId)
                     .into(holder.vege_img);
             holder.vendor.setText(String.valueOf(vege.getVendor()));
-            holder.harvest_day.setText(String.valueOf(vege.getHarvest_day()));
-            holder.harvest_num.setText(String.valueOf(vege.getHarvest_num()));
-            holder.tag1_greenhouse.setText(String.valueOf(vege.getTag1_planting_greenhouse()));
+
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

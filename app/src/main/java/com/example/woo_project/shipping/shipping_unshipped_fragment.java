@@ -1,15 +1,19 @@
 package com.example.woo_project.shipping;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +21,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bumptech.glide.Glide;
 import com.example.woo_project.R;
 import com.example.woo_project.reminder.reminder_cardview;
 import com.example.woo_project.reminder.reminder_seedling_fragment;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +72,8 @@ public class shipping_unshipped_fragment extends Fragment {
         // String tag2,unit,String check_img, String vendor, String remark,String preharvest,String preseedling,
         // String pregrowing,int preday_num, int pregrowing_num))
         for(int i=0;i<1;i++){
-            shipping_unshipped_List.add(new shipping_unshipped_cardview("11","玉米","sophone", "壽豐農會",
-                    "2021-05-16", "A01", 150, "2021-05-05", "盤","2021-05-10","2021-05-30", 12,5,10,20,120));
+            shipping_unshipped_List.add(new shipping_unshipped_cardview("1","玉米","corn", "2021-07-18","永豐餘" ));
+
         }
         shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         shipping_rv.setHasFixedSize(true);
@@ -101,10 +109,23 @@ public class shipping_unshipped_fragment extends Fragment {
                     .load(drawableResourceId)
                     .into(holder.vege_img);
             holder.vendor.setText(String.valueOf(vege.getVendor()));
-            holder.harvest_day.setText(String.valueOf(vege.getHarvest_day()));
-            holder.harvest_num.setText(String.valueOf(vege.getHarvest_num()));
-            holder.tag1_greenhouse.setText(String.valueOf(vege.getTag1_planting_greenhouse()));
+            holder.shipping_date.setText(vege.getShipping_date());
 
+            holder.go_shipped_imb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mctx, R.style.BottomSheetDialogTheme);//初始化BottomSheet
+                    View root = LayoutInflater.from(mctx).inflate(R.layout.shipping_unshipped_bottomsheetdialog, null);//連結的介面
+                    bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
+                    ((View) root.getParent()).setBackgroundColor(mctx.getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
+
+
+
+
+                    // 顯示dialog
+                    bottomSheetDialog.show();
+                }
+            });
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,8 +145,8 @@ public class shipping_unshipped_fragment extends Fragment {
 
         class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img;
-            TextView vege_name,vendor,harvest_day,harvest_num,tag1_greenhouse;
-            ImageButton plus_imb,more_imb;
+            TextView vege_name,vendor,harvest_day,shipping_date,tag1_greenhouse;
+            ImageButton go_shipped_imb,more_imb;
             RecyclerView secondrecyclerview;
 
             public viewholder(@NonNull View itemView) {
@@ -133,10 +154,8 @@ public class shipping_unshipped_fragment extends Fragment {
                 vege_img = (ImageView) itemView.findViewById(R.id.vege_img);
                 vege_name = (TextView) itemView.findViewById(R.id.vege_name);
                 vendor = (TextView) itemView.findViewById(R.id.vendor_tv);
-                harvest_day = (TextView) itemView.findViewById(R.id.harvest_day_tv);
-                harvest_num = (TextView) itemView.findViewById(R.id.harvest_num_tv);
-                tag1_greenhouse = (TextView) itemView.findViewById(R.id.tag1_tv);
-                plus_imb = itemView.findViewById(R.id.plus_imb);
+                shipping_date = (TextView) itemView.findViewById(R.id.shipping_date_tv);
+                go_shipped_imb = itemView.findViewById(R.id.go_shipped_imb);
                 more_imb = itemView.findViewById(R.id.more_imb);
                 secondrecyclerview=itemView.findViewById(R.id.innerRecyclerview);
 

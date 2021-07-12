@@ -1,7 +1,5 @@
 package com.example.woo_project.shipping;
 //庫存量Fragment:庫存量cardview(cardview顯示的資料、出貨btsdialog、詳細資料btsdialog)
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,30 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
-import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.bumptech.glide.Glide;
 import com.example.woo_project.R;
-import com.example.woo_project.reminder.main_reminder;
-import com.example.woo_project.reminder.reminder_cardview_harvest;
-import com.example.woo_project.reminder.reminder_harvest_fragment;
 import com.example.woo_project.reminder.reminder_webservice;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -51,7 +36,7 @@ public class shipping_stock_fragment extends Fragment {
     private List<shipping_stock_cardview> shipping_stock_List;
     private List<shipping_stock_sum_cardview> shipping_stock_sum;
     RecyclerView RvCv;
-    List<shipping_stock_bottomsheetdialog_cardview> items;
+    List<shipping_stock_vege_timeline_cardview> items;
     List<List<String>> inventory_all,inventory_sum;
 
     //廠商列表
