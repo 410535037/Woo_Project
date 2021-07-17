@@ -1,0 +1,640 @@
+Index: app/src/main/res/layouts/main/layout/activity_reminder.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/reminder_layout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/bg\">\r\n\r\n    <View\r\n        android:id=\"@+id/view\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:background=\"@color/title\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <View\r\n        android:id=\"@+id/view2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"220dp\"\r\n        android:background=\"@color/title\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/view\" />\r\n\r\n    <ImageButton\r\n        android:id=\"@+id/plus_imb\"\r\n        android:layout_width=\"40dp\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_marginEnd=\"14dp\"\r\n        android:background=\"#00000000\"\r\n        android:padding=\"8dp\"\r\n        android:scaleType=\"fitCenter\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/time_range_sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/time_range_sp\"\r\n        app:layout_constraintVertical_bias=\"0.666\"\r\n        app:srcCompat=\"@drawable/bell\" />\r\n\r\n    <Spinner\r\n        android:id=\"@+id/time_range_sp\"\r\n        android:layout_width=\"100dp\"\r\n        android:layout_height=\"40dp\"\r\n        android:background=\"@drawable/down_sp\"\r\n        app:layout_constraintBottom_toBottomOf=\"@+id/view\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <androidx.viewpager2.widget.ViewPager2\r\n        android:id=\"@+id/viewPagerImageSlider\"\r\n        android:layout_width=\"306dp\"\r\n        android:layout_height=\"133dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        android:paddingStart=\"100dp\"\r\n        android:paddingEnd=\"100dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.495\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/view\" >\r\n\r\n    </androidx.viewpager2.widget.ViewPager2>\r\n\r\n    <info.hoang8f.android.segmented.SegmentedGroup\r\n        android:id=\"@+id/segmented4\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_margin=\"20dp\"\r\n        android:orientation=\"horizontal\"\r\n        android:background=\"@color/title\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/viewPagerImageSlider\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/viewPagerImageSlider\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/viewPagerImageSlider\"\r\n        app:sc_border_width=\"1dp\"\r\n        app:sc_corner_radius=\"6dp\">\r\n\r\n        <RadioButton\r\n            android:id=\"@+id/rb1\"\r\n            style=\"@style/RadioButton\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:checked=\"true\"\r\n            android:textColor=\"@drawable/radio_text_selected\"\r\n            android:text=\"育苗\" />\r\n\r\n        <RadioButton\r\n            android:id=\"@+id/rb2\"\r\n            style=\"@style/RadioButton\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textColor=\"@drawable/radio_text_selected\"\r\n            android:text=\"定植\" />\r\n\r\n        <RadioButton\r\n            android:id=\"@+id/rb3\"\r\n            style=\"@style/RadioButton\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textColor=\"@drawable/radio_text_selected\"\r\n            android:text=\"收成\" />\r\n\r\n        <RadioButton\r\n            android:id=\"@+id/rb4\"\r\n            style=\"@style/RadioButton\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textColor=\"@drawable/radio_text_selected\"\r\n            android:text=\"其他\" />\r\n\r\n    </info.hoang8f.android.segmented.SegmentedGroup>\r\n\r\n    <androidx.viewpager.widget.ViewPager\r\n        android:id=\"@+id/vp\"\r\n        android:layout_width=\"406dp\"\r\n        android:layout_height=\"350dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/segmented4\"\r\n        app:layout_constraintHorizontal_bias=\"0.505\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/segmented4\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/view2\">\r\n\r\n\r\n    </androidx.viewpager.widget.ViewPager>\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layouts/main/layout/activity_reminder.xml	(revision 511382203a81545f6de8dade501fb43f0c9d52e4)
++++ app/src/main/res/layouts/main/layout/activity_reminder.xml	(date 1614651263389)
+@@ -1,10 +1,11 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:id="@+id/reminder_layout"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent"
++    android:layout_height="wrap_content"
+     android:background="@color/bg">
+ 
+     <View
+@@ -113,15 +114,15 @@
+     <androidx.viewpager.widget.ViewPager
+         android:id="@+id/vp"
+         android:layout_width="406dp"
+-        android:layout_height="350dp"
++        android:layout_height="400dp"
+         android:layout_marginTop="8dp"
++
+         app:layout_constraintEnd_toEndOf="@+id/segmented4"
+         app:layout_constraintHorizontal_bias="0.505"
+         app:layout_constraintStart_toStartOf="@+id/segmented4"
+         app:layout_constraintTop_toBottomOf="@+id/view2">
+-
+-
+     </androidx.viewpager.widget.ViewPager>
+ 
+ 
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/woo_project/record/record.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.woo_project.record;\r\n\r\n\r\nimport android.Manifest;\r\nimport android.app.AlertDialog;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.content.pm.PackageManager;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.graphics.drawable.BitmapDrawable;\r\nimport android.net.Uri;\r\nimport android.os.Build;\r\nimport android.os.Handler;\r\nimport android.os.HandlerThread;\r\nimport android.os.Looper;\r\n\r\nimport androidx.annotation.RequiresApi;\r\nimport androidx.core.app.ActivityCompat;\r\nimport androidx.core.content.FileProvider;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\nimport androidx.recyclerview.widget.StaggeredGridLayoutManager;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport android.os.Bundle;\r\n\r\nimport android.text.Html;\r\nimport android.util.Base64;\r\nimport android.util.Log;\r\nimport android.util.Xml;\r\nimport android.view.Display;\r\nimport android.view.Gravity;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.view.Window;\r\nimport android.view.WindowManager;\r\nimport android.widget.AdapterView;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.AutoCompleteTextView;\r\nimport android.widget.Button;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.Spinner;\r\nimport android.widget.Switch;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.bumptech.glide.Glide;\r\nimport com.example.woo_project.GlobalVariable;\r\nimport com.example.woo_project.QRCode.Constant;\r\nimport com.example.woo_project.R;\r\nimport com.example.woo_project.home.home2;\r\nimport com.example.woo_project.remind.farm_record;\r\nimport com.example.woo_project.remind.fertilizer_record;\r\nimport com.example.woo_project.remind.sickbug_record;\r\nimport com.example.woo_project.webservice;\r\nimport com.google.android.material.chip.ChipGroup;\r\nimport com.itextpdf.text.Document;\r\nimport com.itextpdf.text.DocumentException;\r\nimport com.itextpdf.text.Font;\r\nimport com.itextpdf.text.PageSize;\r\nimport com.itextpdf.text.Paragraph;\r\nimport com.itextpdf.text.pdf.BaseFont;\r\nimport com.itextpdf.text.pdf.PdfPCell;\r\nimport com.itextpdf.text.pdf.PdfPTable;\r\nimport com.itextpdf.text.pdf.PdfWriter;\r\nimport java.io.File;\r\nimport java.io.FileNotFoundException;\r\nimport java.io.FileOutputStream;\r\nimport java.io.IOException;\r\nimport java.nio.charset.StandardCharsets;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\nimport java.util.List;\r\nimport java.util.function.Predicate;\r\n\r\nimport static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;\r\nimport static com.itextpdf.text.xml.xmp.XmpWriter.UTF8;\r\n\r\npublic class record extends Fragment\r\n{\r\n    private boolean fg = false;\r\n    int num = 0,id=2;\r\n    //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)\r\n    private Handler mUI_Handler = new Handler();\r\n    //宣告特約工人的經紀人\r\n    private Handler mThreadHandler;\r\n    private AutoCompleteTextView record_search;\r\n    private String record_search_string=\"\",record_month_select_string=\"\",record_month_select_info=\"can't not found\";\r\n\r\n\r\n    private List<record_Cardview> cardviewList;\r\n    private Spinner mSpinner2;\r\n    private GlobalVariable record_name;\r\n\r\n    //篩選的物件\r\n    private Spinner record_canopy_sp,record_canopy_area_sp,record_plant_kind_sp,reocrd_plant_name_sp;\r\n\r\n    //生產履歷的物件\r\n    private Spinner record_traceability_area_sp, record_traceability_canopy_sp ;\r\n    private List<List<String>> record_traceability_list = new ArrayList<>();\r\n    private String[] traceability_str_split;\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState)\r\n    {\r\n       // getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);\r\n        View view = inflater.inflate(R.layout.activity_record, container, false);\r\n\r\n        // 申請文件讀取權限\r\n        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {\r\n            // 申請權限\r\n            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission\r\n                    .WRITE_EXTERNAL_STORAGE))\r\n            {\r\n                Toast.makeText(getContext(), \"請到設定開啟使用文件權限\", Toast.LENGTH_SHORT).show();\r\n            }\r\n            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constant.REQ_PERM_EXTERNAL_STORAGE);\r\n\r\n        }\r\n\r\n\r\n        //生產履歷button\r\n        Button traceability = view.findViewById(R.id.record_traceability);\r\n        traceability.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                getTraceability();\r\n            }\r\n        });\r\n\r\n        record_name = (GlobalVariable) getActivity().getApplicationContext();\r\n        //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)\r\n        //宣告特約工人\r\n        HandlerThread mThread = new HandlerThread(\"\");\r\n        //讓Worker待命，等待其工作 (開啟Thread)\r\n        mThread.start();\r\n        //找到特約工人的經紀人，這樣才能派遣工作 (找到Thread上的Handler)\r\n        mThreadHandler=new Handler(mThread.getLooper());\r\n\r\n        record_search = view.findViewById(R.id.search_record);\r\n        record_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n            //點擊後抓searchview的文字並跳轉到作物資訊\r\n            @Override\r\n            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\r\n                Log.v(\"test\",\"record TextView:\"+record_search.getText());\r\n\r\n                Intent x=new Intent(getContext(),record_Information2.class);\r\n                startActivity(x);\r\n            }\r\n        });\r\n\r\n        //cardview 建立\r\n\r\n        cardviewList = new ArrayList<>();\r\n        cardviewList.add(new record_Cardview(0,\"皇宮菜\",\"預收 : 20/03/11\"));\r\n        cardviewList.add(new record_Cardview(1,\"皇宮菜\",\"20/03/11\"));\r\n        RecyclerView recyclerView =  view.findViewById(R.id.recyclerView);\r\n        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));\r\n        recyclerView.setAdapter(new record.CardAdapter(getContext(), cardviewList));\r\n\r\n        //Dialog 建立\r\n        ImageButton showDialog = view.findViewById(R.id.Select_item);\r\n        showDialog.setOnClickListener(new View.OnClickListener()\r\n        {\r\n            @Override\r\n            public void onClick(View v)\r\n            {\r\n                setSelect_dialog();\r\n            }\r\n        });\r\n\r\n        Button showDialog2 = view.findViewById(R.id.record_table);\r\n        showDialog2.setOnClickListener(new View.OnClickListener()\r\n        {\r\n            @Override\r\n            public void onClick(View v)\r\n            {\r\n                setRecord_dialog();\r\n            }\r\n        });\r\n        return view;\r\n    }\r\n\r\n    //生產履歷參數\r\n    private String area_str,canopy_str,table_str=\"無\";\r\n    String area, canopy, table;\r\n    //生產履歷操作\r\n    private void getTraceability()\r\n    {\r\n        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());\r\n        View mView = getLayoutInflater().inflate(R.layout.record_traceability_dialog, null);\r\n        record_traceability_area_sp = mView.findViewById(R.id.record_traceability_area_sp);\r\n        record_traceability_canopy_sp = mView.findViewById(R.id.record_traceability_canopy_sp);\r\n        Button record_traceability_commit = mView.findViewById(R.id.record_traceability_commit);\r\n        ChipGroup traceability_ChipGroup = mView.findViewById(R.id.traceability_ChipGroup);\r\n\r\n        mBuilder.setView(mView);\r\n        final AlertDialog dialog = mBuilder.create();\r\n        dialog.show();\r\n\r\n\r\n\r\n\r\n        record_traceability_commit.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                area_str = record_traceability_area_sp.getSelectedItem().toString();\r\n                canopy_str = record_traceability_canopy_sp.getSelectedItem().toString();\r\n                Log.v(\"test\",\"area_str: \" + area_str + \"    canopy_str: \"+canopy_str);\r\n                load_Traceability_table();\r\n\r\n                dialog.dismiss();\r\n            }\r\n        });\r\n\r\n\r\n\r\n        traceability_ChipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {\r\n            @Override\r\n            public void onCheckedChanged(ChipGroup group, int checkedId) {\r\n                String test=\"\";\r\n                switch(checkedId){\r\n                    case R.id.traceability_chip1:\r\n                        test = \"全部!\";\r\n                        table_str = \"全部\";\r\n                        break;\r\n                    case R.id.traceability_chip2:\r\n                        test = \" 防治資材! \";\r\n                        table_str = \"防治資材使用紀錄表\";\r\n                        break;\r\n                    case R.id.traceability_chip3:\r\n                        test = \" 肥料施用! \";\r\n                        table_str = \"肥料施用表\";\r\n                        break;\r\n                    case R.id.traceability_chip4:\r\n                        test = \" 工作紀錄! \";\r\n                        table_str = \"工作紀錄表\";\r\n                        break;\r\n                    default:\r\n                        break;\r\n                }\r\n                Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n\r\n\r\n\r\n        // 調整Dialog從哪開始\r\n        Window dialogWindow = dialog.getWindow();\r\n        dialogWindow.setGravity(Gravity.CENTER);\r\n\r\n        // 去除四角黑色背景\r\n        dialogWindow.setBackgroundDrawable(new BitmapDrawable());\r\n\r\n        /* 將Dialog用螢幕大小百分比方式設置 */\r\n        WindowManager m = getActivity().getWindowManager();\r\n        Display d = m.getDefaultDisplay(); // 取得螢幕寬和高\r\n        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值\r\n        //p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8\r\n        p.width = (int) (d.getWidth() * 0.65);  // 寬度設為螢幕的0.75\r\n        dialogWindow.setAttributes(p);\r\n        load_Traceability_sp();     //從資料庫抓棚架list\r\n\r\n\r\n\r\n    }\r\n    String traceability_str;\r\n    Runnable get_table;\r\n    private void load_Traceability_table()\r\n    {\r\n\r\n        get_table = new Runnable() {\r\n            @Override\r\n            public void run() {\r\n\r\n                Document doc = new Document(PageSize.A4);//创建一个document对象\r\n                FileOutputStream fos,fos2;\r\n                try\r\n                {\r\n                    //抓系統時間當黨名\r\n                    SimpleDateFormat formatter = new SimpleDateFormat(\"yyyy年MM月dd日HH:mm:ss\");\r\n                    Date curDate = new Date(System.currentTimeMillis()) ; // 獲取當前時間\r\n                    String time = formatter.format(curDate);\r\n\r\n                    fos = new FileOutputStream(new File(getActivity().getFilesDir(),\"/\"+time+\".pdf\")); //pdf_address为Pdf文件保存到sd卡的路径\r\n                    Log.v(\"test\",\"路徑: \"+fos.toString());\r\n                    PdfWriter.getInstance(doc, fos);\r\n                    doc.open();\r\n                    PdfPTable table = new PdfPTable(9);  //建立一個只有兩個欄位的表格\r\n//                    table.setWidthPercentage(100f);    //設定表格寬\r\n//                    table.setWidths(new float[]{0.20f, 0.90f});    //課定這兩個欄位的比例大小\r\n\r\n                    PdfPCell cell = new PdfPCell();   //建立一個儲存格\r\n                    //透過 Paragraph 物件增加元素及指定編碼, 也可以直接存入字串\r\n                    Log.v(\"test\",\"traceability_str_split.length : \"+traceability_str_split.length);\r\n                    for(int i =0;i<traceability_str_split.length;i++)\r\n                    {\r\n                        cell.addElement(new Paragraph(traceability_str_split[i],setChineseFont()));\r\n                        table.addCell(cell);\r\n                        cell = new PdfPCell();\r\n\r\n                    }\r\n\r\n\r\n\r\n//                    Log.v(\"test\",\"traceability_str: \"+traceability_str);\r\n\r\n                    doc.add(table);\r\n                    // 一定要记得关闭document对象\r\n                    doc.close();\r\n                    fos.flush();\r\n                    fos.close();\r\n                    mThreadHandler.sendEmptyMessage(123);//操作完毕后进行提醒\r\n\r\n\r\n\r\n                    //存檔\r\n                    Intent intent = new Intent();\r\n                    intent.setAction(Intent.ACTION_SEND);\r\n                    intent.addCategory(\"android.intent.category.DEFAULT\");\r\n\r\n\r\n                    String[] files =  getActivity().fileList();\r\n\r\n                    for(String file : files){\r\n                        Log.e(\"test\",\"file is :\"+ getActivity().getFilesDir().getAbsolutePath()+file);\r\n                    }\r\n                    String path =  getActivity().getFilesDir().getAbsolutePath()+\"/\"+time+\".pdf\";///data/data/包名/cache\r\n\r\n                    File file = new File(path);\r\n                    Uri pdfUri;\r\n                    pdfUri = FileProvider.getUriForFile(\r\n                            getContext(),\r\n                            \"com.example.woo_project.provider\", //(use your app signature + \".provider\" )\r\n                            file);\r\n\r\n                    //pdfUri = Uri.fromFile(file);\r\n                    intent.putExtra(Intent.EXTRA_STREAM, pdfUri);\r\n                    intent.setType(\"application/pdf\");\r\n\r\n                    try {\r\n                        record.this.startActivity(Intent.createChooser(intent, file.getName()));\r\n                    } catch (Exception e) {\r\n                        e.printStackTrace();\r\n                    }\r\n\r\n                } catch (FileNotFoundException e1) {\r\n                    e1.printStackTrace();\r\n                } catch (DocumentException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n\r\n            }\r\n        };\r\n\r\n\r\n        Runnable set_table = new Runnable() {\r\n            @Override\r\n            public void run() {\r\n\r\n                Log.v(\"test\",\"area: \" + area_str + \"    canopy: \"+ canopy_str + \"   table: \"+table_str);\r\n                traceability_str = record_webservice.record_traceability(area_str,canopy_str,table_str);\r\n                traceability_str_split = traceability_str.split(\"zzz\");\r\n                //Toast.makeText(record.this, traceability_str, Toast.LENGTH_SHORT).show();\r\n                mThreadHandler.post(get_table);\r\n            }\r\n        };\r\n\r\n        mThreadHandler.post(set_table);\r\n\r\n    }\r\n\r\n    public Font setChineseFont() {\r\n\r\n        Font fontChinese = null;\r\n        try {\r\n            //字型 標楷體\r\n            BaseFont chinese = BaseFont.createFont(\"assets/kaiu.ttf\"\r\n                    , BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);//設置中文字型\r\n\r\n            fontChinese = new Font(chinese, 12, Font.NORMAL);\r\n        } catch (DocumentException e) {\r\n            e.printStackTrace();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return fontChinese;\r\n    }\r\n\r\n\r\n\r\n\r\n    //跑生產履歷棚架資料\r\n    private void load_Traceability_sp()\r\n    {\r\n        final Runnable set_Traceability = new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                new Handler(Looper.getMainLooper()).post(new Runnable()\r\n                {\r\n                    @RequiresApi(api = Build.VERSION_CODES.N)\r\n                    @Override\r\n                    public void run() {\r\n                        List<String> canopy_area = new ArrayList<>();\r\n                        //棚架\r\n                        for (int i = 0; i < record_traceability_list.size(); i++) {\r\n                            canopy_area.add(record_traceability_list.get(i).get(0));\r\n                            Log.v(\"test\", \"record_select_list_canopy:  \" + record_traceability_list.get(i).get(0));\r\n                        }\r\n                        ArrayAdapter<String> area_adapter = new ArrayAdapter<String>(getContext(),\r\n                                R.layout.record_select_dropdown_item,                            //選項資料內容\r\n                                canopy_area);   //自訂getView()介面格式(Spinner介面未展開時的View)\r\n                        record_traceability_area_sp.setAdapter(area_adapter);\r\n                        record_traceability_area_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {\r\n                            @Override\r\n                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {\r\n                                //選中該區域的棚架list\r\n                                List<String> record_plant_canopy = new ArrayList<>();\r\n                                for (int i = 1; i < record_traceability_list.get(position).size(); i++) {\r\n                                    record_plant_canopy.add(record_traceability_list.get(position).get(i));\r\n                                }\r\n\r\n                                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(),\r\n                                        R.layout.record_select_dropdown_item,                            //選項資料內容\r\n                                        record_plant_canopy);   //自訂getView()介面格式(Spinner介面未展開時的View)\r\n                                record_traceability_canopy_sp.setAdapter(adapter1);\r\n                            }\r\n                            @Override\r\n                            public void onNothingSelected(AdapterView<?> parent) {\r\n                            }\r\n                        });\r\n                    }\r\n                });\r\n\r\n            }\r\n        };\r\n\r\n        Runnable get_Traceability = new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                record_traceability_list = record_webservice.record_select_list_canopy();\r\n                mThreadHandler.post(set_Traceability);\r\n            }\r\n        };\r\n        mThreadHandler.post(get_Traceability);\r\n    }\r\n\r\n\r\n\r\n    //篩選操作\r\n    private void setSelect_dialog()\r\n    {\r\n        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());\r\n        View mView = getLayoutInflater().inflate(R.layout.record_select, null);\r\n        record_canopy_area_sp = mView.findViewById(R.id.record_canopy_area_sp);\r\n        record_canopy_sp = mView.findViewById(R.id.record_canopy_sp);\r\n        reocrd_plant_name_sp = mView.findViewById(R.id.reocrd_plant_name_sp);\r\n        record_plant_kind_sp = mView.findViewById(R.id.record_plant_kind_sp);\r\n\r\n        //篩選\r\n        Button select_item = mView.findViewById(R.id.record_select_item);\r\n\r\n        mBuilder.setView(mView);\r\n        final AlertDialog dialog = mBuilder.create();\r\n        dialog.show();\r\n\r\n        select_item.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                record_month_select_string = mSpinner2.getSelectedItem().toString();\r\n\r\n                if(!record_month_select_string.equals(\"月份…\"))\r\n                {\r\n                    record_month_select_string = record_month_select_string.replace(\"月\", \"\");\r\n                    Log.v(\"test\", \"record month:  \" + record_month_select_string);\r\n                    //請經紀人指派工作名稱 r，給工人做\r\n                    //mThreadHandler.post(record_month_select_r1);\r\n                }\r\n                dialog.dismiss();\r\n            }\r\n        });\r\n\r\n\r\n\r\n        // 調整Dialog從哪開始\r\n        Window dialogWindow = dialog.getWindow();\r\n        dialogWindow.setGravity(Gravity.RIGHT | Gravity.TOP);\r\n\r\n        // 去除四角黑色背景\r\n        dialogWindow.setBackgroundDrawable(new BitmapDrawable());\r\n\r\n        /* 將Dialog用螢幕大小百分比方式設置 */\r\n        WindowManager m = getActivity().getWindowManager();\r\n        Display d = m.getDefaultDisplay(); // 取得螢幕寬和高\r\n        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值\r\n        // p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8\r\n        p.width = (int) (d.getWidth() * 0.75);  // 寬度設為螢幕的0.75\r\n        dialogWindow.setAttributes(p);\r\n\r\n        mThreadHandler.post(getRecord_select_list);\r\n    }\r\n\r\n    //篩選操作\r\n    private void setRecord_dialog()\r\n    {\r\n        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());\r\n        View mView = getLayoutInflater().inflate(R.layout.record_table, null);\r\n        Button one,two,three;\r\n        one = mView.findViewById(R.id.add1);\r\n        two = mView.findViewById(R.id.add2);\r\n        three = mView.findViewById(R.id.add3);\r\n\r\n        one.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent x=new Intent(view.getContext(), farm_record.class);\r\n                startActivity(x);\r\n            }\r\n        });\r\n        two.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent x=new Intent(view.getContext(), fertilizer_record.class);\r\n                startActivity(x);\r\n            }\r\n        });\r\n        three.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Intent x=new Intent(view.getContext(), sickbug_record.class);\r\n                startActivity(x);\r\n            }\r\n        });\r\n        mBuilder.setView(mView);\r\n        final AlertDialog dialog = mBuilder.create();\r\n        dialog.show();\r\n\r\n\r\n        // 調整Dialog從哪開始\r\n        Window dialogWindow = dialog.getWindow();\r\n        dialogWindow.setGravity(Gravity.CENTER);\r\n\r\n        // 去除四角黑色背景\r\n        dialogWindow.setBackgroundDrawable(new BitmapDrawable());\r\n\r\n        /* 將Dialog用螢幕大小百分比方式設置 */\r\n        WindowManager m = getActivity().getWindowManager();\r\n        Display d = m.getDefaultDisplay(); // 取得螢幕寬和高\r\n        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 取得對話框目前數值\r\n        // p.height = (int) (d.getHeight() * 0.8); // 高度設為螢幕的0.8\r\n        p.width = (int) (d.getWidth() * 0.75);  // 寬度設為螢幕的0.75\r\n        dialogWindow.setAttributes(p);\r\n    }\r\n\r\n\r\n    //從資料庫抓棚架list和作物list\r\n    List<List<String>> record_select_list_canopy = new ArrayList<>();\r\n    List<List<String>> record_select_list_plant = new ArrayList<>();\r\n    Runnable getRecord_select_list = new Runnable() {\r\n        @Override\r\n        public void run() {\r\n            record_select_list_canopy = record_webservice.record_select_list_canopy();\r\n            record_select_list_plant = record_webservice.record_select_list_plant();\r\n            mThreadHandler.post(setRecord_select_list);\r\n        }\r\n    };\r\n\r\n    Runnable setRecord_select_list = new Runnable() {\r\n        @Override\r\n        public void run()\r\n        {\r\n            new Handler(Looper.getMainLooper()).post(new Runnable()\r\n            {\r\n                @RequiresApi(api = Build.VERSION_CODES.N)\r\n                @Override\r\n                public void run() {\r\n                    List<String> canopy_area = new ArrayList<>();\r\n                    List<String> plant_kind = new ArrayList<>();\r\n\r\n                    //棚架\r\n                    for(int i = 0 ; i <record_select_list_canopy.size();i++)\r\n                    {\r\n                        canopy_area.add(record_select_list_canopy.get(i).get(0));\r\n                        Log.v(\"test\",\"record_select_list_canopy:  \"+record_select_list_canopy.get(i).get(0));\r\n                        Log.v(\"test\",\"record_select_list_canopy1:  \"+record_select_list_canopy.get(i));\r\n                        //record_select_list_canopy.get(i).remove(0);\r\n                    }\r\n                    ArrayAdapter<String> area_adapter = new ArrayAdapter<String>(getContext(),\r\n                            R.layout.record_select_dropdown_item,                            //選項資料內容\r\n                            canopy_area);   //自訂getView()介面格式(Spinner介面未展開時的View)\r\n                    record_canopy_area_sp.setAdapter(area_adapter);\r\n\r\n                    record_canopy_area_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {\r\n                        @Override\r\n                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {\r\n                            //選中該區域的棚架list\r\n                            List<String> record_plant_canopy = new ArrayList<>();\r\n                            for(int i = 1; i < record_select_list_canopy.get(position).size();i++)\r\n                            {\r\n                                record_plant_canopy.add(record_select_list_canopy.get(position).get(i));\r\n                            }\r\n\r\n\r\n                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(),\r\n                                    R.layout.record_select_dropdown_item,                            //選項資料內容\r\n                                    record_plant_canopy);   //自訂getView()介面格式(Spinner介面未展開時的View)\r\n                            record_canopy_sp.setAdapter(adapter1);\r\n                        }\r\n\r\n                        @Override\r\n                        public void onNothingSelected(AdapterView<?> parent) {\r\n                        }\r\n                    });\r\n\r\n\r\n                    //作物\r\n                    for(int i = 0 ; i <record_select_list_plant.size();i++)\r\n                    {\r\n                        plant_kind.add(record_select_list_plant.get(i).get(0));\r\n                        Log.v(\"test\",\"record_select_list_plant:  \"+record_select_list_plant.get(i).get(0));\r\n                        Log.v(\"test\",\"record_select_list_plant1:  \"+record_select_list_plant.get(i));\r\n                        //record_select_list_canopy.get(i).remove(0);\r\n                    }\r\n\r\n                    //作物種類\r\n                    ArrayAdapter<String> plant_adapter = new ArrayAdapter<String>(getContext(),\r\n                            R.layout.record_select_dropdown_item,                            //選項資料內容\r\n                            plant_kind);   //自訂getView()介面格式(Spinner介面未展開時的View)\r\n                    record_plant_kind_sp.setAdapter(plant_adapter);\r\n\r\n                    //作物名稱\r\n                    record_plant_kind_sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {\r\n                        @Override\r\n                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {\r\n                            //選中作物類別的作物list\r\n                            List<String> record_plant_name = new ArrayList<>();\r\n                            for(int i = 1; i < record_select_list_plant.get(position).size();i++)\r\n                            {\r\n                                record_plant_name.add(record_select_list_plant.get(position).get(i));\r\n                            }\r\n\r\n\r\n                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(),\r\n                                    R.layout.record_select_dropdown_item,                            //選項資料內容\r\n                                    record_plant_name);   //自訂getView()介面格式(Spinner介面未展開時的View)\r\n                            reocrd_plant_name_sp.setAdapter(adapter1);\r\n                        }\r\n\r\n                        @Override\r\n                        public void onNothingSelected(AdapterView<?> parent) {\r\n                        }\r\n                    });\r\n\r\n\r\n                }\r\n            });\r\n\r\n        }\r\n    };\r\n\r\n\r\n    /**\r\n    Runnable record_search_r1 = new Runnable() {\r\n        @Override\r\n        public void run() {\r\n            record_search_string = webservice.Record_list(record_name.getUser_gmail());\r\n            mThreadHandler.post(record_search_r2);\r\n\r\n        }\r\n    };\r\n\r\n    Runnable record_search_r2 = new Runnable() {\r\n        @Override\r\n        public void run()\r\n    {\r\n            new Handler(Looper.getMainLooper()).post(new Runnable()\r\n        {\r\n                @Override\r\n                public void run() {\r\n                    String[] all ,split,split_record_search_img;\r\n                    List<String> split_record_search = new ArrayList<>();\r\n                    List<String> split_record_search_date = new ArrayList<>();\r\n                    List<String> split_record_search_id = new ArrayList<>();\r\n                    if (!record_search_string.equals(\"can't not found\"))\r\n                    {\r\n                        all = record_search_string.split(\"分開\");\r\n                        split = all[0].split(\"%\");\r\n                        split_record_search_img = all[1].split(\"切\");\r\n                        int index=0;\r\n                        if(split.length < 3)\r\n                        {\r\n                            split_record_search_date.add(split[index]);\r\n                            split_record_search.add(split[index+1]);\r\n                            split_record_search_id.add(\"0\");\r\n                        }\r\n                        else\r\n                        {\r\n                            for(int i = 0;i < split.length/3;i++)\r\n                            {\r\n                                split_record_search_date.add(split[index]);\r\n                                split_record_search.add(split[index+1]);\r\n                                split_record_search_id.add(split[index+2]);\r\n                                index = index + 3;\r\n                            }\r\n                        }\r\n\r\n\r\n\r\n                        //搜尋bar list view\r\n                        Log.v(\"test\",\"record的紀錄: \"+ split_record_search.get(0));\r\n                        record_search.setAdapter(new ArrayAdapter<>(record.this,\r\n                                android.R.layout.simple_list_item_1, split_record_search));\r\n\r\n                    int size1 = cardviewList.size();\r\n                    for(int i=0;i < size1;i++)\r\n                    {\r\n                        Log.v(\"test\",\"cardviewList.size(): \"+cardviewList.size());\r\n                        cardviewList.remove(0);\r\n                    }\r\n\r\n                    for(int num = 0; num < split_record_search.size();num++)\r\n                    {\r\n                        cardviewList.add(new record_Cardview(split_record_search_id.get(num),split_record_search.get(num),split_record_search_date.get(num), split_record_search_img[num]));\r\n                        //cardviewList.add(new record_Cardview(String.valueOf(num),split_record_search.get(num),split_record_search_date.get(num), split_record_search_img[num]));\r\n                    }\r\n\r\n                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);\r\n                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));\r\n                    recyclerView.setAdapter(new record.CardAdapter(record.this, cardviewList));\r\n                    }\r\n                }\r\n            });\r\n        }\r\n    };\r\n\r\n\r\n    Runnable  record_month_select_r1 = new Runnable() {\r\n        @Override\r\n        public void run() {\r\n            record_month_select_info = webservice.Record_Select_month(record_month_select_string);\r\n            mThreadHandler.post(record_month_select_r2);\r\n        }\r\n    };\r\n\r\n    Runnable  record_month_select_r2 = new Runnable() {\r\n        @Override\r\n        public void run() {\r\n            new Handler(Looper.getMainLooper()).post(new Runnable(){\r\n                @Override\r\n                public void run() {\r\n                    if (!record_month_select_info.equals(\"can't not found\"))\r\n                    {\r\n\r\n                        split_line3 = record_month_select_info.split(\"切\"); //切割作物名和圖片編碼\r\n                        split_record_vege = split_line3[0].split(\"%\");   //切割各作物\r\n                        split_record_date = split_line3[1].split(\"%\");   //時間\r\n                        split_record_img = split_line3[2].split(\"圖\");  //切割各圖片編碼\r\n                        split_record_id_string = split_line3[3].split(\"%\");\r\n\r\n\r\n\r\n                        int size1 = cardviewList.size();\r\n                        for(int i=0;i < size1;i++)\r\n                        {\r\n                            Log.v(\"test\",\"cardviewList.size(): \"+cardviewList.size());\r\n                            cardviewList.remove(0);\r\n                        }\r\n\r\n                        for(int num = 0; num < split_record_vege.length;num++)\r\n                        {\r\n                            cardviewList.add(new record_Cardview(split_record_id_string[num],split_record_vege[num],split_record_date[num], split_record_img[num]));\r\n                        }\r\n\r\n                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);\r\n                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));\r\n                    recyclerView.setAdapter(new record.CardAdapter(record.this, cardviewList));\r\n                    }\r\n                    else\r\n                    {\r\n                        Toast.makeText(record.this,\"查無資料!\",Toast.LENGTH_SHORT).show();\r\n                    }\r\n                }\r\n            });\r\n\r\n        }\r\n    };\r\n\r\n\r\n    @Override\r\n    protected void onDestroy() {\r\n        super.onDestroy();\r\n        //移除工人上的工作\r\n        if (mThreadHandler != null) {\r\n            mThreadHandler.removeCallbacks(record_search_r1 );\r\n            mThreadHandler.removeCallbacks(record_month_select_r1 );\r\n\r\n        }\r\n        //解聘工人 (關閉Thread)\r\n        if (mThread != null) {\r\n            mThread.quit();\r\n        }\r\n\r\n    }\r\n**/\r\n\r\n\r\n    private class CardAdapter  extends  RecyclerView.Adapter<CardAdapter.ViewHolder>\r\n    {\r\n        private Context context;\r\n        public List<record_Cardview> cardviewList;\r\n\r\n        CardAdapter(Context context, List<record_Cardview> cardviewList) {\r\n            this.context = context;\r\n            this.cardviewList = cardviewList;\r\n        }\r\n\r\n        @Override\r\n        public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {\r\n            View view = LayoutInflater.from(context).inflate(R.layout.record_cardview,viewGroup,false);\r\n            return new ViewHolder(view);\r\n        }\r\n\r\n        @Override\r\n        public void onBindViewHolder(CardAdapter.ViewHolder viewHolder, int i) {\r\n            final record_Cardview cardview = cardviewList.get(i);\r\n            viewHolder.tx1.setText(String.valueOf(cardview.getName()));\r\n            //Glide.with(record.this).load(cardview.getImage()).into(viewHolder.plantId);\r\n            viewHolder.tx2.setText(String.valueOf((cardview.getTime())));\r\n            Log.v(\"test\",\"cardview.getName():  \"+cardview.getName());\r\n\r\n            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n\r\n //                   addItem(cardviewList.size());\r\n                    //record_name.setRecord_vege_name(cardview.getName());\r\n\r\n                    Intent intent = new Intent(getContext(), record_Information.class);\r\n                    intent.setFlags(FLAG_ACTIVITY_CLEAR_TOP);\r\n                    startActivity(intent);\r\n                }\r\n            });\r\n        }\r\n\r\n        @Override\r\n        public int getItemCount() {\r\n            return cardviewList.size();\r\n        }\r\n\r\n        class ViewHolder extends RecyclerView.ViewHolder{\r\n                    ImageView plantId;\r\n                    TextView tx1,tx2;\r\n\r\n                    ViewHolder(View itemView){\r\n                        super(itemView);\r\n                        plantId = (ImageView) itemView.findViewById(R.id.plantId);\r\n                        tx1 = (TextView) itemView.findViewById(R.id.tx1);\r\n                        tx2 = (TextView) itemView.findViewById(R.id.tx2);\r\n                    }\r\n        }\r\n\r\n        public  void addItem(int i){\r\n            fg = true;\r\n//            num = cardviewList.size()-1;\r\n//            //add(位置,資料)\r\n//            cardviewList.add(i, new record_Cardview(id,\"小白菜\", R.drawable.icon201));\r\n//            id=id+1;\r\n//            notifyItemInserted(i);\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/woo_project/record/record.java	(revision 511382203a81545f6de8dade501fb43f0c9d52e4)
++++ app/src/main/java/com/example/woo_project/record/record.java	(date 1614648785925)
+@@ -23,6 +23,8 @@
+ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
++import androidx.viewpager.widget.ViewPager;
++
+ import android.os.Bundle;
+ 
+ import android.text.Html;
+@@ -91,10 +93,11 @@
+     private AutoCompleteTextView record_search;
+     private String record_search_string="",record_month_select_string="",record_month_select_info="can't not found";
+ 
+-
+     private List<record_Cardview> cardviewList;
++
+     private Spinner mSpinner2;
+-    private GlobalVariable record_name;
++
++
+ 
+     //篩選的物件
+     private Spinner record_canopy_sp,record_canopy_area_sp,record_plant_kind_sp,reocrd_plant_name_sp;
+@@ -122,7 +125,6 @@
+ 
+         }
+ 
+-
+         //生產履歷button
+         Button traceability = view.findViewById(R.id.record_traceability);
+         traceability.setOnClickListener(new View.OnClickListener() {
+@@ -132,7 +134,6 @@
+             }
+         });
+ 
+-        record_name = (GlobalVariable) getActivity().getApplicationContext();
+         //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
+         //宣告特約工人
+         HandlerThread mThread = new HandlerThread("");
+@@ -153,6 +154,9 @@
+             }
+         });
+ 
++
++
++
+         //cardview 建立
+ 
+         cardviewList = new ArrayList<>();
+@@ -838,7 +842,7 @@
+                 @Override
+                 public void onClick(View v) {
+ 
+- //                   addItem(cardviewList.size());
++                    //                   addItem(cardviewList.size());
+                     //record_name.setRecord_vege_name(cardview.getName());
+ 
+                     Intent intent = new Intent(getContext(), record_Information.class);
+@@ -854,15 +858,15 @@
+         }
+ 
+         class ViewHolder extends RecyclerView.ViewHolder{
+-                    ImageView plantId;
+-                    TextView tx1,tx2;
++            ImageView plantId;
++            TextView tx1,tx2;
+ 
+-                    ViewHolder(View itemView){
+-                        super(itemView);
+-                        plantId = (ImageView) itemView.findViewById(R.id.plantId);
+-                        tx1 = (TextView) itemView.findViewById(R.id.tx1);
+-                        tx2 = (TextView) itemView.findViewById(R.id.tx2);
+-                    }
++            ViewHolder(View itemView){
++                super(itemView);
++                plantId = (ImageView) itemView.findViewById(R.id.plantId);
++                tx1 = (TextView) itemView.findViewById(R.id.tx1);
++                tx2 = (TextView) itemView.findViewById(R.id.tx2);
++            }
+         }
+ 
+         public  void addItem(int i){
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1614648800601)
++++ .idea/compiler.xml	(date 1614648800601)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/woo_project/record/record_Information.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.woo_project.record;\r\n\r\nimport android.content.Context;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\n\r\nimport com.example.woo_project.R;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class record_Information extends AppCompatActivity {\r\n    boolean fg = true;\r\n    List<record_information_cardview> cardviewList2 = new ArrayList<>();\r\n    RecyclerView recyclerView;\r\n    List<String> cardview_index = new ArrayList<>();\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.record_information);\r\n\r\n        List<record_information_cardview> cardviewList = new ArrayList<>();\r\n       // cardviewList.add(new record_information_cardview(0, \"第一週(19/04/27~19/04/28)\", \"澆水25次\", \"施肥1次\", \"間拔5次\", \"澆水25次\", \"施肥1次\", \"間拔5次\", \"澆水25次\"));\r\n        cardviewList.add(new record_information_cardview(0,\"01\",\"2020.04.13 10:01\",\"第一週\"));\r\n        cardviewList.add(new record_information_cardview(1,\"02\",\"2020.04.20 11:20\",\"第二週\"));\r\n        cardviewList.add(new record_information_cardview(2,\"03\",\"2020.04.27 12:35\",\"第三週\"));\r\n        //public record_information_cardview(int id,String day_or_week_num,String datetime,String content)\r\n\r\n\r\n        recyclerView = findViewById(R.id.record_info_RecyclerView);\r\n        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));\r\n        recyclerView.setAdapter(new CardAdapter(this, cardviewList));\r\n\r\n    }\r\n\r\n    private class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {\r\n        private Context context;\r\n        public List<record_information_cardview> cardviewList;\r\n\r\n        CardAdapter(Context context, List<record_information_cardview> cardviewList) {\r\n            this.context = context;\r\n            this.cardviewList = cardviewList;\r\n        }\r\n\r\n        @Override\r\n        public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {\r\n            View view = LayoutInflater.from(context).inflate(R.layout.activity_choose_calendar_cardview,parent, false);\r\n            return new ViewHolder(view);\r\n        }\r\n\r\n        @Override\r\n        public void onBindViewHolder(final CardAdapter.ViewHolder viewHolder,  int i) {\r\n            final record_information_cardview cardview = cardviewList.get(i);\r\n//            viewHolder.week.setText(String.valueOf(cardview.getWeek()));\r\n//            viewHolder.day1.setText(String.valueOf(cardview.getDay1()));\r\n//            viewHolder.day2.setText(String.valueOf(cardview.getDay2()));\r\n//            viewHolder.day3.setText(String.valueOf(cardview.getDay3()));\r\n//            viewHolder.day4.setText(String.valueOf(cardview.getDay4()));\r\n//            viewHolder.day5.setText(String.valueOf(cardview.getDay5()));\r\n//            viewHolder.day6.setText(String.valueOf(cardview.getDay6()));\r\n//            viewHolder.day7.setText(String.valueOf(cardview.getDay7()));\r\n\r\n            viewHolder.day_or_week_num.setText(cardview.getDay_or_week_num());\r\n            viewHolder.datetime.setText(cardview.getDatetime());\r\n            viewHolder.content.setText(cardview.getContent());\r\n            viewHolder.day_or_week.setText(\"週\");\r\n\r\n\r\n            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n                    Log.v(\"test\",\"i的值: \" +cardview.getId());\r\n                    if(cardview_index.indexOf(String.valueOf(cardview.getId())) < 0) {\r\n                        cardview_index.add(String.valueOf(cardview.getId()));\r\n                        cardviewList2.clear();\r\n                        cardviewList2.add(new record_information_cardview(0,\"02\",\"2020.04.14 10:01\",\"好吃\"));\r\n                        cardviewList2.add(new record_information_cardview(1,\"03\",\"2020.04.15 11:20\",\"好吃好吃\"));\r\n                        cardviewList2.add(new record_information_cardview(2,\"04\",\"2020.04.16 12:35\",\"好吃好吃好吃\"));\r\n                        cardviewList2.add(new record_information_cardview(3,\"05\",\"2020.04.17 10:01\",\"好吃好吃好吃\"));\r\n                        cardviewList2.add(new record_information_cardview(4,\"06\",\"2020.04.18 11:20\",\"好吃好吃\"));\r\n                        cardviewList2.add(new record_information_cardview(5,\"07\",\"2020.04.19 12:35\",\"好吃\"));\r\n                        viewHolder.record_info2_RecyclerView.setLayoutManager(new LinearLayoutManager(record_Information.this, LinearLayoutManager.VERTICAL, false));\r\n                        viewHolder.record_info2_RecyclerView.setAdapter(new CardAdapter2(record_Information.this, cardviewList2));\r\n\r\n\r\n                        Log.v(\"test\",\"第 \"+ cardview.getId() +\" cardview1  list長度\" +cardviewList.size());\r\n\r\n                    }\r\n                    else{\r\n                        cardview_index.remove(String.valueOf(cardview.getId()));\r\n                        cardviewList2.clear();\r\n                        viewHolder.record_info2_RecyclerView.setLayoutManager(new LinearLayoutManager(record_Information.this, LinearLayoutManager.VERTICAL, false));\r\n                        viewHolder.record_info2_RecyclerView.setAdapter(new CardAdapter2(record_Information.this, cardviewList2));\r\n\r\n                    }\r\n\r\n\r\n                }\r\n            });\r\n        }\r\n\r\n        @Override\r\n        public int getItemCount() {\r\n            return cardviewList.size();\r\n        }\r\n\r\n        //Adapter 需要一個 ViewHolder，只要實作它的 constructor 就好，保存起來的view會放在itemView裡面\r\n        class ViewHolder extends RecyclerView.ViewHolder {\r\n            TextView week,day1,day2,day3,day4,day5,day6,day7;\r\n\r\n            TextView day_or_week_num,day_or_week,datetime,content;\r\n            ImageView img;\r\n            RecyclerView record_info2_RecyclerView;\r\n\r\n\r\n            ViewHolder(View itemView) {\r\n                super(itemView);\r\n//                week = itemView.findViewById(R.id.record_weeks_date);\r\n//                day1 = itemView.findViewById(R.id.tv_day_1);\r\n//                day2 = itemView.findViewById(R.id.tv_day_2);\r\n//                day3 = itemView.findViewById(R.id.tv_day_3);\r\n//                day4 = itemView.findViewById(R.id.tv_day_4);\r\n//                day5 = itemView.findViewById(R.id.tv_day_5);\r\n//                day6 = itemView.findViewById(R.id.tv_day_6);\r\n//                day7 = itemView.findViewById(R.id.tv_day_7);\r\n\r\n                day_or_week_num = itemView.findViewById(R.id.day_or_week_num);\r\n                day_or_week = itemView.findViewById(R.id.day_or_week);\r\n                datetime = itemView.findViewById(R.id.datetime);\r\n                content = itemView.findViewById(R.id.content);\r\n                img = itemView.findViewById(R.id.img);\r\n                record_info2_RecyclerView = itemView.findViewById(R.id.record_info2_RecyclerView);\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n\r\n\r\n    private class CardAdapter2 extends RecyclerView.Adapter<CardAdapter2.ViewHolder> {\r\n        private Context context;\r\n        public List<record_information_cardview> cardviewList;\r\n\r\n        CardAdapter2(Context context, List<record_information_cardview> cardviewList) {\r\n            this.context = context;\r\n            this.cardviewList = cardviewList;\r\n        }\r\n\r\n        @Override\r\n        public CardAdapter2.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {\r\n            View view = LayoutInflater.from(context).inflate(R.layout.activity_choose_calendar_cardview,parent, false);\r\n            return new ViewHolder(view);\r\n        }\r\n\r\n        @Override\r\n        public void onBindViewHolder(CardAdapter2.ViewHolder viewHolder, int i) {\r\n            final record_information_cardview cardview = cardviewList.get(i);\r\n\r\n            viewHolder.day_or_week_num.setText(cardview.getDay_or_week_num());\r\n            viewHolder.datetime.setText(cardview.getDatetime());\r\n            viewHolder.content.setText(cardview.getContent());\r\n            viewHolder.day_or_week.setText(\"天\");\r\n\r\n            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n                    //        addItem(cardviewList.size());\r\n\r\n//                    ImageView imageView = new ImageView(context);\r\n//                    imageView.setImageResource(cardview.getImage());\r\n//                    Toast toast = new Toast(context);\r\n//                    toast.setView(imageView);\r\n//                    toast.setDuration(Toast.LENGTH_SHORT);\r\n//                    toast.show();\r\n                }\r\n            });\r\n        }\r\n\r\n        @Override\r\n        public int getItemCount() {\r\n            return cardviewList.size();\r\n        }\r\n\r\n        //Adapter 需要一個 ViewHolder，只要實作它的 constructor 就好，保存起來的view會放在itemView裡面\r\n        class ViewHolder extends RecyclerView.ViewHolder {\r\n            TextView week,day1,day2,day3,day4,day5,day6,day7;\r\n\r\n            TextView day_or_week_num,day_or_week,datetime,content;\r\n            ImageView img;\r\n            RecyclerView record_info2_RecyclerView;\r\n\r\n\r\n            ViewHolder(View itemView) {\r\n                super(itemView);\r\n\r\n                day_or_week_num = itemView.findViewById(R.id.day_or_week_num);\r\n                day_or_week = itemView.findViewById(R.id.day_or_week);\r\n                datetime = itemView.findViewById(R.id.datetime);\r\n                content = itemView.findViewById(R.id.content);\r\n                img = itemView.findViewById(R.id.img);\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/woo_project/record/record_Information.java	(revision 511382203a81545f6de8dade501fb43f0c9d52e4)
++++ app/src/main/java/com/example/woo_project/record/record_Information.java	(date 1614648785785)
+@@ -1,215 +1,109 @@
+ package com.example.woo_project.record;
+ 
+ import android.content.Context;
++import android.graphics.Color;
+ import android.os.Bundle;
+ 
++import androidx.annotation.NonNull;
++import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentPagerAdapter;
+ import androidx.recyclerview.widget.LinearLayoutManager;
+ import androidx.recyclerview.widget.RecyclerView;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
++import androidx.viewpager.widget.PagerAdapter;
++import androidx.viewpager.widget.ViewPager;
+ 
+ import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.Button;
+ import android.widget.ImageView;
++import android.widget.RadioButton;
+ import android.widget.TextView;
+ 
+ import com.example.woo_project.R;
++import com.example.woo_project.remind.pagerAdapter;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+ 
++import info.hoang8f.android.segmented.SegmentedGroup;
++
+ public class record_Information extends AppCompatActivity {
+     boolean fg = true;
+-    List<record_information_cardview> cardviewList2 = new ArrayList<>();
+-    RecyclerView recyclerView;
+-    List<String> cardview_index = new ArrayList<>();
++
++    RadioButton record_rb1,record_rb2;
++    ViewPager record_info_vp;
++    record_information_fragment  fragment1 = new record_information_fragment();
++    record_information_fragment2 fragment2 = new record_information_fragment2();
++    test1 test1 = new test1();
++    test2 test2 = new test2();
++    List<Fragment> fg_list = new ArrayList<>();
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.record_information);
+ 
+-        List<record_information_cardview> cardviewList = new ArrayList<>();
+-       // cardviewList.add(new record_information_cardview(0, "第一週(19/04/27~19/04/28)", "澆水25次", "施肥1次", "間拔5次", "澆水25次", "施肥1次", "間拔5次", "澆水25次"));
+-        cardviewList.add(new record_information_cardview(0,"01","2020.04.13 10:01","第一週"));
+-        cardviewList.add(new record_information_cardview(1,"02","2020.04.20 11:20","第二週"));
+-        cardviewList.add(new record_information_cardview(2,"03","2020.04.27 12:35","第三週"));
+-        //public record_information_cardview(int id,String day_or_week_num,String datetime,String content)
+-
++        record_rb1 = findViewById(R.id.record_rb1);
++        record_rb2 = findViewById(R.id.record_rb2);
++        SegmentedGroup segmented4 = findViewById(R.id.segmented4);
++        segmented4.setTintColor(Color.parseColor("#FFFFFF"), Color.parseColor("#89b094"));
+ 
+-        recyclerView = findViewById(R.id.record_info_RecyclerView);
+-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+-        recyclerView.setAdapter(new CardAdapter(this, cardviewList));
++        record_info_vp = findViewById(R.id.record_info_vp);
+ 
+-    }
++        fg_list.add(fragment1);
++        fg_list.add(fragment2);
+ 
+-    private class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+-        private Context context;
+-        public List<record_information_cardview> cardviewList;
++        pagerAdapter adapter = new pagerAdapter(getSupportFragmentManager(),fg_list);
++        record_info_vp.setAdapter(adapter);
+ 
+-        CardAdapter(Context context, List<record_information_cardview> cardviewList) {
+-            this.context = context;
+-            this.cardviewList = cardviewList;
+-        }
+ 
+-        @Override
+-        public CardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+-            View view = LayoutInflater.from(context).inflate(R.layout.activity_choose_calendar_cardview,parent, false);
+-            return new ViewHolder(view);
+-        }
+-
+-        @Override
+-        public void onBindViewHolder(final CardAdapter.ViewHolder viewHolder,  int i) {
+-            final record_information_cardview cardview = cardviewList.get(i);
+-//            viewHolder.week.setText(String.valueOf(cardview.getWeek()));
+-//            viewHolder.day1.setText(String.valueOf(cardview.getDay1()));
+-//            viewHolder.day2.setText(String.valueOf(cardview.getDay2()));
+-//            viewHolder.day3.setText(String.valueOf(cardview.getDay3()));
+-//            viewHolder.day4.setText(String.valueOf(cardview.getDay4()));
+-//            viewHolder.day5.setText(String.valueOf(cardview.getDay5()));
+-//            viewHolder.day6.setText(String.valueOf(cardview.getDay6()));
+-//            viewHolder.day7.setText(String.valueOf(cardview.getDay7()));
++        record_info_vp.setCurrentItem(0);
++        record_info_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
++            @Override
++            public void onPageScrolled(int i, float v, int i1) {
+ 
+-            viewHolder.day_or_week_num.setText(cardview.getDay_or_week_num());
+-            viewHolder.datetime.setText(cardview.getDatetime());
+-            viewHolder.content.setText(cardview.getContent());
+-            viewHolder.day_or_week.setText("週");
++            }
+ 
+-
+-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+-                @Override
+-                public void onClick(View v) {
+-                    Log.v("test","i的值: " +cardview.getId());
+-                    if(cardview_index.indexOf(String.valueOf(cardview.getId())) < 0) {
+-                        cardview_index.add(String.valueOf(cardview.getId()));
+-                        cardviewList2.clear();
+-                        cardviewList2.add(new record_information_cardview(0,"02","2020.04.14 10:01","好吃"));
+-                        cardviewList2.add(new record_information_cardview(1,"03","2020.04.15 11:20","好吃好吃"));
+-                        cardviewList2.add(new record_information_cardview(2,"04","2020.04.16 12:35","好吃好吃好吃"));
+-                        cardviewList2.add(new record_information_cardview(3,"05","2020.04.17 10:01","好吃好吃好吃"));
+-                        cardviewList2.add(new record_information_cardview(4,"06","2020.04.18 11:20","好吃好吃"));
+-                        cardviewList2.add(new record_information_cardview(5,"07","2020.04.19 12:35","好吃"));
+-                        viewHolder.record_info2_RecyclerView.setLayoutManager(new LinearLayoutManager(record_Information.this, LinearLayoutManager.VERTICAL, false));
+-                        viewHolder.record_info2_RecyclerView.setAdapter(new CardAdapter2(record_Information.this, cardviewList2));
+-
+-
+-                        Log.v("test","第 "+ cardview.getId() +" cardview1  list長度" +cardviewList.size());
+-
+-                    }
+-                    else{
+-                        cardview_index.remove(String.valueOf(cardview.getId()));
+-                        cardviewList2.clear();
+-                        viewHolder.record_info2_RecyclerView.setLayoutManager(new LinearLayoutManager(record_Information.this, LinearLayoutManager.VERTICAL, false));
+-                        viewHolder.record_info2_RecyclerView.setAdapter(new CardAdapter2(record_Information.this, cardviewList2));
+-
+-                    }
+-
+-
++            @Override
++            public void onPageSelected(int i) {
++                switch (i) {
++                    case 0:
++                        record_rb1.setChecked(true);
++                        record_info_vp.setCurrentItem(0);
++                        break;
++                    case 1:
++                        record_rb2.setChecked(true);
++                        record_info_vp.setCurrentItem(1);
++                        //viewPager2.setCurrentItem(1,true);
++                        break;
+                 }
+-            });
+-        }
++            }
+ 
+-        @Override
+-        public int getItemCount() {
+-            return cardviewList.size();
+-        }
+-
+-        //Adapter 需要一個 ViewHolder，只要實作它的 constructor 就好，保存起來的view會放在itemView裡面
+-        class ViewHolder extends RecyclerView.ViewHolder {
+-            TextView week,day1,day2,day3,day4,day5,day6,day7;
+-
+-            TextView day_or_week_num,day_or_week,datetime,content;
+-            ImageView img;
+-            RecyclerView record_info2_RecyclerView;
++            @Override
++            public void onPageScrollStateChanged(int i) {
+ 
+-
+-            ViewHolder(View itemView) {
+-                super(itemView);
+-//                week = itemView.findViewById(R.id.record_weeks_date);
+-//                day1 = itemView.findViewById(R.id.tv_day_1);
+-//                day2 = itemView.findViewById(R.id.tv_day_2);
+-//                day3 = itemView.findViewById(R.id.tv_day_3);
+-//                day4 = itemView.findViewById(R.id.tv_day_4);
+-//                day5 = itemView.findViewById(R.id.tv_day_5);
+-//                day6 = itemView.findViewById(R.id.tv_day_6);
+-//                day7 = itemView.findViewById(R.id.tv_day_7);
+-
+-                day_or_week_num = itemView.findViewById(R.id.day_or_week_num);
+-                day_or_week = itemView.findViewById(R.id.day_or_week);
+-                datetime = itemView.findViewById(R.id.datetime);
+-                content = itemView.findViewById(R.id.content);
+-                img = itemView.findViewById(R.id.img);
+-                record_info2_RecyclerView = itemView.findViewById(R.id.record_info2_RecyclerView);
+             }
+-        }
+-    }
++        });
+ 
+-
+-
+-
+-    private class CardAdapter2 extends RecyclerView.Adapter<CardAdapter2.ViewHolder> {
+-        private Context context;
+-        public List<record_information_cardview> cardviewList;
+-
+-        CardAdapter2(Context context, List<record_information_cardview> cardviewList) {
+-            this.context = context;
+-            this.cardviewList = cardviewList;
+-        }
+-
+-        @Override
+-        public CardAdapter2.ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
+-            View view = LayoutInflater.from(context).inflate(R.layout.activity_choose_calendar_cardview,parent, false);
+-            return new ViewHolder(view);
+-        }
++        record_rb1.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                record_info_vp.setCurrentItem(0);
++                record_rb1.setChecked(true);
++            }
++        });
+ 
+-        @Override
+-        public void onBindViewHolder(CardAdapter2.ViewHolder viewHolder, int i) {
+-            final record_information_cardview cardview = cardviewList.get(i);
+-
+-            viewHolder.day_or_week_num.setText(cardview.getDay_or_week_num());
+-            viewHolder.datetime.setText(cardview.getDatetime());
+-            viewHolder.content.setText(cardview.getContent());
+-            viewHolder.day_or_week.setText("天");
+-
+-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+-                @Override
+-                public void onClick(View v) {
+-                    //        addItem(cardviewList.size());
+-
+-//                    ImageView imageView = new ImageView(context);
+-//                    imageView.setImageResource(cardview.getImage());
+-//                    Toast toast = new Toast(context);
+-//                    toast.setView(imageView);
+-//                    toast.setDuration(Toast.LENGTH_SHORT);
+-//                    toast.show();
+-                }
+-            });
+-        }
+-
+-        @Override
+-        public int getItemCount() {
+-            return cardviewList.size();
+-        }
++        record_rb2.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                record_info_vp.setCurrentItem(1);
++                record_rb2.setChecked(true);
++            }
++        });
++    }
+ 
+-        //Adapter 需要一個 ViewHolder，只要實作它的 constructor 就好，保存起來的view會放在itemView裡面
+-        class ViewHolder extends RecyclerView.ViewHolder {
+-            TextView week,day1,day2,day3,day4,day5,day6,day7;
+ 
+-            TextView day_or_week_num,day_or_week,datetime,content;
+-            ImageView img;
+-            RecyclerView record_info2_RecyclerView;
+-
+-
+-            ViewHolder(View itemView) {
+-                super(itemView);
+-
+-                day_or_week_num = itemView.findViewById(R.id.day_or_week_num);
+-                day_or_week = itemView.findViewById(R.id.day_or_week);
+-                datetime = itemView.findViewById(R.id.datetime);
+-                content = itemView.findViewById(R.id.content);
+-                img = itemView.findViewById(R.id.img);
+-            }
+-        }
+-    }
+ }
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <compositeConfiguration>\r\n          <compositeBuild compositeDefinitionSource=\"SCRIPT\" />\r\n        </compositeConfiguration>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n            <option value=\"$PROJECT_DIR$/zxing-lib\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 511382203a81545f6de8dade501fb43f0c9d52e4)
++++ .idea/gradle.xml	(date 1614649986228)
+@@ -7,6 +7,7 @@
+         <compositeConfiguration>
+           <compositeBuild compositeDefinitionSource="SCRIPT" />
+         </compositeConfiguration>
++        <option name="testRunner" value="PLATFORM" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+         <option name="modules">
+@@ -17,7 +18,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
+-        <option name="testRunner" value="PLATFORM" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CMakeSettings\">\r\n    <configurations>\r\n      <configuration PROFILE_NAME=\"Debug\" CONFIG_NAME=\"Debug\" />\r\n    </configurations>\r\n  </component>\r\n  <component name=\"NullableNotNullManager\">\r\n    <option name=\"myDefaultNullable\" value=\"org.jetbrains.annotations.Nullable\" />\r\n    <option name=\"myDefaultNotNull\" value=\"androidx.annotation.NonNull\" />\r\n    <option name=\"myNullables\">\r\n      <value>\r\n        <list size=\"12\">\r\n          <item index=\"0\" class=\"java.lang.String\" itemvalue=\"org.jetbrains.annotations.Nullable\" />\r\n          <item index=\"1\" class=\"java.lang.String\" itemvalue=\"javax.annotation.Nullable\" />\r\n          <item index=\"2\" class=\"java.lang.String\" itemvalue=\"javax.annotation.CheckForNull\" />\r\n          <item index=\"3\" class=\"java.lang.String\" itemvalue=\"edu.umd.cs.findbugs.annotations.Nullable\" />\r\n          <item index=\"4\" class=\"java.lang.String\" itemvalue=\"android.support.annotation.Nullable\" />\r\n          <item index=\"5\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.Nullable\" />\r\n          <item index=\"6\" class=\"java.lang.String\" itemvalue=\"android.annotation.Nullable\" />\r\n          <item index=\"7\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.RecentlyNullable\" />\r\n          <item index=\"8\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.qual.Nullable\" />\r\n          <item index=\"9\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NullableDecl\" />\r\n          <item index=\"10\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NullableType\" />\r\n          <item index=\"11\" class=\"java.lang.String\" itemvalue=\"com.android.annotations.Nullable\" />\r\n        </list>\r\n      </value>\r\n    </option>\r\n    <option name=\"myNotNulls\">\r\n      <value>\r\n        <list size=\"11\">\r\n          <item index=\"0\" class=\"java.lang.String\" itemvalue=\"org.jetbrains.annotations.NotNull\" />\r\n          <item index=\"1\" class=\"java.lang.String\" itemvalue=\"javax.annotation.Nonnull\" />\r\n          <item index=\"2\" class=\"java.lang.String\" itemvalue=\"edu.umd.cs.findbugs.annotations.NonNull\" />\r\n          <item index=\"3\" class=\"java.lang.String\" itemvalue=\"android.support.annotation.NonNull\" />\r\n          <item index=\"4\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.NonNull\" />\r\n          <item index=\"5\" class=\"java.lang.String\" itemvalue=\"android.annotation.NonNull\" />\r\n          <item index=\"6\" class=\"java.lang.String\" itemvalue=\"androidx.annotation.RecentlyNonNull\" />\r\n          <item index=\"7\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.qual.NonNull\" />\r\n          <item index=\"8\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NonNullDecl\" />\r\n          <item index=\"9\" class=\"java.lang.String\" itemvalue=\"org.checkerframework.checker.nullness.compatqual.NonNullType\" />\r\n          <item index=\"10\" class=\"java.lang.String\" itemvalue=\"com.android.annotations.NonNull\" />\r\n        </list>\r\n      </value>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n  <component name=\"jetbrains.communicator.idea.IdProvider\" IDEtalkID=\"DCEC284B6437B681D454BDA0D7C1CAD5\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 511382203a81545f6de8dade501fb43f0c9d52e4)
++++ .idea/misc.xml	(date 1614648800617)
+@@ -10,7 +10,7 @@
+     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
+     <option name="myNullables">
+       <value>
+-        <list size="12">
++        <list size="15">
+           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
+           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
+           <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
+@@ -23,12 +23,15 @@
+           <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
+           <item index="10" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
+           <item index="11" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
++          <item index="12" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
++          <item index="13" class="java.lang.String" itemvalue="io.reactivex.annotations.Nullable" />
++          <item index="14" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.Nullable" />
+         </list>
+       </value>
+     </option>
+     <option name="myNotNulls">
+       <value>
+-        <list size="11">
++        <list size="14">
+           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
+           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
+           <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
+@@ -40,11 +43,14 @@
+           <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullDecl" />
+           <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
+           <item index="10" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
++          <item index="11" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
++          <item index="12" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
++          <item index="13" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+         </list>
+       </value>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/res/layouts/record/layout/record_information.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><RelativeLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <LinearLayout\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"100dp\"\r\n            android:gravity=\"center\">\r\n\r\n            <ImageView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"match_parent\"\r\n                android:src=\"@drawable/vege_small\"/>\r\n\r\n        </LinearLayout>\r\n\r\n        <View\r\n            android:layout_width=\"250dp\"\r\n            android:layout_height=\"1.3dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:background=\"#D2D5D3\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_marginBottom=\"10dp\"/>\r\n\r\n        <LinearLayout\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <RelativeLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"vertical\"\r\n                android:layout_weight=\"10\"\r\n                android:layout_marginStart=\"10dp\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_LL1\"\r\n                    android:layout_toStartOf=\"@+id/record_RL1\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"農地編號 : \"\r\n                        android:textSize=\"15sp\" />\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"A80\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_LL2\"\r\n                    android:layout_below=\"@+id/record_LL1\"\r\n                    android:layout_toStartOf=\"@+id/record_RL2\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"作物名 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"小白菜\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_LL3\"\r\n                    android:layout_below=\"@+id/record_LL2\"\r\n                    android:layout_toStartOf=\"@+id/record_RL3\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"預期收穫 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"250 公斤\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_LL4\"\r\n                    android:layout_below=\"@+id/record_LL3\"\r\n                    android:layout_toStartOf=\"@+id/record_RL4\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"育苗日期 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"19/11/11\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_LL5\"\r\n                    android:layout_below=\"@+id/record_LL4\"\r\n                    android:layout_toStartOf=\"@+id/record_RL5\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"預採收日 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"20/03/04\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n            </RelativeLayout>\r\n\r\n            <View\r\n                android:layout_width=\"0dp\"\r\n                android:layout_weight=\"0.1\"\r\n                android:layout_height=\"100dp\"\r\n                android:background=\"#D2D5D3\"\r\n                android:layout_gravity=\"center\"\r\n                android:layout_marginTop=\"10dp\"\r\n                android:layout_marginEnd=\"5dp\"\r\n                android:layout_marginBottom=\"10dp\"/>\r\n\r\n            <RelativeLayout\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"vertical\"\r\n                android:layout_weight=\"10\">\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_RL1\"\r\n                    android:layout_toStartOf=\"@+id/record_LL1\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"盤數 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"20盤\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_RL2\"\r\n                    android:layout_below=\"@+id/record_RL1\"\r\n                    android:layout_toStartOf=\"@+id/record_LL2\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:text=\"品種 : \"\r\n                        android:textSize=\"15sp\" />\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"花蓮三號\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_RL3\"\r\n                    android:layout_below=\"@+id/record_RL2\"\r\n                    android:layout_toEndOf=\"@+id/record_LL3\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"實際收穫 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"200 公斤\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_RL4\"\r\n                    android:layout_below=\"@+id/record_RL3\"\r\n                    android:layout_toEndOf=\"@+id/record_LL4\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\">\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"定植日期 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"19/12/11\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:id=\"@+id/record_RL5\"\r\n                    android:layout_below=\"@+id/record_RL4\"\r\n                    android:layout_toStartOf=\"@+id/record_LL4\"\r\n                    tools:ignore=\"NotSibling\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:orientation=\"horizontal\"\r\n                    android:layout_marginBottom=\"5dp\"\r\n                    >\r\n\r\n                    <TextView\r\n                        android:layout_width=\"80dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"採收日期 : \"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                    <TextView\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:text=\"20/03/11\"\r\n                        android:textSize=\"15sp\"/>\r\n\r\n                </LinearLayout>\r\n\r\n            </RelativeLayout>\r\n\r\n        </LinearLayout>\r\n        <!--\r\n        <View\r\n            android:layout_width=\"250dp\"\r\n            android:layout_height=\"1.3dp\"\r\n            android:layout_gravity=\"center\"\r\n            android:background=\"#D2D5D3\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_marginBottom=\"10dp\"/>\r\n        -->\r\n        <info.hoang8f.android.segmented.SegmentedGroup\r\n            android:id=\"@+id/segmented4\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_margin=\"20dp\"\r\n            android:orientation=\"horizontal\"\r\n            android:layout_gravity=\"center\"\r\n            android:background=\"@color/test\">\r\n\r\n            <RadioButton\r\n                android:id=\"@+id/rb1\"\r\n                style=\"@style/RadioButton\"\r\n                android:layout_width=\"80dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:checked=\"true\"\r\n                android:text=\"以週次\" />\r\n\r\n            <RadioButton\r\n                android:id=\"@+id/rb2\"\r\n                style=\"@style/RadioButton\"\r\n                android:layout_width=\"80dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"以期間\" />\r\n\r\n\r\n\r\n        </info.hoang8f.android.segmented.SegmentedGroup>\r\n\r\n        <ScrollView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\">\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/record_info_RecyclerView\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            />\r\n\r\n        </ScrollView>\r\n\r\n    </LinearLayout>\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layouts/record/layout/record_information.xml	(revision 511382203a81545f6de8dade501fb43f0c9d52e4)
++++ app/src/main/res/layouts/record/layout/record_information.xml	(date 1614648785847)
+@@ -1,13 +1,16 @@
+-<RelativeLayout
++<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
++    android:layout_height="match_parent"
++    android:orientation="vertical">
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:orientation="vertical">
++        android:layout_height="wrap_content"
++        android:orientation="vertical"
++        android:background="@color/test">
+ 
+         <LinearLayout
+             android:layout_marginTop="10dp"
+@@ -320,10 +323,12 @@
+             android:layout_margin="20dp"
+             android:orientation="horizontal"
+             android:layout_gravity="center"
+-            android:background="@color/test">
++            android:background="@color/test"
++            app:sc_border_width="1dp"
++            app:sc_corner_radius="6dp">
+ 
+             <RadioButton
+-                android:id="@+id/rb1"
++                android:id="@+id/record_rb1"
+                 style="@style/RadioButton"
+                 android:layout_width="80dp"
+                 android:layout_height="wrap_content"
+@@ -331,7 +336,7 @@
+                 android:text="以週次" />
+ 
+             <RadioButton
+-                android:id="@+id/rb2"
++                android:id="@+id/record_rb2"
+                 style="@style/RadioButton"
+                 android:layout_width="80dp"
+                 android:layout_height="wrap_content"
+@@ -341,19 +346,12 @@
+ 
+         </info.hoang8f.android.segmented.SegmentedGroup>
+ 
+-        <ScrollView
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content">
+ 
+-        <androidx.recyclerview.widget.RecyclerView
+-            android:id="@+id/record_info_RecyclerView"
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_marginBottom="10dp"
+-            />
+-
+-        </ScrollView>
+ 
+     </LinearLayout>
+ 
+-</RelativeLayout>
+\ No newline at end of file
++    <androidx.viewpager.widget.ViewPager
++        android:id="@+id/record_info_vp"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"/>
++</LinearLayout>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(date 1614648767125)
++++ .idea/jarRepositories.xml	(date 1614648767125)
+@@ -0,0 +1,35 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="BintrayJCenter" />
++      <option name="name" value="BintrayJCenter" />
++      <option name="url" value="https://jcenter.bintray.com/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="Google" />
++      <option name="name" value="Google" />
++      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="maven2" />
++      <option name="name" value="maven2" />
++      <option name="url" value="http://dl.bintray.com/journeyapps/maven" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="maven" />
++      <option name="name" value="maven" />
++      <option name="url" value="https://jitpack.io" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file

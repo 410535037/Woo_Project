@@ -63,7 +63,7 @@ public class shipping_webservice
     }
 
     //庫存詳細資訊
-    public static List<List<String>> inventory(int user)
+    public static List<List<String>> Inventory(int user, String plant_name, String plant_img, String ship_vendor,String canopy)
     {
         String SOAP_ACTION = "http://tempuri.org/Inventory";          //命名空間+要用的函數名稱
         String METHOD_NAME = "Inventory";   //函數名稱
@@ -72,6 +72,10 @@ public class shipping_webservice
         try {
             SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
             request.addProperty("user",user);
+            request.addProperty("plant_name",plant_name);
+            request.addProperty("plant_img",plant_img);
+            request.addProperty("ship_vendor",ship_vendor);
+            request.addProperty("canopy",canopy);
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.bodyOut = request;
@@ -100,6 +104,45 @@ public class shipping_webservice
         } catch (Exception e) {
 
             Log.v("test2","e的錯誤訊息 : "+e.toString());
+            return result;
+        }
+    }
+    //庫存cardview有哪些cnaopy
+    public static List<String> Inventory_canopy_list(int user, String plant_name, String plant_img, String ship_vendor)
+    {
+        String SOAP_ACTION = "http://tempuri.org/Inventory_canopy_list";          //命名空間+要用的函數名稱
+        String METHOD_NAME = "Inventory_canopy_list";   //函數名稱
+        List<String> result = new ArrayList<>();
+        //必須用try catch包著
+        try {
+            SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+            request.addProperty("user",user);
+            request.addProperty("plant_name",plant_name);
+            request.addProperty("plant_img",plant_img);
+            request.addProperty("ship_vendor",ship_vendor);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.bodyOut = request;
+            envelope.dotNet = true;//若WS有輸入參數必須要加這一行否則WS沒反應
+            envelope.setOutputSoapObject(request);
+            envelope.encodingStyle = "utf-8";
+            HttpTransportSE ht = new HttpTransportSE(URL);
+            ht.call(SOAP_ACTION, envelope);
+            Log.v("test","有進WS");
+            // 獲取回傳數據
+            SoapObject object = (SoapObject) envelope.bodyIn;
+            // 獲取返回的結果
+
+            String getString=object.getProperty(0).toString();
+            Log.v("test"," getString1: "+ getString);
+            getString = getString.replace(" ","").replace("string=","");
+            getString = getString.substring(getString.indexOf("{")+1,getString.indexOf("}"));
+            Log.v("test"," getString2: "+ getString);
+            result = Arrays.asList(getString.split(";"));
+            Log.v("test","ws的result: "+result);
+            return result;
+        } catch (Exception e) {
+
+            Log.v("test"," getString2777777: "+ e);
             return result;
         }
     }

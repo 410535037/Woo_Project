@@ -1,14 +1,20 @@
 package com.example.woo_project.shipping;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -16,7 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -25,13 +33,19 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bumptech.glide.Glide;
 import com.example.woo_project.R;
+import com.example.woo_project.reminder.DatePickerFragment;
+import com.example.woo_project.reminder.reminder_seedling_fragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_stock_sum_Adapter.viewholder>  {
+public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_stock_sum_Adapter.viewholder> implements DatePickerDialog.OnDateSetListener  {
 
     //找到UI工人的經紀人，這樣才能派遣工作  (找到顯示畫面的UI Thread上的Handler)
     private Handler mUI_Handler = new Handler();
@@ -40,17 +54,35 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
     //宣告特約工人
     private HandlerThread mThread;
 
+    //庫存某一個cardview的詳細資訊
+    List<List<String>> vege_timeline_list_content = new ArrayList<>();
+    RecyclerView vege_timeline_data_recyclerview;
+
+
+    //庫存某一個cardview的canopy list
+    List<String> vege_timeline_list_canopy = new ArrayList<>();
+    Spinner shipping_stock_spinner; //上面的spinner
+    String canopy_selected; //選中的canopy
+
     private Context mctx;
-        private List<shipping_stock_sum_cardview> shipping_stock_List;
-        private Fragment fragment;
-        private List<String> vendor_list;
-        private OptionsPickerView pvOptions;
-        private TextInputEditText vendor_input;
-        public shipping_stock_sum_Adapter(Fragment fragment,Context mctx, List<shipping_stock_sum_cardview> shipping_stock_List,List<String> vendor_list) {
+
+    private List<shipping_stock_sum_cardview> shipping_stock_List;
+    private Fragment fragment;
+    private List<String> vendor_list;
+    private OptionsPickerView pvOptions;
+    private TextInputEditText vendor_input;
+
+    FragmentManager fragmentManager;
+    Calendar calendar;
+    TextInputEditText out_date;
+    DatePickerDialog  datePicker;
+
+        public shipping_stock_sum_Adapter(Fragment fragment, Context mctx, List<shipping_stock_sum_cardview> shipping_stock_List, List<String> vendor_list, FragmentManager fragmentManager) {
             this.mctx = mctx;
             this.shipping_stock_List = shipping_stock_List;
             this.fragment = fragment;
             this.vendor_list = vendor_list;
+            this.fragmentManager = fragmentManager;
         }
 
         @Override
@@ -68,10 +100,11 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
             return new shipping_stock_sum_Adapter.viewholder(view);
         }
 
+
+
         @Override
         public void onBindViewHolder(final shipping_stock_sum_Adapter.viewholder holder, final int position) {
             final shipping_stock_sum_cardview vege=shipping_stock_List.get(position);
-
             holder.vege_name.setText(vege.getVege_name());
             int drawableResourceId = mctx.getResources().getIdentifier(vege.getVege_img(), "drawable", mctx.getPackageName());
             Glide.with(mctx)
@@ -90,111 +123,148 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
 
                 }
             });
+            //庫存詳細資訊
             holder.more_imb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mctx, R.style.BottomSheetDialogTheme);//初始化BottomSheet
+                    final BottomSheetDialog more_bottomSheetDialog = new BottomSheetDialog(mctx, R.style.BottomSheetDialogTheme);//初始化BottomSheet
                     View root = LayoutInflater.from(mctx).inflate(R.layout.shipping_vege_timeline_bottomsheetdialog, null);//連結的介面
-                    bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
+                    more_bottomSheetDialog.setContentView(root);//將介面載入至BottomSheet內
                     ((View) root.getParent()).setBackgroundColor(mctx.getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
-                    RecyclerView vege_timeline_data_recyclerview = root.findViewById(R.id.vege_timeline_data_recyclerview);
+                    //作物名稱
+                    TextView vege_name_tv = root.findViewById(R.id.vege_name_tv);
+                    vege_name_tv.setText(vege.getVege_name());
 
+                    // 庫存某一cardview有哪些canopy
+                    //取得cardview canopy list
+                    final Runnable getVege_timeline_canopy=new Runnable () {
 
+                        public void run() {
+                            ArrayAdapter<CharSequence> adapter =
+                                    new ArrayAdapter(mctx,                          //對應的Context
+                                            android.R.layout.simple_spinner_item,   //預設Spinner未展開時的View(預設及選取後樣式)
+                                            vege_timeline_list_canopy);             //資料選項內容
+                            shipping_stock_spinner.setAdapter(adapter);
+                        }
+
+                    };
+
+                    final Runnable setVege_timeline_canopy=new Runnable () {
+                        public void run() {
+                            //請經紀人指派工作名稱 r，給工人做
+                            vege_timeline_list_canopy = shipping_webservice.Inventory_canopy_list(39, vege.getVege_name(), vege.getVege_img(),vege.getVendor());
+                            mUI_Handler.post(getVege_timeline_canopy);
+                        }
+
+                    };
+
+                    shipping_stock_spinner = root.findViewById(R.id.greenhouse_sp);
+                    mThreadHandler.post(setVege_timeline_canopy);
+
+                    //育苗定植收成的詳細資訊
+                    vege_timeline_data_recyclerview = root.findViewById(R.id.vege_timeline_data_recyclerview);
                     final List<shipping_stock_vege_timeline_cardview> vege_timeline_list = new ArrayList<>();
 
-                    vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("育苗","2021-05-05","no_end_date", 5));
-                    vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("定植","2021-05-10","no_end_date",19));
-                    vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("收成———出貨廠商 : 永豐餘","2021-05-29","no_end_date",0));
+                    final Runnable getVege_timeline=new Runnable () {
+
+                        public void run() {
 
 
-                    vege_timeline_data_recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                    vege_timeline_data_recyclerview.setHasFixedSize(true);
-                    vege_timeline_data_recyclerview.setAdapter(new shipping_stock_vege_timeline_Adapter(mctx,vege_timeline_list));
+                            List<String> more_seedling_date = new ArrayList<>();    //實際育苗日
+                            List<Integer> more_seedling_days = new ArrayList<>();    //實際育苗天數
+                            List<String> more_seedling_num = new ArrayList<>();     //育苗數量
+                            List<String> more_remarks = new ArrayList<>();          //備註
 
-//                    final RecyclerView RvCv = root.findViewById(R.id.recyclerview_cv);
-//                    Spinner shipping_stock_spinner = root.findViewById(R.id.shipping_stock_spinner);
-//
-//                    ArrayAdapter<CharSequence> adapter =
-//                            ArrayAdapter.createFromResource(mctx,            //對應的Context
-//                                    R.array.shipping_stock_info,             //資料選項內容
-//                                    android.R.layout.simple_spinner_item);  //預設Spinner未展開時的View(預設及選取後樣式)
-//
-//                    final List<shipping_stock_bottomsheetdialog_cardview> items = new ArrayList<>();
-//
-//                    shipping_stock_spinner.setAdapter(adapter);
-//                    shipping_stock_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-//                    {
-//                        @Override
-//                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                            // 選項有選取時的動作            定植盤數 : 15盤"
-//                            String spnStr = String.valueOf(parent.getSelectedItem());
-//                            if(spnStr.equals("2021-06-23"))
-//                            {
-//                                items.clear();
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-05",15,"育苗盤數 : 25盤"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-20",34,"定植棚架 : A01"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-23",0,"收穫重量 : 20公斤\n出貨廠商 : 永豐餘"));
-//
-//                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//                                RvCv.setHasFixedSize(true);
-//                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
-//
-//                            }
-//                            else if (spnStr.equals("2021-06-24"))
-//                            {
-//                                items.clear();
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-06",18,"育苗盤數 : 45盤"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-24",30,"定植棚架 : B03"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-24",0,"收穫重量 : 50公斤\n出貨廠商 : 永豐餘"));
-//
-//                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//                                RvCv.setHasFixedSize(true);
-//                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
-//                            }
-//                            else if (spnStr.equals("2021-06-28"))
-//                            {
-//                                items.clear();
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-11",17,"育苗盤數 : 20盤"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-28",30,"定植棚架 : B18"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-28",0,"收穫重量 : 23公斤\n出貨廠商 : 永豐餘"));
-//
-//                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//                                RvCv.setHasFixedSize(true);
-//                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
-//                            }
-//                            else if (spnStr.equals("2021-07-01"))
-//                            {
-//                                items.clear();
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-18",15,"育苗盤數 : 25盤"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-06-02",29,"定植棚架 : A11"));
-//                                items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-07-01",0,"收穫重量 : 20公斤\n出貨廠商 : 永豐餘"));
-//
-//                                RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//                                RvCv.setHasFixedSize(true);
-//                                RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onNothingSelected(AdapterView<?> parent) {
-//                            // 沒有選取時的動作
-//                        }
-//                    });
-//
-//
-//                    items.clear();
-//                    items.add(new shipping_stock_bottomsheetdialog_cardview("育苗","2021-05-05",15,"育苗盤數 : 25盤"));
-//                    items.add(new shipping_stock_bottomsheetdialog_cardview("定植","2021-05-20",34,"定植棚架 : A01"));
-//                    items.add(new shipping_stock_bottomsheetdialog_cardview("收成","2021-06-23",0,"收穫重量 : 20公斤\n出貨廠商 : 永豐餘"));
-//
-//                    RvCv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-//                    RvCv.setHasFixedSize(true);
-//                    RvCv.setAdapter(new shipping_stock_bottomsheetdialog_Adapter(fragment,items));
+                            List<String> more_planting_date = new ArrayList<>();    //實際定植日
+                            List<Integer> more_planting_days = new ArrayList<>();    //實際成長天數
+                            List<String> more_planting_num = new ArrayList<>();     //定植數量
+
+                            List<String> more_harvest_date = new ArrayList<>();     //實際收成日
+                            List<String> more_harvest_weight = new ArrayList<>();   //實際收成重量
+
+
+                            for(int i=0;i<vege_timeline_list_content.size();i++)
+                            {
+                                more_seedling_date.add(vege_timeline_list_content.get(i).get(0));
+                                more_seedling_days.add(Integer.parseInt(vege_timeline_list_content.get(i).get(1)));
+                                more_seedling_num.add(vege_timeline_list_content.get(i).get(2));
+                                more_remarks.add(vege_timeline_list_content.get(i).get(3));
+
+                                more_planting_date.add(vege_timeline_list_content.get(i).get(4));
+                                more_planting_days.add(Integer.parseInt(vege_timeline_list_content.get(i).get(5)));
+                                more_planting_num.add(vege_timeline_list_content.get(i).get(6));
+
+                                more_harvest_date.add(vege_timeline_list_content.get(i).get(7));
+                                more_harvest_weight.add(vege_timeline_list_content.get(i).get(8));
+                            }
+
+                            //如果只有一個育苗or定植or收成就顯示一個日期，否則顯示第一個和最後一個日期
+                            if(more_seedling_date.get(0).equals(more_seedling_date.get(more_seedling_date.size() - 1)))
+                            {
+                                vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("育苗",more_seedling_date.get(0),"no_end_date", more_seedling_days.get(0)));
+                            }
+                            else
+                            {
+                                vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("育苗",more_seedling_date.get(0),more_seedling_date.get(more_seedling_date.size()-1),
+                                        Collections.max(more_seedling_days)));
+                            }
+                            if(more_planting_date.get(0).equals(more_planting_date.get(more_seedling_date.size() - 1)))
+                            {
+                                vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("定植",more_planting_date.get(0),"no_end_date",more_planting_days.get(0)));
+                            }
+                            else
+                            {
+                                vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("定植",more_planting_date.get(0),more_planting_date.get(more_planting_date.size()-1),
+                                        Collections.max(more_planting_days)));
+                            }
+                            if(more_harvest_date.get(0).equals(more_harvest_date.get(more_seedling_date.size() - 1)))
+                            {
+                                vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("收成",more_harvest_date.get(0),"no_end_date",0));
+                            }
+                            else
+                            {
+                                vege_timeline_list.add(new shipping_stock_vege_timeline_cardview("收成",more_harvest_date.get(0),more_harvest_date.get(more_harvest_date.size()-1),0));
+                            }
+
+                            vege_timeline_data_recyclerview.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                            vege_timeline_data_recyclerview.setHasFixedSize(true);
+                            vege_timeline_data_recyclerview.setAdapter(new shipping_stock_vege_timeline_Adapter(mctx,vege_timeline_list,
+                                    more_seedling_date,more_seedling_num,more_remarks,
+                                    more_planting_date,more_planting_num,
+                                    more_harvest_date,more_harvest_weight));
+
+                        }
+
+                    };
+
+                    //取得資料
+                    final Runnable setVege_timeline=new Runnable () {
+
+                        public void run() {
+                            vege_timeline_list_content = shipping_webservice.Inventory(39, vege.getVege_name(), vege.getVege_img(),vege.getVendor(),canopy_selected);
+                            mUI_Handler.post(getVege_timeline);
+                        }
+
+                    };
+
+                    shipping_stock_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            //選中某canopy就call websevice取得資料
+                            canopy_selected = adapterView.getSelectedItem().toString();
+                            mThreadHandler.post(setVege_timeline);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
 
                     // 顯示dialog
-                    bottomSheetDialog.show();
+                    more_bottomSheetDialog.show();
 
 
                 }
@@ -211,7 +281,7 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                     ((View) root.getParent()).setBackgroundColor(mctx.getResources().getColor(android.R.color.transparent));//將背景設為透明，否則預設白底
 
 
-                    final TextInputEditText out_date,out_weight,out_price;
+                    final TextInputEditText out_weight,out_price;
                     final boolean[] ship_status = new boolean[1];
                     TextView vege_name,stock_num;
 
@@ -225,7 +295,46 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
 
                     vege_name.setText(vege.getVege_name());
                     stock_num.setText(String.valueOf(vege.getHarvest_num())+" 公斤");
-                    out_date.setText("2021-06-23");
+
+                    //抓到今天
+                    calendar = Calendar.getInstance();
+                    CharSequence todaydate = DateFormat.format("yyyy-MM-dd", calendar.getTime());
+
+                    out_date.setText(todaydate);
+                    //看日曆
+                    out_date.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            datePicker = new DatePickerDialog (mctx,null,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+                            datePicker.setCancelable(true);
+                            datePicker.setCanceledOnTouchOutside(true);
+                            datePicker.setButton(DialogInterface.BUTTON_POSITIVE, "確認",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //確定的邏輯程式碼在監聽中實現
+                                            DatePicker picker = datePicker.getDatePicker();
+                                            int year = picker.getYear();
+                                            int monthOfYear = picker.getMonth()+1;
+                                            int dayOfMonth = picker.getDayOfMonth();
+                                            out_date.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+                                        }
+                                    });
+                            datePicker.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //取消什麼也不用做
+                                        }
+                                    });
+                            datePicker.show();
+
+                        }
+                    });
+
+
+
                     vendor_input.setText(vege.getVendor());
                     out_weight.setText(String.valueOf(vege.getHarvest_num()));
                     out_price.setText("");
@@ -356,9 +465,20 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
             return shipping_stock_List.size();
         }
 
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayofmonth) {
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,dayofmonth);
+
+        String currentDateString =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime());
+
+        out_date.setText(currentDateString);
+    }
 
 
-        class viewholder extends RecyclerView.ViewHolder {
+    class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img;
             TextView vege_name,vendor,harvest_num;
             ImageButton go_shipping_imb,more_imb;

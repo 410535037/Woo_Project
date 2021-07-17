@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import android.os.Bundle;
 
 import android.text.Html;
@@ -91,10 +93,11 @@ public class record extends Fragment
     private AutoCompleteTextView record_search;
     private String record_search_string="",record_month_select_string="",record_month_select_info="can't not found";
 
-
     private List<record_Cardview> cardviewList;
+
     private Spinner mSpinner2;
-    private GlobalVariable record_name;
+
+
 
     //篩選的物件
     private Spinner record_canopy_sp,record_canopy_area_sp,record_plant_kind_sp,reocrd_plant_name_sp;
@@ -122,7 +125,6 @@ public class record extends Fragment
 
         }
 
-
         //生產履歷button
         Button traceability = view.findViewById(R.id.record_traceability);
         traceability.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +134,6 @@ public class record extends Fragment
             }
         });
 
-        record_name = (GlobalVariable) getActivity().getApplicationContext();
         //聘請一個特約工人，有其經紀人派遣其工人做事 (另起一個有Handler的Thread)
         //宣告特約工人
         HandlerThread mThread = new HandlerThread("");
@@ -152,6 +153,9 @@ public class record extends Fragment
                 startActivity(x);
             }
         });
+
+
+
 
         //cardview 建立
 
@@ -838,7 +842,7 @@ public class record extends Fragment
                 @Override
                 public void onClick(View v) {
 
- //                   addItem(cardviewList.size());
+                    //                   addItem(cardviewList.size());
                     //record_name.setRecord_vege_name(cardview.getName());
 
                     Intent intent = new Intent(getContext(), record_Information.class);
@@ -854,15 +858,15 @@ public class record extends Fragment
         }
 
         class ViewHolder extends RecyclerView.ViewHolder{
-                    ImageView plantId;
-                    TextView tx1,tx2;
+            ImageView plantId;
+            TextView tx1,tx2;
 
-                    ViewHolder(View itemView){
-                        super(itemView);
-                        plantId = (ImageView) itemView.findViewById(R.id.plantId);
-                        tx1 = (TextView) itemView.findViewById(R.id.tx1);
-                        tx2 = (TextView) itemView.findViewById(R.id.tx2);
-                    }
+            ViewHolder(View itemView){
+                super(itemView);
+                plantId = (ImageView) itemView.findViewById(R.id.plantId);
+                tx1 = (TextView) itemView.findViewById(R.id.tx1);
+                tx2 = (TextView) itemView.findViewById(R.id.tx2);
+            }
         }
 
         public  void addItem(int i){

@@ -65,11 +65,6 @@ public class shipping_stock_fragment extends Fragment {
 
         mThreadHandler.post(getVendor_list);
         mThreadHandler.post(getInventory_sum);
-        //shipping_stock_cardview(String id, String vege_img, String name, String tag1,
-        // String tag2,unit,String check_img, String vendor, String remark,String preharvest,String preseedling,
-        // String pregrowing,int preday_num, int pregrowing_num))
-
-
     }
 
     //剩餘庫存量
@@ -114,7 +109,7 @@ public class shipping_stock_fragment extends Fragment {
 
                     shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                     shipping_rv.setHasFixedSize(true);
-                    shipping_rv.setAdapter(new shipping_stock_sum_Adapter(getTargetFragment(),getActivity(),shipping_stock_sum,vendor_list));
+                    shipping_rv.setAdapter(new shipping_stock_sum_Adapter(getTargetFragment(),getActivity(),shipping_stock_sum,vendor_list,getFragmentManager()));
 
 
 
@@ -133,79 +128,7 @@ public class shipping_stock_fragment extends Fragment {
             vendor_list=reminder_webservice.vendor_list();
             //請經紀人指派工作名稱 r，給工人做
             Log.v("test","data:"+vendor_list);
-            //mUI_Handler.post(setVendor_list);
         }
 
-    };
-
-
-
-
-
-    //詳細庫存
-    Runnable getInventory_all=new Runnable () {
-
-        public void run() {
-
-
-            //顯示"自訂"區間的作物CardviewList
-            inventory_all = shipping_webservice.inventory(39);
-            mUI_Handler.post(setInventory_all);
-        }
-
-    };
-
-    //從資料庫抓完並顯示收成的CardviewList資料
-    private Runnable setInventory_all = new Runnable() {
-        @Override
-        public void run() {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public void run() {
-
-                    List<String> inventory_name = new ArrayList<>();
-                    List<String> inventory_pic = new ArrayList<>();
-                    List<String> inventory_vendor = new ArrayList<>();
-                    List<String> inventory_canopy = new ArrayList<>();
-                    List<String> inventory_weight = new ArrayList<>();
-                    List<String> inventory_date = new ArrayList<>();
-                    //統計作物和對應數量
-                    List<List<String>> name_weight = new ArrayList<>();
-
-                    //png_list
-                    Log.v("test","inventory_all的長度: "+inventory_all.size());
-                    for(int i=0;i<inventory_all.size();i++) {
-
-                        inventory_name.add(inventory_all.get(i).get(0));
-                        inventory_pic.add(inventory_all.get(i).get(1));
-                        inventory_vendor.add(inventory_all.get(i).get(2));
-                        inventory_canopy.add(inventory_all.get(i).get(3));
-                        inventory_weight.add(inventory_all.get(i).get(4));
-                        inventory_date.add(inventory_all.get(i).get(5));
-                        Log.v("inventory vendor:",inventory_vendor.get(i));
-                    }
-
-
-
-
-                    shipping_stock_List = new ArrayList<>();
-
-                    for(int i=0;i<inventory_name.size();i++){
-                        shipping_stock_List.add(new shipping_stock_cardview(String.valueOf(i),inventory_name.get(i),inventory_pic.get(i), "壽豐農會",
-                                "2021-05-15", Integer.parseInt(inventory_weight.get(i)), "A01", 30, "2021-05-05","盤","2021-05-10", 12,5,10,5));
-                    }
-
-
-                    shipping_rv.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                    shipping_rv.setHasFixedSize(true);
-
-
-
-
-                }
-            });
-
-        }
     };
 }

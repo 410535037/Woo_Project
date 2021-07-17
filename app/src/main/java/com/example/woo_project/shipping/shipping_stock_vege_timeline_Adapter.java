@@ -23,10 +23,34 @@ public class shipping_stock_vege_timeline_Adapter extends RecyclerView.Adapter<s
     private List<shipping_stock_vege_timeline_cardview> vege_timeline_list;
     private List<shipping_stock_vege_timeline_details_cardview> vege_timeline_details_list = new ArrayList<>();
 
-    public shipping_stock_vege_timeline_Adapter(Context context, List<shipping_stock_vege_timeline_cardview> vege_timeline_list) {
+    List<String> more_seedling_date;    //實際育苗日
+    List<String> more_seedling_num;     //育苗數量
+    List<String> more_remarks;          //備註
+
+    List<String> more_planting_date;    //實際定植日
+    List<String> more_planting_num;     //定植數量
+
+    List<String> more_harvest_date;     //實際收成日
+    List<String> more_harvest_weight;   //實際收成重量
+
+
+    public shipping_stock_vege_timeline_Adapter(Context context, List<shipping_stock_vege_timeline_cardview> vege_timeline_list,
+                                                List<String> more_seedling_date,List<String> more_seedling_num,List<String> more_remarks,
+                                                List<String> more_planting_date,List<String> more_planting_num,
+                                                List<String> more_harvest_date,List<String> more_harvest_weight) {
 
         this.context = context;
         this.vege_timeline_list = vege_timeline_list;
+
+        this.more_seedling_date = more_seedling_date;
+        this.more_seedling_num = more_seedling_num;
+        this.more_remarks = more_remarks;
+
+        this.more_planting_date = more_planting_date;
+        this.more_planting_num = more_planting_num;
+
+        this.more_harvest_date = more_harvest_date;
+        this.more_harvest_weight = more_harvest_weight;
     }
 
     @NonNull
@@ -72,17 +96,22 @@ public class shipping_stock_vege_timeline_Adapter extends RecyclerView.Adapter<s
         vege_timeline_details_list.clear();
         if(position==0){
 
-            vege_timeline_details_list.add(new shipping_stock_vege_timeline_details_cardview("盤數 : 25盤","備註 : 無"));
-
+            for(int i=0;i<more_seedling_num.size();i++)
+            {
+                vege_timeline_details_list.add(new shipping_stock_vege_timeline_details_cardview("盤數 : "+more_seedling_num.get(i)+" 盤","備註 : "+more_remarks.get(i)));
+            }
         }
         else if(position==1){
-
-            vege_timeline_details_list.add(new shipping_stock_vege_timeline_details_cardview("日期 : 2021-05-10","盤數 : 15盤"));
-
-
+            for(int i=0;i<more_planting_date.size();i++)
+            {
+                vege_timeline_details_list.add(new shipping_stock_vege_timeline_details_cardview("日期 : "+more_planting_date.get(i),"盤數 : "+more_planting_num.get(i)+" 盤"));
+            }
         }
         else if(position==2){
-            vege_timeline_details_list.add(new shipping_stock_vege_timeline_details_cardview("日期 : 2021-05-29","收成重量 : 200公斤"));
+            for(int i=0;i<more_harvest_date.size();i++)
+            {
+                vege_timeline_details_list.add(new shipping_stock_vege_timeline_details_cardview("日期 : "+more_harvest_date.get(i),"收成重量 : "+more_harvest_weight.get(i)+" 公斤"));
+            }
 
         }
 
