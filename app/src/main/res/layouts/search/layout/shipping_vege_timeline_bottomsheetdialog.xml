@@ -11,11 +11,15 @@
 
     <Spinner
         android:id="@+id/greenhouse_sp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="240dp"
+
+
         app:layout_constraintBottom_toBottomOf="@+id/vege_name_tv"
+
+        app:layout_constraintEnd_toStartOf="@+id/vege_name_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/vege_name_tv" />
 
@@ -42,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vege_name_tv" />
 
     <TextView
-        android:id="@+id/btmsheet_confirm_tv"
+        android:id="@+id/btmsheet_cancel_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"

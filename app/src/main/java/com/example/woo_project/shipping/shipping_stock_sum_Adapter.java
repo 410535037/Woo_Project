@@ -137,6 +137,15 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                     TextView vege_name_tv = root.findViewById(R.id.vege_name_tv);
                     vege_name_tv.setText(vege.getVege_name());
 
+                    //關閉
+                    TextView btmsheet_cancel_tv = root.findViewById(R.id.btmsheet_cancel_tv);
+                    btmsheet_cancel_tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            more_bottomSheetDialog.dismiss();
+                        }
+                    });
+
                     // 庫存某一cardview有哪些canopy
                     //取得cardview canopy list
                     final Runnable getVege_timeline_canopy=new Runnable () {
@@ -144,9 +153,14 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
                         public void run() {
                             ArrayAdapter<CharSequence> adapter =
                                     new ArrayAdapter(mctx,                          //對應的Context
-                                            android.R.layout.simple_spinner_item,   //預設Spinner未展開時的View(預設及選取後樣式)
+                                            R.layout.shipping_vege_timeline_bottomsheetdialog_spinner,   //預設Spinner未展開時的View(預設及選取後樣式)
                                             vege_timeline_list_canopy);             //資料選項內容
+                            //下拉呈現畫面
+                            adapter.setDropDownViewResource(R.layout.shipping_vege_timeline_bottomsheetdialog_spinner_item);
+                            shipping_stock_spinner.setBackgroundColor(0x0); //取消右邊箭頭
+                            shipping_stock_spinner.setDropDownVerticalOffset(dip2px(mctx,20)); //往下
                             shipping_stock_spinner.setAdapter(adapter);
+
                         }
 
                     };
@@ -477,6 +491,10 @@ public class shipping_stock_sum_Adapter extends RecyclerView.Adapter<shipping_st
         out_date.setText(currentDateString);
     }
 
+    public static int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 
     class viewholder extends RecyclerView.ViewHolder {
             ImageView vege_img;
